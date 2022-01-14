@@ -1,10 +1,10 @@
 from telegram import Update
-from telegram.ext import Updater
-from telegram.ext import CallbackContext
-from telegram.ext import MessageHandler, Filters
-
+from telegram.ext import Updater, CallbackContext, MessageHandler, Filters, CommandHandler
+from utils import ilya_ilya, ilya_razum
+# with open('token.txt', 'r') as f:
+#    token = f.readline()
 with open('token.txt', 'r') as f:
-    token = f.readline()
+    token = f.readline().strip()
 updater = Updater(token=token, use_context=True)
 dispatcher = updater.dispatcher
 
@@ -12,18 +12,27 @@ dispatcher = updater.dispatcher
 def ilya(update: Update, context: CallbackContext) -> None:
     tg_message = update.message.text
     tg_user = update.message.from_user
-    wordlist = [' илья ', ' ильи ', ' илье ', ' илью ', ' ильей ']  # ё?. Не поломаются ли от пробелов позиции - на практике вроде нет, но нужно понять как код работает
-    if any(c in tg_message.lower() for c in wordlist):  # Этот if нужно убрать, при этом чтобы сообщение не отправлялось
-        while any(c in tg_message.lower() for c in wordlist):
-            for word in wordlist:
-                pos = tg_message.lower().find(word)
-                if pos != -1:  # оно и без этого работает не багаясь почему-то, но пусть будет
-                    realword = tg_message[pos:pos + len(word)]
-                    tg_message = tg_message.replace(realword, realword.replace('ь', '').replace('Ь', ''))
-        reply = str(tg_user['first_name'])+': '+tg_message  # работает без str, но предупреждение из-за какой-то хуйни в либе
+    wordlist1 = ['илья', 'ильи', 'илье', 'илью', 'ильей', 'ильёй']
+    wordlist2 = ['разумный', 'разумного', 'разумным', 'разумному', 'разумная']
+    send = False
+    if any(c in tg_message.lower() for c in wordlist1):
+        tg_message = ilya_ilya(wordlist1, tg_message)
+        send = True
+    if any(c in tg_message.lower() for c in wordlist2):
+        tg_message = ilya_razum(wordlist2, tg_message)
+        send = True
+    if send:
+        reply = str(tg_user['first_name'])+' блять опять херню пишет.'+'\n'+'Правильно будет: '+tg_message
+        # работает без str, но предупреждение из-за какой-то хуйни в либе
         context.bot.send_message(chat_id=update.effective_chat.id, text=reply)
 
 
+def pasha_nick(update: Update, context: CallbackContext) -> None:
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Нахрена ты на мой ник тыкаешь?")
+
+
+pasha_nick_handler = CommandHandler('I3700ch1u', pasha_nick)
+dispatcher.add_handler(pasha_nick_handler)
 ilya_handler = MessageHandler(Filters.text & (~Filters.command), ilya)
 dispatcher.add_handler(ilya_handler)
 
