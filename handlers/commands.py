@@ -1,3 +1,5 @@
+import random
+
 from telegram import Update
 from telegram.ext import CallbackContext
 
@@ -13,6 +15,12 @@ def hentai(update: Update, context: CallbackContext) -> None:
     filename = download_hentai()
     context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(filename, 'rb'), caption=filename)
     remove_hentai(filename)
+
+
+def auf(update: Update, context: CallbackContext) -> None:
+    with open("data/pacanskie-citaty-pro-zhizn") as f:
+        lines = f.readlines()
+    context.bot.send_message(chat_id=update.effective_chat.id, text=lines[random.randint(0,100)])
 
 
 def important_data_write(update: Update, context: CallbackContext) -> None:
