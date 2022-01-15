@@ -66,6 +66,19 @@ def hentai(update: Update, context: CallbackContext) -> None:
     context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(path, 'rb'))
     remove_hentai(path)
 
+def important_data_write(update: Update, context: CallbackContext) -> None:
+    data = update.message.text[6:]
+    print(0)
+
+def important_data_read(update: Update, context: CallbackContext) -> None:
+    context.bot.send_message(chat_id=update.effective_chat.id, text="1")
+    print(1)
+
+important_data_write_handler = CommandHandler('save', important_data_write)
+dispatcher.add_handler(important_data_write_handler)
+
+important_data_read_handler = CommandHandler('read', important_data_read)
+dispatcher.add_handler(important_data_read_handler)
 
 pasha_nick_handler = CommandHandler('I3700ch1u', pasha_nick)
 dispatcher.add_handler(pasha_nick_handler)
