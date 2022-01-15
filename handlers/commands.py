@@ -10,9 +10,9 @@ def pasha_nick(update: Update, context: CallbackContext) -> None:
 
 
 def hentai(update: Update, context: CallbackContext) -> None:
-    path = download_hentai()
-    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(path, 'rb'))
-    remove_hentai(path)
+    filename = download_hentai()
+    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(filename, 'rb'), caption=filename)
+    remove_hentai(filename)
 
 
 def important_data_write(update: Update, context: CallbackContext) -> None:

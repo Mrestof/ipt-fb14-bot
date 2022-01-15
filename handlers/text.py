@@ -23,6 +23,7 @@ def text_messages(update: Update, context: CallbackContext) -> None:
     if '@hhanchenn' in tg_message.lower():
         context.bot.send_message(chat_id=update.effective_chat.id, text='хахачлен', reply_to_message_id=tg_message_id)
         return None
+    # TODO: add regular expression
     if tg_message.lower() == 'оск' or ' оск ' in tg_message.lower():
         osk_list = ['орбление', 'Оски (Osci, Opsci, Όσκοι, Όπικοί) — считавшие себя италийскими автохтонами, '
                                 'составляли ветвь умбрийского племени и занимали, в доисторическую эпоху, '
