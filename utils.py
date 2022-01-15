@@ -18,7 +18,19 @@ def ilya_razum(wordlist2, tg_message):
                 tg_message = tg_message.replace(realword, realword[:pos2])
     return tg_message
 
-
+def important_data_write(text):
+    f = open('important_data', 'r')
+    l = f.readlines()
+    f.close()
+    if len(l) == 5:
+        f = open('important_data', 'w')
+        for i in range(4):
+            f.write(l[i+1])
+        f.close()
+    f = open('important_data', 'a')
+    f.write(text + '\n')
+    f.close()
+    return
 '''
 def izvrashenie(tg_message: str):
     wordlist = ['илья', 'ильи', 'илье', 'илью', 'ильей']
