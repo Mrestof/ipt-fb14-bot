@@ -30,7 +30,7 @@ def getlink():
 
 def download_hentai():
     image_url = getlink()
-    filename = image_url.split("/")[-2]
+    filename = image_url.split('/')[-2]
     r = requests.get(image_url, stream=True)
     if r.status_code == 200:
         r.raw.decode_content = True
