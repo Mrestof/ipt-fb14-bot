@@ -3,7 +3,7 @@ from telegram.ext import Updater
 from telegram.ext import MessageHandler, Filters, CommandHandler
 
 from handlers.text import text_messages
-from handlers.commands import hentai, pasha_nick, auf, ero, ecchi, photo  # , important_data_read, important_data_write
+from handlers.commands import hentai, pasha_nick, auf, anekdot, ero, ecchi, photo  # , important_data_read, important_data_write
 
 
 # Function to get token from file
@@ -19,7 +19,8 @@ def set_commands(token: str) -> None:
                 BotCommand('ecchi', 'Safe for родители'),
                 BotCommand('ero', 'Кожаные мешки с мясом'),
                 BotCommand('auf', 'АУФ'),
-                BotCommand('photo', 'Вах какая красота')]
+                BotCommand('photo', 'Вах какая красота'),
+                BotCommand('anekdot', 'Помереть со смеху')]
     bot = Bot(token)
     bot.set_my_commands(commands)
 
