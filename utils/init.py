@@ -50,6 +50,9 @@ def get_updater(token: str) -> Updater:
     auf_handler = CommandHandler('auf', auf)
     dispatcher.add_handler(auf_handler)
 
+    anekdot_handler = CommandHandler('anekdot', anekdot)
+    dispatcher.add_handler(anekdot_handler)
+
     return updater
 
 # Other variants for saving messages function (TODO: UnScooby-do this crap)

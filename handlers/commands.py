@@ -52,8 +52,10 @@ def auf(update: Update, context: CallbackContext) -> None:
     context.bot.send_message(chat_id=update.effective_chat.id, text=lines[random.randint(0, 100)])
     # context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=update.message.message_id)
 
-
-# Other variants of saving messages
+def anekdot(update: Update, context: CallbackContext) -> None:
+    with open('data/anekdots.txt') as f:
+        a = ''.join([f.readline() for _ in range(5056)]).split('###')
+    context.bot.send_message(chat_id=update.effective_chat.id, text=random.choice(a))
 '''
 def important_data_write(update: Update, context: CallbackContext) -> None:
     reply_text = update.message.reply_to_message.text
