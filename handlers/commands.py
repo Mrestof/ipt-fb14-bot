@@ -5,6 +5,7 @@ from telegram.ext import CallbackContext
 
 from utils.nhentai import download_hentai, remove_hentai
 from utils.wallhaven import download_wallhaven, remove_wallhaven
+from utils.resize_image import resize_image
 
 
 # Meme function to react on Pasha's nickname
@@ -23,26 +24,29 @@ def hentai(update: Update, context: CallbackContext) -> None:
 
 # Function to download and send Ecchi pictures SFW
 def ecchi(update: Update, context: CallbackContext) -> None:
-    filename = download_wallhaven('ecchi')
-    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(filename, 'rb'), caption=filename)
+    path = download_wallhaven('ecchi')
+    resize_image(path, 1920)
+    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(path, 'rb'), caption=path)
     # context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=update.message.message_id)
-    remove_wallhaven(filename)
+    remove_wallhaven(path)
 
 
 # Function to download and send Erotic photos and their names
 def ero(update: Update, context: CallbackContext) -> None:
-    filename = download_wallhaven('ero')
-    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(filename, 'rb'), caption=filename)
+    path = download_wallhaven('ero')
+    resize_image(path, 1920)
+    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(path, 'rb'), caption=path)
     # context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=update.message.message_id)
-    remove_wallhaven(filename)
+    remove_wallhaven(path)
 
 
 # Function to download and send Photos and their names
 def photo(update: Update, context: CallbackContext) -> None:
-    filename = download_wallhaven('photo')
-    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(filename, 'rb'), caption=filename)
+    path = download_wallhaven('photo')
+    resize_image(path, 1920)
+    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(path, 'rb'), caption=path)
     # context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=update.message.message_id)
-    remove_wallhaven(filename)
+    remove_wallhaven(path)
 
 
 # Function to send quotes from real men

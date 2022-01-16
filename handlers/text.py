@@ -7,7 +7,10 @@ from utils.text import ilya_ilya, ilya_razum
 
 
 def text_messages(update: Update, context: CallbackContext) -> None:
-
+    if update.message is None:
+        print(update, "\nError")
+        # TODO: logging
+        return None
     tg_message = update.message.text
     tg_message_id = update.message.message_id
     tg_user = update.message.from_user

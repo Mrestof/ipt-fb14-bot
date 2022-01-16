@@ -3,14 +3,16 @@ import requests
 import os
 
 
-def Generate_Code():  # function generates a random 6 digit number
+# function generates a random 6-digit number
+def Generate_Code():
     code = ''
     for i in range(6):
         code += str(random.randint(0, 9))
     return code
 
 
-def valid_url():  # function checks whether a doujin exists with the generated code
+# function checks whether a doujin exists with the generated code
+def valid_url():
     url = None
     valid = False
     while not valid:
