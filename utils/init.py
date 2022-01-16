@@ -6,12 +6,14 @@ from handlers.text import text_messages
 from handlers.commands import hentai, pasha_nick, auf, ero, ecchi, photo  # , important_data_read, important_data_write
 
 
+# Function to get token from file
 def get_token() -> str:
     with open('data/token.txt', 'r') as f:
         token = f.readline().strip()
     return token
 
 
+# Function to set commands description
 def set_commands(token: str) -> None:
     commands = [BotCommand('hentai', 'Отойти на 5 минут'),
                 BotCommand('ecchi', 'Safe for родители'),
@@ -22,6 +24,7 @@ def set_commands(token: str) -> None:
     bot.set_my_commands(commands)
 
 
+# Function to declare all commands handlers for bot (Telegram API)
 def get_updater(token: str) -> Updater:
     updater = Updater(token=token, use_context=True)
     dispatcher = updater.dispatcher
@@ -49,7 +52,7 @@ def get_updater(token: str) -> Updater:
 
     return updater
 
-
+# Other variants for saving messages function (TODO: UnScooby-do this crap)
 '''
     important_data_write_handler = CommandHandler('save', important_data_write)
     dispatcher.add_handler(important_data_write_handler)
