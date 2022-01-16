@@ -1,7 +1,6 @@
 import random
 import requests
 import os
-import tempfile
 
 from bs4 import BeautifulSoup
 
