@@ -13,10 +13,17 @@ def pasha_nick(update: Update, context: CallbackContext) -> None:
 
 
 def hentai(update: Update, context: CallbackContext) -> None:
-    filename = download_hentai()
-    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(filename, 'rb'), caption="nhentai-"+filename)
-    # context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=update.message.message_id)
-    remove_hentai(filename)
+    if random.randint(0, 1):
+        filename = download_hentai()
+        context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(filename, 'rb'),
+                               caption="nhentai-" + filename)
+        # context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=update.message.message_id)
+        remove_hentai(filename)
+    else:
+        filename = download_wallhaven('hentai')
+        context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(filename, 'rb'),
+                               caption=filename)
+        remove_wallhaven(filename)
 
 
 def ero(update: Update, context: CallbackContext) -> None:

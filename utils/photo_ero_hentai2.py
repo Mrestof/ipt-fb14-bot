@@ -1,24 +1,32 @@
+import random
+
 import requests
 import os
 
 from bs4 import BeautifulSoup
 
 
-
 def crawl(images_type):
     url = ''  # нужно ли это?
     if images_type == 'photo':
-        url = f'https://wallhaven.cc/search?categories=100&purity=100&resolutions=1920x1080&sorting=random&order=desc'
+        url = f'https://wallhaven.cc/search?categories=100&purity=100&ratios=16x9&topRange=1y&sorting=toplist&order' \
+              f'=desc&page={random.randint(1, 100)} '
     elif images_type == 'ero':
-        url = f'https://wallhaven.cc/search?categories=101&purity=010&sorting=random&order=desc'
+        url = f'https://wallhaven.cc/search?categories=001&purity=010&topRange=1y&sorting=toplist&order=desc&page=' \
+              f'{random.randint(1, 100)}'
     elif images_type == 'hentai':
-        url = f'https://wallhaven.cc/search?categories=010&purity=010&sorting=random&order=desc'
+        url = f'https://wallhaven.cc/search?categories=010&purity=010&topRange=1y&sorting=toplist&order=desc&page=' \
+              f'{random.randint(1, 100)}'
     req = requests.get(url)
     soup = BeautifulSoup(req.content, features="html.parser")
-    s = soup.find('a', {'class': 'preview'})
-    filename = (str(s)[48:54])
-    filename_part = filename[:2]
-    url = f'https://w.wallhaven.cc/full/{filename_part}/wallhaven-{filename}.jpg'
+    ss = soup.findAll('a', {'class': 'preview'})
+    filename_list = []
+    for s in ss:
+        filename = (str(s)[48:54])
+        filename_list.append(filename)
+    chosen_filename = random.choice(filename_list)
+    chosen_filename_part = chosen_filename[:2]
+    url = f'https://w.wallhaven.cc/full/{chosen_filename_part}/wallhaven-{chosen_filename}.jpg'
     return url
 
 
