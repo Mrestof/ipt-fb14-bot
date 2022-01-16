@@ -1,14 +1,25 @@
+from telegram import Bot, BotCommand
 from telegram.ext import Updater
 from telegram.ext import MessageHandler, Filters, CommandHandler
 
 from handlers.text import text_messages
-from handlers.commands import hentai, pasha_nick, auf, ero,ecchi, photo  # , important_data_read, important_data_write
+from handlers.commands import hentai, pasha_nick, auf, ero, ecchi, photo  # , important_data_read, important_data_write
 
 
 def get_token() -> str:
     with open('data/token.txt', 'r') as f:
         token = f.readline().strip()
     return token
+
+
+def set_commands(token: str) -> None:
+    commands = [BotCommand('hentai', 'Отойти на 5 минут'),
+                BotCommand('ecchi', 'Safe for родители'),
+                BotCommand('ero', 'Кожаные мешки с мясом'),
+                BotCommand('auf', 'АУФ'),
+                BotCommand('photo', 'Вах какая красота')]
+    bot = Bot(token)
+    bot.set_my_commands(commands)
 
 
 def get_updater(token: str) -> Updater:

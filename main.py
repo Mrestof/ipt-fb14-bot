@@ -1,8 +1,10 @@
-from utils.init import get_token, get_updater
+from utils.init import get_token, get_updater, set_commands
 
 
 def main():
     token = get_token()
+
+    set_commands(token)
     updater = get_updater(token)
     updater.start_polling()
 
