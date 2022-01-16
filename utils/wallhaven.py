@@ -14,7 +14,7 @@ def crawl(images_type):
     elif images_type == 'ero':
         url = f'https://wallhaven.cc/search?categories=001&purity=010&topRange=1y&sorting=toplist&order=desc&page=' \
               f'{random.randint(1, 100)}'
-    elif images_type == 'hentai':
+    elif images_type == 'ecchi':
         url = f'https://wallhaven.cc/search?categories=010&purity=010&topRange=1y&sorting=toplist&order=desc&page=' \
               f'{random.randint(1, 100)}'
     req = requests.get(url)

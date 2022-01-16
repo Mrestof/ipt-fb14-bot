@@ -3,8 +3,8 @@ import random
 from telegram import Update
 from telegram.ext import CallbackContext
 
-from utils.hentai import download_hentai, remove_hentai
-from utils.photo_ero_hentai2 import download_wallhaven, remove_wallhaven
+from utils.nhentai import download_hentai, remove_hentai
+from utils.wallhaven import download_wallhaven, remove_wallhaven
 
 
 def pasha_nick(update: Update, context: CallbackContext) -> None:
@@ -13,17 +13,17 @@ def pasha_nick(update: Update, context: CallbackContext) -> None:
 
 
 def hentai(update: Update, context: CallbackContext) -> None:
-    if random.randint(0, 1):
-        filename = download_hentai()
-        context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(filename, 'rb'),
-                               caption="nhentai-" + filename)
-        # context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=update.message.message_id)
-        remove_hentai(filename)
-    else:
-        filename = download_wallhaven('hentai')
-        context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(filename, 'rb'),
-                               caption=filename)
-        remove_wallhaven(filename)
+    filename = download_hentai()
+    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(filename, 'rb'), caption="nhentai-" + filename)
+    # context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=update.message.message_id)
+    remove_hentai(filename)
+
+
+def ecchi(update: Update, context: CallbackContext) -> None:
+    filename = download_wallhaven('ecchi')
+    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(filename, 'rb'), caption=filename)
+    # context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=update.message.message_id)
+    remove_wallhaven(filename)
 
 
 def ero(update: Update, context: CallbackContext) -> None:
