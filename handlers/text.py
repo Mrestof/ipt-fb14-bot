@@ -35,7 +35,8 @@ def text_messages(update: Update, context: CallbackContext) -> None:
     if any(c in tg_message.lower() for c in wordlist_kringe):
         kringe_list = ['КРИИИИИИИИНЖ', 'Кринжовый кринж, кринжанул', f'{tg_user.first_name} опять кринжанул и '
                                                                      f'сморозил херню', 'ИСПАНСКИЙ СТЫД']
-        context.bot.send_message(chat_id=update.effective_chat.id, text=random.choice(kringe_list), reply_to_message_id=tg_message_id)
+        context.bot.send_message(chat_id=update.effective_chat.id, text=random.choice(kringe_list),
+                                 reply_to_message_id=tg_message_id)
         return None
     if any(c in tg_message.lower() for c in wordlist_ilya):
         tg_message = ilya_ilya(wordlist_ilya, tg_message)
@@ -49,3 +50,4 @@ def text_messages(update: Update, context: CallbackContext) -> None:
         reply = random.choice(reply_list) + '\n' + 'Правильно будет: ' + tg_message
         # работает без str, но предупреждение из-за какой-то хуйни в либе
         context.bot.send_message(chat_id=update.effective_chat.id, text=reply, reply_to_message_id=tg_message_id)
+        

@@ -27,7 +27,7 @@ def getlink():
     filename = url.split('/')[-3]
     pos1 = r.content.decode().find('https://i.nhentai.net/galleries')
     pos2 = r.content.decode()[pos1:].find('"')
-    return r.content.decode()[pos1:pos1 + pos2],filename
+    return r.content.decode()[pos1:pos1 + pos2], filename
 
 
 def download_hentai():

@@ -25,7 +25,7 @@ def url_check(url):
         return url
 
 
-def download_foto():
+def download_photo():
     image_info = url_check(crawl())
     filename = image_info[31:47]
     r = requests.get(image_info, stream=True)
@@ -36,5 +36,5 @@ def download_foto():
         return filename
 
 
-def remove_foto(path):
+def remove_photo(path):
     os.remove(path)

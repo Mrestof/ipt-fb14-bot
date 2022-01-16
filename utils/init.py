@@ -2,7 +2,7 @@ from telegram.ext import Updater
 from telegram.ext import MessageHandler, Filters, CommandHandler
 
 from handlers.text import text_messages
-from handlers.commands import hentai, pasha_nick, important_data_read, important_data_write, auf, ero, foto
+from handlers.commands import hentai, pasha_nick, auf, ero, photo  # , important_data_read, important_data_write
 
 
 def get_token() -> str:
@@ -27,15 +27,18 @@ def get_updater(token: str) -> Updater:
     ero_handler = CommandHandler('ero', ero)
     dispatcher.add_handler(ero_handler)
 
-    foto_handler = CommandHandler('foto', foto)
-    dispatcher.add_handler(foto_handler)
+    photo_handler = CommandHandler('photo', photo)
+    dispatcher.add_handler(photo_handler)
 
     auf_handler = CommandHandler('auf', auf)
     dispatcher.add_handler(auf_handler)
 
+    return updater
+
+
+'''
     important_data_write_handler = CommandHandler('save', important_data_write)
     dispatcher.add_handler(important_data_write_handler)
 
     important_data_read_handler = CommandHandler('read', important_data_read)
-    dispatcher.add_handler(important_data_read_handler)
-    return updater
+    dispatcher.add_handler(important_data_read_handler)'''
