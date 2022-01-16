@@ -1,6 +1,7 @@
 import csv
 
 
+# Function to remove 'ь' from "Илья"
 def ilya_ilya(wordlist, tg_message):
     while any(w in tg_message.lower() for w in wordlist):
         for word in wordlist:
@@ -12,6 +13,7 @@ def ilya_ilya(wordlist, tg_message):
     return tg_message
 
 
+# Function to remove "ний" from "Разумний"
 def ilya_razum(wordlist, tg_message):
     while any(w in tg_message.lower() for w in wordlist):
         for word in wordlist:
@@ -24,6 +26,7 @@ def ilya_razum(wordlist, tg_message):
     return tg_message
 
 
+# Function to write 5 important messages to file
 def important_data_write(text: str) -> None:
     saved_msgs_path = 'data/saved_msgs.csv'
     with open(saved_msgs_path, 'r') as f:

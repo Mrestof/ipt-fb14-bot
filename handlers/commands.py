@@ -8,11 +8,13 @@ from utils.wallhaven import download_wallhaven, remove_wallhaven
 from utils.resize_image import resize_image
 
 
+# Meme function to react on Pasha's nickname
 def pasha_nick(update: Update, context: CallbackContext) -> None:
     context.bot.send_message(chat_id=update.effective_chat.id, text='Ну да, хуевый у меня ник.\nНо это блядь не значит '
                                                                     'что на него тыкать нужно!')
 
 
+# Function to download and send Hentai mangas profile pictures and their tags
 def hentai(update: Update, context: CallbackContext) -> None:
     filename = download_hentai()
     context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(filename, 'rb'), caption="nhentai-" + filename)
@@ -20,6 +22,7 @@ def hentai(update: Update, context: CallbackContext) -> None:
     remove_hentai(filename)
 
 
+# Function to download and send Ecchi pictures SFW
 def ecchi(update: Update, context: CallbackContext) -> None:
     path = download_wallhaven('ecchi')
     resize_image(path, 1920)
@@ -28,6 +31,7 @@ def ecchi(update: Update, context: CallbackContext) -> None:
     remove_wallhaven(path)
 
 
+# Function to download and send Erotic photos and their names
 def ero(update: Update, context: CallbackContext) -> None:
     path = download_wallhaven('ero')
     resize_image(path, 1920)
@@ -36,6 +40,7 @@ def ero(update: Update, context: CallbackContext) -> None:
     remove_wallhaven(path)
 
 
+# Function to download and send Photos and their names
 def photo(update: Update, context: CallbackContext) -> None:
     path = download_wallhaven('photo')
     resize_image(path, 1920)
@@ -44,6 +49,7 @@ def photo(update: Update, context: CallbackContext) -> None:
     remove_wallhaven(path)
 
 
+# Function to send quotes from real men
 def auf(update: Update, context: CallbackContext) -> None:
     with open("data/pacanskie-citaty-pro-zhizn") as f:
         lines = f.readlines()
@@ -51,6 +57,7 @@ def auf(update: Update, context: CallbackContext) -> None:
     # context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=update.message.message_id)
 
 
+# Other variants of saving messages
 '''
 def important_data_write(update: Update, context: CallbackContext) -> None:
     reply_text = update.message.reply_to_message.text
