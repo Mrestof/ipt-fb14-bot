@@ -1,7 +1,7 @@
 import random
-
 import requests
 import os
+import tempfile
 
 from bs4 import BeautifulSoup
 
@@ -10,15 +10,15 @@ def crawl(images_type):
     url = ''  # нужно ли это?
     if images_type == 'photo':
         url = f'https://wallhaven.cc/search?categories=100&purity=100&ratios=16x9&topRange=1y&sorting=toplist&order' \
-              f'=desc&page={random.randint(1, 100)} '
+              f'=desc&page={random.randint(1, 50)} '
     elif images_type == 'ero':
         url = f'https://wallhaven.cc/search?categories=001&purity=010&topRange=1y&sorting=toplist&order=desc&page=' \
               f'{random.randint(1, 100)}'
     elif images_type == 'ecchi':
         url = f'https://wallhaven.cc/search?categories=010&purity=010&topRange=1y&sorting=toplist&order=desc&page=' \
               f'{random.randint(1, 100)}'
-    req = requests.get(url)
-    soup = BeautifulSoup(req.content, features="html.parser")
+    r = requests.get(url)
+    soup = BeautifulSoup(r.content, features="html.parser")
     ss = soup.findAll('a', {'class': 'preview'})
     filename_list = []
     for s in ss:
