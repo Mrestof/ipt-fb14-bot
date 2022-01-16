@@ -4,8 +4,7 @@ from telegram import Update
 from telegram.ext import CallbackContext
 
 from utils.hentai import download_hentai, remove_hentai
-from utils.ero import download_ero, remove_ero
-from utils.foto import download_photo, remove_photo
+from utils.photo_ero_hentai2 import download_wallhaven, remove_wallhaven
 
 
 def pasha_nick(update: Update, context: CallbackContext) -> None:
@@ -15,30 +14,30 @@ def pasha_nick(update: Update, context: CallbackContext) -> None:
 
 def hentai(update: Update, context: CallbackContext) -> None:
     filename = download_hentai()
-    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(filename, 'rb'), caption=filename)
+    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(filename, 'rb'), caption="nhentai-"+filename)
     # context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=update.message.message_id)
     remove_hentai(filename)
 
 
 def ero(update: Update, context: CallbackContext) -> None:
-    filename = download_ero()
+    filename = download_wallhaven('ero')
     context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(filename, 'rb'), caption=filename)
     # context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=update.message.message_id)
-    remove_ero(filename)
+    remove_wallhaven(filename)
 
 
 def photo(update: Update, context: CallbackContext) -> None:
-    filename = download_photo()
+    filename = download_wallhaven('photo')
     context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(filename, 'rb'), caption=filename)
     # context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=update.message.message_id)
-    remove_photo(filename)
+    remove_wallhaven(filename)
 
 
 def auf(update: Update, context: CallbackContext) -> None:
     with open("data/pacanskie-citaty-pro-zhizn") as f:
         lines = f.readlines()
     context.bot.send_message(chat_id=update.effective_chat.id, text=lines[random.randint(0, 100)])
-    context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=update.message.message_id)
+    # context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=update.message.message_id)
 
 
 '''

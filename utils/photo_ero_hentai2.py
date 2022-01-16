@@ -4,9 +4,15 @@ import os
 from bs4 import BeautifulSoup
 
 
-# TODO: remove duplicates from ero.py
-def crawl():
-    url = f'https://wallhaven.cc/search?categories=100&purity=100&sorting=random&order=desc'
+
+def crawl(images_type):
+    url = ''  # нужно ли это?
+    if images_type == 'photo':
+        url = f'https://wallhaven.cc/search?categories=100&purity=100&resolutions=1920x1080&sorting=random&order=desc'
+    elif images_type == 'ero':
+        url = f'https://wallhaven.cc/search?categories=101&purity=010&sorting=random&order=desc'
+    elif images_type == 'hentai':
+        url = f'https://wallhaven.cc/search?categories=010&purity=010&sorting=random&order=desc'
     req = requests.get(url)
     soup = BeautifulSoup(req.content, features="html.parser")
     s = soup.find('a', {'class': 'preview'})
@@ -25,8 +31,8 @@ def url_check(url):
         return url
 
 
-def download_photo():
-    image_info = url_check(crawl())
+def download_wallhaven(image_type):
+    image_info = url_check(crawl(image_type))
     filename = image_info[31:47]
     r = requests.get(image_info, stream=True)
     if r.status_code == 200:
@@ -36,5 +42,5 @@ def download_photo():
         return filename
 
 
-def remove_photo(path):
+def remove_wallhaven(path):
     os.remove(path)
