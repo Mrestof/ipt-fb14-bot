@@ -3,7 +3,8 @@ from telegram.ext import Updater
 from telegram.ext import MessageHandler, Filters, CommandHandler
 
 from handlers.text import text_messages
-from handlers.commands import hentai, pasha_nick, auf, anekdot, ero, ecchi, photo  # , important_data_read, important_data_write
+from handlers.commands import hentai, pasha_nick, auf, anekdot, ero, ecchi, photo
+# important_data_read, important_data_write
 
 
 # Function to get token from file
@@ -18,9 +19,10 @@ def set_commands(token: str) -> None:
     commands = [BotCommand('hentai', 'Отойти на 5 минут'),
                 BotCommand('ecchi', 'Safe for родители'),
                 BotCommand('ero', 'Кожаные мешки с мясом'),
+                BotCommand('anekdot', 'Помереть со смеху'),
                 BotCommand('auf', 'АУФ'),
-                BotCommand('photo', 'Вах какая красота'),
-                BotCommand('anekdot', 'Помереть со смеху')]
+                BotCommand('photo', 'Вах какая красота')
+                ]
     bot = Bot(token)
     bot.set_my_commands(commands)
 
@@ -55,6 +57,7 @@ def get_updater(token: str) -> Updater:
     dispatcher.add_handler(anekdot_handler)
 
     return updater
+
 
 # Other variants for saving messages function (TODO: UnScooby-do this crap)
 '''
