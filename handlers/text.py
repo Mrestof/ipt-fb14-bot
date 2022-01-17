@@ -7,10 +7,16 @@ from utils.text import ilya_ilya, ilya_razum
 
 
 def text_messages(update: Update, context: CallbackContext) -> None:
-    print(update.message.text)
     if update.message is None:
         # TODO: fix handling of edited_messages
         return None
+    elif update.message.chat.type == 'private':
+        context.bot.send_message(chat_id=update.effective_chat.id, text='Chat functions only for groups')
+        print('private   '+update.message.from_user.first_name + ': ' + update.message.text)
+        return None
+    else:
+        print(update.message.chat.title + '_chat   ' + update.message.from_user.first_name + ': ' + update.message.text)
+
     tg_message = update.message.text
     tg_message_id = update.message.message_id
     tg_user = update.message.from_user
@@ -48,7 +54,7 @@ def text_messages(update: Update, context: CallbackContext) -> None:
         tg_message = ilya_razum(wordlist_razum, tg_message)
         send = True
     if send:
-        reply_list = [f'{tg_user.first_name} бредит','Блядь, опять херню пишешь', 'Ты в школе вообще учился?',
+        reply_list = [f'{tg_user.first_name} бредит', 'Блядь, опять херню пишешь', 'Ты в школе вообще учился?',
                       'Это знать надо! Если ты учился на ФизТехе. Это классика, блядь!']
         reply = random.choice(reply_list) + '\n' + 'Правильно будет: ' + tg_message
         # работает без str, но предупреждение из-за какой-то хуйни в либе
