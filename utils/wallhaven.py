@@ -8,13 +8,13 @@ from bs4 import BeautifulSoup
 def crawl(images_type):
     url = ''  # нужно ли это?
     if images_type == 'photo':
-        url = f'https://wallhaven.cc/search?categories=100&purity=100&ratios=16x9&topRange=1y&sorting=toplist&order' \
+        url = 'https://wallhaven.cc/search?categories=100&purity=100&ratios=16x9&topRange=1y&sorting=toplist&order' \
               f'=desc&page={random.randint(1, 50)} '
     elif images_type == 'ero':
-        url = f'https://wallhaven.cc/search?categories=001&purity=010&topRange=1y&sorting=toplist&order=desc&page=' \
+        url = 'https://wallhaven.cc/search?categories=001&purity=010&topRange=1y&sorting=toplist&order=desc&page=' \
               f'{random.randint(1, 100)}'
     elif images_type == 'ecchi':
-        url = f'https://wallhaven.cc/search?categories=010&purity=010&topRange=1y&sorting=toplist&order=desc&page=' \
+        url = 'https://wallhaven.cc/search?categories=010&purity=010&topRange=1y&sorting=toplist&order=desc&page=' \
               f'{random.randint(1, 100)}'
     r = requests.get(url)
     soup = BeautifulSoup(r.content, features="html.parser")
@@ -41,12 +41,8 @@ def url_check(url):
 def download_wallhaven(image_type):
     image_info = url_check(crawl(image_type))
     filename = image_info[31:47]
-    r = requests.get(image_info, stream=True)
-    if r.status_code == 200:
-        r.raw.decode_content = True
-        with open(filename, 'wb') as f:
-            f.write(r.content)
-        return filename
+    os.system(f'wget --limit-rate=1m -O {filename} {image_info}')
+    return filename
 
 
 def remove_wallhaven(path):

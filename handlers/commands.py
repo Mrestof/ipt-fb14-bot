@@ -10,14 +10,12 @@ from utils.resize_image import resize_image
 
 # Meme function to react on Pasha's nickname
 def pasha_nick(update: Update, context: CallbackContext) -> None:
-    print(update.message.chat.title + '_chat   ' + update.message.from_user.first_name + ': ' + update.message.text)
     context.bot.send_message(chat_id=update.effective_chat.id, text='Ну да, хуевый у меня ник.\nНо это блядь не значит '
                                                                     'что на него тыкать нужно!')
 
 
 # Function to download and send Hentai mangas profile pictures and their tags
 def hentai(update: Update, context: CallbackContext) -> None:
-    print(update.message.chat.title + '_chat   ' + update.message.from_user.first_name + ': ' + update.message.text)
     filename = download_hentai()
     context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(filename, 'rb'), caption="nhentai-" + filename)
     # context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=update.message.message_id)
@@ -26,7 +24,6 @@ def hentai(update: Update, context: CallbackContext) -> None:
 
 # Function to download and send Ecchi pictures SFW
 def ecchi(update: Update, context: CallbackContext) -> None:
-    print(update.message.chat.title + '_chat   ' + update.message.from_user.first_name + ': ' + update.message.text)
     path = download_wallhaven('ecchi')
     resize_image(path, 1920)
     context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(path, 'rb'), caption=path)
@@ -36,7 +33,6 @@ def ecchi(update: Update, context: CallbackContext) -> None:
 
 # Function to download and send Erotic photos and their names
 def ero(update: Update, context: CallbackContext) -> None:
-    print(update.message.chat.title + '_chat   ' + update.message.from_user.first_name + ': ' + update.message.text)
     path = download_wallhaven('ero')
     resize_image(path, 1920)
     context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(path, 'rb'), caption=path)
@@ -46,7 +42,6 @@ def ero(update: Update, context: CallbackContext) -> None:
 
 # Function to download and send Photos and their names
 def photo(update: Update, context: CallbackContext) -> None:
-    print(update.message.chat.title + '_chat   ' + update.message.from_user.first_name + ': ' + update.message.text)
     path = download_wallhaven('photo')
     resize_image(path, 1920)
     context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(path, 'rb'), caption=path)
@@ -56,7 +51,6 @@ def photo(update: Update, context: CallbackContext) -> None:
 
 # Function to send quotes from real men
 def auf(update: Update, context: CallbackContext) -> None:
-    print(update.message.chat.title + '_chat   ' + update.message.from_user.first_name + ': ' + update.message.text)
     with open("data/pacanskie-citaty-pro-zhizn") as f:
         lines = f.readlines()
     context.bot.send_message(chat_id=update.effective_chat.id, text=lines[random.randint(0, 151)])
@@ -64,7 +58,6 @@ def auf(update: Update, context: CallbackContext) -> None:
 
 
 def anekdot(update: Update, context: CallbackContext) -> None:
-    print(update.message.chat.title + '_chat   ' + update.message.from_user.first_name + ': ' + update.message.text)
     with open('data/anekdots.txt') as f:
         a = ''.join([f.readline() for _ in range(5056)]).split('###')
     context.bot.send_message(chat_id=update.effective_chat.id, text=random.choice(a))

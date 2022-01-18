@@ -35,7 +35,7 @@ def get_updater(token: str) -> Updater:
     text_handler = MessageHandler(Filters.text & (~Filters.command), text_messages)
     dispatcher.add_handler(text_handler)
 
-    pasha_nick_handler = CommandHandler('I3700ch1u', pasha_nick)
+    pasha_nick_handler = CommandHandler('I3700ch3g0', pasha_nick)
     dispatcher.add_handler(pasha_nick_handler)
 
     hentai_handler = CommandHandler('hentai', hentai)

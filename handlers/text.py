@@ -12,10 +12,7 @@ def text_messages(update: Update, context: CallbackContext) -> None:
         return None
     elif update.message.chat.type == 'private':
         context.bot.send_message(chat_id=update.effective_chat.id, text='Chat functions only for groups')
-        print('private   '+update.message.from_user.first_name + ': ' + update.message.text)
         return None
-    else:
-        print(update.message.chat.title + '_chat   ' + update.message.from_user.first_name + ': ' + update.message.text)
 
     tg_message = update.message.text
     tg_message_id = update.message.message_id
@@ -23,7 +20,7 @@ def text_messages(update: Update, context: CallbackContext) -> None:
 
     wordlist_ilya = ['илья', 'ильи', 'илье', 'илью', 'ильей', 'ильёй']
     wordlist_razum = ['разумный', 'разумного', 'разумным', 'разумному', 'разумная']
-    wordlist_kringe = ['кринж', 'криндж']
+    wordlist_kringe = ['кринж', 'криндж', 'кринге']
     send = False
     if 'выполнить приказ 66' in tg_message.lower():
         # context.bot.kickChatMember(chat_id=update.effective_chat.id, user_id='483029014')
@@ -59,4 +56,3 @@ def text_messages(update: Update, context: CallbackContext) -> None:
         reply = random.choice(reply_list) + '\n' + 'Правильно будет: ' + tg_message
         # работает без str, но предупреждение из-за какой-то хуйни в либе
         context.bot.send_message(chat_id=update.effective_chat.id, text=reply, reply_to_message_id=tg_message_id)
-        

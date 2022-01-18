@@ -35,12 +35,8 @@ def getlink():
 def download_hentai():
     image_info = getlink()
     filename = image_info[1]
-    r = requests.get(image_info[0], stream=True)
-    if r.status_code == 200:
-        r.raw.decode_content = True
-        with open(filename, 'wb') as f:
-            f.write(r.content)
-        return filename
+    os.system(f'wget --limit-rate=1m -O {filename} {image_info[0]}')  # TODO: check the OS beforehand
+    return filename
 
 
 def remove_hentai(path):
