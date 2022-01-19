@@ -25,11 +25,14 @@ def hentai(update: Update, context: CallbackContext) -> None:
 
 # Function to download and send Erotic photos and their names
 def ero(update: Update, context: CallbackContext) -> None:
-    path = download_wallhaven('ero')
-    resize_image(path, 1920)
-    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(path, 'rb'), caption=path)
-    # context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=update.message.message_id)
-    remove_wallhaven(path)
+    if update.message.chat_id == -1001698562626:
+        context.bot.send_message(chat_id=update.effective_chat.id, text='Сори в этом чате без эротики, пиши в лс')
+    else:
+        path = download_wallhaven('ero')
+        resize_image(path, 1920)
+        context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(path, 'rb'), caption=path)
+        # context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=update.message.message_id)
+        remove_wallhaven(path)
 
 
 # Function to download and send Ecchi pictures SFW

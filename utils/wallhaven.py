@@ -41,7 +41,7 @@ def url_check(url):
 def download_wallhaven(image_type):
     image_info = url_check(crawl(image_type))
     filename = image_info[31:47]
-    os.system(f'wget --limit-rate=1m -O {filename} {image_info}')
+    os.system(f'wget --limit-rate=2m -O {filename} {image_info}')
     return filename
 
 

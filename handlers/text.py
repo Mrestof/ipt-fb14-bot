@@ -3,7 +3,7 @@ import random
 from telegram import Update
 from telegram.ext import CallbackContext
 
-from utils.text import ilya_ilya, ilya_razum
+# from utils.text import ilya_ilya, ilya_razum
 
 
 def text_messages(update: Update, context: CallbackContext) -> None:
@@ -22,13 +22,15 @@ def text_messages(update: Update, context: CallbackContext) -> None:
     wordlist_razum = ['разумный', 'разумного', 'разумным', 'разумному', 'разумная']
     wordlist_kringe = ['кринж', 'криндж', 'кринге']
     send = False
-    if 'выполнить приказ 66' in tg_message.lower():
+    if 'выполнить приказ 66' in tg_message.lower() and tg_user.id == 483029014:
         # context.bot.kickChatMember(chat_id=update.effective_chat.id, user_id='483029014')
         context.bot.leaveChat(chat_id=update.effective_chat.id)
         return None
+    '''
     if '@hhanchenn' in tg_message.lower():
         context.bot.send_message(chat_id=update.effective_chat.id, text='хахачлен', reply_to_message_id=tg_message_id)
         return None
+    '''
     # TODO: add regular expression
     if tg_message.lower() == 'оск' or ' оск ' in tg_message.lower():
         osk_list = ['орбление', 'Оски (Osci, Opsci, Όσκοι, Όπικοί) — считавшие себя италийскими автохтонами, '
@@ -44,6 +46,7 @@ def text_messages(update: Update, context: CallbackContext) -> None:
         context.bot.send_message(chat_id=update.effective_chat.id, text=random.choice(kringe_list),
                                  reply_to_message_id=tg_message_id)
         return None
+    '''
     if any(c in tg_message.lower() for c in wordlist_ilya):
         tg_message = ilya_ilya(wordlist_ilya, tg_message)
         send = True
@@ -56,3 +59,4 @@ def text_messages(update: Update, context: CallbackContext) -> None:
         reply = random.choice(reply_list) + '\n' + 'Правильно будет: ' + tg_message
         # работает без str, но предупреждение из-за какой-то хуйни в либе
         context.bot.send_message(chat_id=update.effective_chat.id, text=reply, reply_to_message_id=tg_message_id)
+    '''

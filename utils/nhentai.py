@@ -6,7 +6,9 @@ import os
 # function generates a random 6-digit number
 def Generate_Code():
     code = ''
-    for i in range(6):
+    code += str(random.randint(0, 3))
+    code += str(random.randint(0, 8))
+    for i in range(4):
         code += str(random.randint(0, 9))
     return code
 
