@@ -3,7 +3,7 @@ from telegram.ext import Updater
 from telegram.ext import MessageHandler, Filters, CommandHandler
 
 from handlers.text import text_messages
-from handlers.commands import hentai, pasha_nick, auf, anekdot, ero, ecchi, photo
+from handlers.commands import hentai, pasha_nick, auf, anekdot, ero, ecchi, photo, minecraft
 # important_data_read, important_data_write
 
 
@@ -21,7 +21,8 @@ def set_commands(token: str) -> None:
                 BotCommand('ero', 'Кожаные мешки с мясом'),
                 BotCommand('anekdot', 'Помереть со смеху'),
                 BotCommand('auf', 'АУФ'),
-                BotCommand('photo', 'Вах какая красота')
+                BotCommand('photo', 'Вах какая красота'),
+                BotCommand('minecraft', 'Ваня хватит фермы строить')
                 ]
     bot = Bot(token)
     bot.set_my_commands(commands)
@@ -55,6 +56,9 @@ def get_updater(token: str) -> Updater:
 
     anekdot_handler = CommandHandler('anekdot', anekdot)
     dispatcher.add_handler(anekdot_handler)
+
+    minecraft_handler = CommandHandler('minecraft', minecraft)
+    dispatcher.add_handler(minecraft_handler)
 
     return updater
 
