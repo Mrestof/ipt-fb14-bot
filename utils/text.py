@@ -2,7 +2,7 @@ import csv
 
 
 # Function to remove 'ь' from "Илья"
-def ilya_ilya(wordlist, tg_message):
+def ilya_modifier(wordlist, tg_message):
     while any(w in tg_message.lower() for w in wordlist):
         for word in wordlist:
             pos = tg_message.lower().find(word)
@@ -14,7 +14,7 @@ def ilya_ilya(wordlist, tg_message):
 
 
 # Function to remove "ний" from "Разумний"
-def ilya_razum(wordlist, tg_message):
+def razum_modifier(wordlist, tg_message):
     while any(w in tg_message.lower() for w in wordlist):
         for word in wordlist:
             pos = tg_message.lower().find(word)
