@@ -1,0 +1,5 @@
+beautifulsoup4==4.10.0
+python-telegram-bot==13.10
+pillow==9.0.0
+requests==2.27.1
+mcstatus==8.0.0
