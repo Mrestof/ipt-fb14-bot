@@ -1,3 +1,4 @@
+# TODO: explain magic numbers or refactor the blocks of code with them or refactor the whole module
 import random
 import requests
 import os
@@ -29,6 +30,7 @@ def crawl(images_type):
     return url
 
 
+# TODO: refactor in more convenient and stable way
 def url_check(url):
     r = requests.get(url)
     if r.status_code == 404:

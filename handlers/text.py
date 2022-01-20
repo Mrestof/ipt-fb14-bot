@@ -1,13 +1,17 @@
+# TODO: add switches for text functions
+# TODO: fix var naming (for commented blocks of code)
 import random
 import re
 
 from telegram import Update
 from telegram.ext import CallbackContext
 
-
 # from utils.text import ilya_ilya, ilya_razum
 
 
+# TODO: research the ways of splitting the big handler into smaller pieces
+# TODO: try to merge some conditions into more compact blocks of code
+# TODO: put constants to the separate file/var
 def text_messages(update: Update, context: CallbackContext) -> None:
     if update.message is None:
         # TODO: fix handling of edited_messages
@@ -20,7 +24,6 @@ def text_messages(update: Update, context: CallbackContext) -> None:
     tg_message_id = update.message.message_id
     tg_user = update.message.from_user
 
-    tg_message_osk = ' '+tg_message+' '
     wordlist_ilya = ['илья', 'ильи', 'илье', 'илью', 'ильей', 'ильёй']
     wordlist_razum = ['разумный', 'разумного', 'разумным', 'разумному', 'разумная']
     wordlist_kringe = ['кринж', 'криндж', 'кринге']
@@ -32,7 +35,7 @@ def text_messages(update: Update, context: CallbackContext) -> None:
                                                                  f'сморозил херню', 'ИСПАНСКИЙ СТЫД']
     reply_list = [f'{tg_user.first_name} бредит', 'Блядь, опять херню пишешь', 'Ты в школе вообще учился?',
                   'Это знать надо! Если ты учился на ФизТехе. Это классика, блядь!']
-    send = False
+
     if 'выполнить приказ 66' in tg_message.lower() and tg_user.id == 483029014:
         context.bot.leaveChat(chat_id=update.effective_chat.id)
         return None
@@ -41,6 +44,9 @@ def text_messages(update: Update, context: CallbackContext) -> None:
         context.bot.send_message(chat_id=update.effective_chat.id, text='хахачлен', reply_to_message_id=tg_message_id)
         return None
     '''
+
+    # TODO: little refactor for regex
+    tg_message_osk = ' '+tg_message+' '
     if re.search('[?:,. ]оск[?:,. ]', tg_message_osk.lower()) is not None:
         context.bot.send_message(chat_id=update.effective_chat.id, text=random.choice(osk_list),
                                  reply_to_message_id=tg_message_id)
@@ -50,6 +56,7 @@ def text_messages(update: Update, context: CallbackContext) -> None:
                                  reply_to_message_id=tg_message_id)
         return None
     '''
+    send = False
     if any(c in tg_message.lower() for c in wordlist_ilya):
         tg_message = ilya_ilya(wordlist_ilya, tg_message)
         send = True

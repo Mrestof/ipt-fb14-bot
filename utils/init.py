@@ -16,6 +16,7 @@ def get_token() -> str:
 
 # Function to set commands description
 def set_commands(token: str) -> None:
+    # TODO: take the names and descriptions of the commands from codebase
     commands = [BotCommand('hentai', 'Отойти на 5 минут'),
                 BotCommand('ecchi', 'Safe for родители'),
                 BotCommand('ero', 'Кожаные мешки с мясом'),
@@ -30,6 +31,7 @@ def set_commands(token: str) -> None:
 
 # Function to declare all commands handlers for bot (Telegram API)
 def get_updater(token: str) -> Updater:
+    # TODO: make the following code more compact (with the help of for cycle)
     updater = Updater(token=token, use_context=True)
     dispatcher = updater.dispatcher
 

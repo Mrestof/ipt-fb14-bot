@@ -43,6 +43,7 @@ def resize_image(path, max_size):
             print(e)
 
 
+# Template for local testing
 def main():
     ...
 
