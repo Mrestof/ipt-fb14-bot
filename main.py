@@ -8,6 +8,9 @@ def main():
     updater = get_updater(token)  # Bot Updater (Function for initiation)
     updater.start_polling()  # Bot Start Function
 
+    # TODO: Make via logger
+    print('Start the bot. Logs go here.')
+
 
 def debug():
     from utils.text import important_data_write
