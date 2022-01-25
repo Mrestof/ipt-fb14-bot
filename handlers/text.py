@@ -7,8 +7,8 @@ from telegram import Update
 from telegram.ext import CallbackContext
 
 from utils.text import ilya_modifier, razum_modifier
-from tempcfg import order66_state, hhanchenn_state, osk_state, kringe_state, zemlyanoi_state, ilya_state, razum_state,\
-    pasha400_state, deadinside_state
+from tempcfg import order66_state, hhanchenn_state, osk_state, kringe_state, zemlyanoi_state, ilya_state, razum_state, \
+    pasha400_state, deadinside_state, khashcha_state
 
 
 # TODO: research the ways of splitting the big handler into smaller pieces
@@ -43,6 +43,8 @@ def text_messages(update: Update, context: CallbackContext) -> None:
     wordlist_earth = ['земляной', 'земляного', 'земляному', 'земляным', 'земляном']
     earth_list = ['Нет, блин, лунный', 'Нет, блин, водный', 'Хто Я?', 'Вийди отсюда розбійник!',
                   f'{tg_user.first_name} ошибся, он Зеленский']
+    wordlist_khashcha = ['хаща', 'хащи', 'хаще', 'хащу']
+    khashcha_list = ['Ліс', 'Бір', 'Діброва', 'Тундра', 'Тайга', 'Пуща']
 
     if pasha400_state and len(tg_message) > 400 and tg_user.id == 483029014:
         context.bot.send_message(chat_id=update.effective_chat.id,
@@ -58,7 +60,7 @@ def text_messages(update: Update, context: CallbackContext) -> None:
                                  reply_to_message_id=tg_message_id)
         return None
 
-    if osk_state and re.search('[?:,. ]оск[?:,. ]', ' '+tg_message.lower()+' ') is not None:
+    if osk_state and re.search('[?:,. ]оск[?:,. ]', ' ' + tg_message.lower() + ' ') is not None:
         # TODO: little refactor for regex
         context.bot.send_message(chat_id=update.effective_chat.id,
                                  text=random.choice(osk_list),
@@ -86,6 +88,11 @@ def text_messages(update: Update, context: CallbackContext) -> None:
             context.bot.send_audio(chat_id=update.effective_chat.id,
                                    audio=open('data/Fem.Love-Zakat.mp3', 'rb'),
                                    reply_to_message_id=tg_message_id)
+    if khashcha_state and any(c in tg_message.lower() for c in wordlist_khashcha):
+        context.bot.send_message(chat_id=update.effective_chat.id,
+                                 text=random.choice(khashcha_list),
+                                 reply_to_message_id=tg_message_id)
+        return None
     send = False
     if ilya_state and any(c in tg_message.lower() for c in wordlist_ilya):
         tg_message = ilya_modifier(wordlist_ilya, tg_message)
