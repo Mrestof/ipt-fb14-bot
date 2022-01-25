@@ -57,7 +57,7 @@ def photo(update: Update, context: CallbackContext) -> None:
 def auf(update: Update, context: CallbackContext) -> None:
     with open("data/pacanskie-citaty-pro-zhizn") as f:
         lines = f.readlines()
-    context.bot.send_message(chat_id=update.effective_chat.id, text=lines[random.randint(0, 151)])
+    context.bot.send_message(chat_id=update.effective_chat.id, text=lines[random.randint(0, 252)])
     # context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=update.message.message_id)
 
 
