@@ -13,8 +13,7 @@ def main():
 
 
 def debug():
-    from utils.text import important_data_write
-    important_data_write('super cool data \n uberrr')
+    ...
 
 
 if __name__ == '__main__':

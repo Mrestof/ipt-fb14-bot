@@ -3,3 +3,5 @@ python-telegram-bot==13.10
 pillow==9.0.0
 requests==2.27.1
 mcstatus==8.0.0
+nhentai-api==0.0.19
+bs4~=0.0.1

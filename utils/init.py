@@ -63,12 +63,3 @@ def get_updater(token: str) -> Updater:
     dispatcher.add_handler(minecraft_handler)
 
     return updater
-
-
-# Other variants for saving messages function (TODO: UnScooby-do this crap)
-'''
-    important_data_write_handler = CommandHandler('save', important_data_write)
-    dispatcher.add_handler(important_data_write_handler)
-
-    important_data_read_handler = CommandHandler('read', important_data_read)
-    dispatcher.add_handler(important_data_read_handler)'''
