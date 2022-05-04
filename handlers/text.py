@@ -4,7 +4,6 @@ from telegram import Update
 from telegram.ext import CallbackContext
 
 from utils.text import ilya_modifier, razum_modifier
-from utils.logging import chat_logging_text
 from config import *
 
 
@@ -12,8 +11,6 @@ with open('data/fullgroups.txt', 'r') as f:
     fullgroups = [int(i.strip()) for i in f.readlines()]
 with open('data/limitgroups.txt', 'r') as f:
     limitgroups = [int(i.strip()) for i in f.readlines()]
-with open('data/loggedgroups.txt', 'r') as f:
-    loggedgroups = [int(i.strip()) for i in f.readlines()]
 with open('data/makuha_kick_list.txt', 'r') as f:
     makuha_kick_id = [int(i.strip()) for i in f.readlines()]
 
@@ -30,14 +27,12 @@ def text_messages(update: Update, context: CallbackContext) -> None:
         context.bot.send_message(chat_id=update.effective_chat.id,
                                  text='Chat functions only for groups')
         return None
-    '''
     elif update.message.chat.id not in fullgroups and update.message.chat.id not in limitgroups:
+        '''
         context.bot.send_message(chat_id=update.effective_chat.id,
                                  text='Not working')
+        '''
         return None
-    '''
-    if update.message.chat.id in loggedgroups:
-        chat_logging_text(update)
 
     tg_message = update.message.text
     tg_message_id = update.message.message_id
