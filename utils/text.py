@@ -9,6 +9,16 @@ def ilya_modifier(wordlist, tg_message):
     return tg_message
 
 
+'''
+def ilya_modifier(wordlist, tg_message):
+    for word in split(r'\W', tg_message):
+        if word.lower() in wordlist:
+            new_word = word.replace('ь', '').replace('Ь', '')
+            tg_message = tg_message.replace(word, new_word)
+    return tg_message
+'''
+
+
 # Function to remove "ний" from "Разумний"
 def razum_modifier(wordlist, tg_message):
     while any(w in tg_message.lower() for w in wordlist):

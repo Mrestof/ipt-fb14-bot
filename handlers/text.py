@@ -77,8 +77,7 @@ def text_messages(update: Update, context: CallbackContext) -> None:
                                  reply_to_message_id=tg_message_id)
         return None
 
-    if (osk_state or tg_group_id in fullgroups) and re.search('[?:,. ]оск[?:,. ]', ' ' + tg_message.lower() + ' ') is not None:
-        # TODO: little refactor for regex
+    if (osk_state or tg_group_id in fullgroups) and re.search(r'\Wоск\W', ' ' + tg_message.lower() + ' ') is not None:
         context.bot.send_message(chat_id=update.effective_chat.id,
                                  text=random.choice(osk_list),
                                  reply_to_message_id=tg_message_id)

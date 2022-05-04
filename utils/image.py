@@ -32,7 +32,7 @@ def crawl(images_type):
     return url
 
 
-# TODO: refactor in more convenient and stable way
+# TODO: somehow save the useful info on fail of this function
 def url_check(url):
     r = requests.get(url)
     if r.status_code == 404:
