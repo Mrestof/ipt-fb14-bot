@@ -3,9 +3,7 @@ import random
 from telegram import Update
 from telegram.ext import CallbackContext
 
-from utils.nhentai import download_hentai, remove_hentai
-from utils.wallhaven import download_wallhaven, remove_wallhaven
-from utils.resize_image import resize_image
+from utils.image import download_wallhaven, remove_wallhaven, resize_image,download_hentai, remove_hentai
 from utils.minecraft import server_stats
 from utils.markov_chains import markov_sentence
 
@@ -64,12 +62,6 @@ def auf_markov(update: Update, context: CallbackContext) -> None:
                              text=markov_sentence('data/pacan.txt'))
 
 
-def anekdot(update: Update, context: CallbackContext) -> None:
-    with open('data/anekdots.txt') as f:
-        a = ''.join([f.readline() for _ in range(5056)]).split('###')
-    context.bot.send_message(chat_id=update.effective_chat.id, text=random.choice(a))
-
-
 def minecraft(update: Update, context: CallbackContext) -> None:
     #if update.message.chat.type != 'private':
     context.bot.send_message(chat_id=update.effective_chat.id, text=server_stats())
@@ -124,9 +116,6 @@ def oleg_markov(update: Update, context: CallbackContext) -> None:
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=markov_sentence('data/users_messages/oleg_sergayev.txt')+' (c) Олег')
 
-# TODO: think of a best way to deal with data files         ??? otkyda (mb anekdot)
-# TODO: refactor function to be more compact and extensible ??? otkyda (mb anekdot)
-
 
 def deadinside(update: Update, context: CallbackContext) -> None:
     item_number = random.randint(-1, 61)
@@ -136,3 +125,5 @@ def deadinside(update: Update, context: CallbackContext) -> None:
         context.bot.send_audio(chat_id=update.effective_chat.id, audio=open('data/deadinside/Fem.Love-Zakat.mp3', 'rb'))
     else:
         context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(f'data/deadinside/{item_number}.jpg', 'rb'))
+# TODO: think of a best way to deal with data files
+# TODO: refactor function to be more compact and extensible

@@ -3,10 +3,9 @@ def ilya_modifier(wordlist, tg_message):
     while any(w in tg_message.lower() for w in wordlist):
         for word in wordlist:
             pos = tg_message.lower().find(word)
-            # TODO: sort out how this work
-            if pos != -1:
+            if pos != -1:  # check if `word` found
                 realword = tg_message[pos:pos + len(word)]
-                tg_message = tg_message.replace(realword, realword.replace('ь', '').replace('Ь', ''))
+                tg_message = tg_message.replace(realword, realword.replace('ь', '').replace('Ь', ''), -1)
     return tg_message
 
 
@@ -15,7 +14,6 @@ def razum_modifier(wordlist, tg_message):
     while any(w in tg_message.lower() for w in wordlist):
         for word in wordlist:
             pos = tg_message.lower().find(word)
-            # TODO: sort out how this work
             if pos != -1:
                 realword = tg_message[pos:pos + len(word)]
                 pos2 = realword.lower().find("н")

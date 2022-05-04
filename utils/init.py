@@ -3,10 +3,10 @@ from telegram.ext import Updater
 from telegram.ext import MessageHandler, Filters, CommandHandler
 
 from handlers.text import text_messages
-from handlers.commands import hentai, pasha_nick, auf, anekdot, ero, ecchi, photo, minecraft, deadinside, auf_markov,\
+from handlers.commands import hentai, pasha_nick, auf, ero, ecchi, photo, minecraft, deadinside, auf_markov,\
     pavelko_markov, razum_markov, khashcha_markov, bolgov_markov, semen_markov, frolov_markov, makuha_markov, \
     david_markov, edward_markov, oleg_markov
-from handlers.photo import photo_messages
+from handlers.image import photo_messages
 from handlers.video import video_messages
 from handlers.audio import audio_messages
 
@@ -24,10 +24,9 @@ def set_commands(token: str) -> None:
     commands = [BotCommand('hentai', 'Отойти на 5 минут'),
                 BotCommand('ecchi', 'Safe for родители'),
                 BotCommand('ero', 'Кожаные мешки с мясом'),
-                BotCommand('anekdot', 'Помереть со смеху'),
                 BotCommand('auf', 'АУФ'),
                 BotCommand('photo', 'Вах какая красота'),
-                BotCommand('1000minus7', 'Я умер, прости'),
+                BotCommand('deadinside', 'Я умер, прости'),
                 BotCommand('minecraft', 'Ваня хватит фермы строить'),
                 BotCommand('pavelko_markov', 'Запасной Артем Павелко'),
                 BotCommand('razum_markov', 'Запасной Иля Разум'),
@@ -83,13 +82,10 @@ def get_updater(token: str) -> Updater:
     auf_markov_handler = CommandHandler('auf_markov', auf_markov)
     dispatcher.add_handler(auf_markov_handler)
 
-    anekdot_handler = CommandHandler('anekdot', anekdot)
-    dispatcher.add_handler(anekdot_handler)
-
     minecraft_handler = CommandHandler('minecraft', minecraft)
     dispatcher.add_handler(minecraft_handler)
 
-    deadinside_handler = CommandHandler('1000minus7', deadinside)
+    deadinside_handler = CommandHandler('deadinside', deadinside)
     dispatcher.add_handler(deadinside_handler)
 
     pavelko_markov_handler = CommandHandler('pavelko_markov', pavelko_markov)

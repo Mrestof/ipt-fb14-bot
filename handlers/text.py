@@ -1,5 +1,6 @@
 import random
 import re
+
 from telegram import Update
 from telegram.ext import CallbackContext
 
@@ -20,8 +21,8 @@ with open('data/makuha_kick_list.txt', 'r') as f:
 
 
 def text_messages(update: Update, context: CallbackContext) -> None:
-    if update.message is None:
-        # TODO: fix handling of edited_messages
+
+    if update.edited_message is not None:
         return None
     elif update.message.chat.type == 'private':
         context.bot.send_message(chat_id=update.effective_chat.id,
@@ -66,7 +67,7 @@ def text_messages(update: Update, context: CallbackContext) -> None:
         return None
 
     if (order69_state or tg_group_id in fullgroups) and 'виконати наказ 69' in tg_message.lower() and tg_user.id in makuha_kick_id:
-        context.bot.kickChatMember(chat_id=update.effective_chat.id,
+        context.bot.ban_chat_member(chat_id=update.effective_chat.id,
                                    user_id=658890395)
         return None
 
