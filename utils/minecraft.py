@@ -21,5 +21,5 @@ def server_stats() -> str:
     response += f'Пинг: {latency} мс\n'
     # query = server.query()
     # response += (f'Играют в кубики : {", ".join(query.players.names)}') # нужна двойная кавычка
-    response += 'Тут должен быть список игроков, но у них запросы к серваку отключены :('
+    # response += 'Тут должен быть список игроков, но у них запросы к серваку отключены :('
     return response
