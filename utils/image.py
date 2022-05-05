@@ -9,7 +9,7 @@ from NHentai import NHentai
 
 
 def crawl(images_type):
-    url = ''  # нужно ли это?
+    url = ''
     if images_type == 'photo':
         url = 'https://wallhaven.cc/search?categories=100&purity=100&ratios=16x9&topRange=1y&sorting=toplist&order' \
               f'=desc&page={random.randint(1, 50)} '
@@ -51,7 +51,6 @@ def download_wallhaven(image_type):
 
 def remove_wallhaven(path):
     os.remove(path)
-
 
 
 def resize_image(path, max_size):

@@ -7,7 +7,6 @@ from telegram.ext import CallbackContext
 from utils.text import ilya_modifier, razum_modifier
 from config import *
 
-
 with open('data/fullgroups.txt', 'r') as f:
     fullgroups = [int(i.strip()) for i in f.readlines()]
 with open('data/limitgroups.txt', 'r') as f:
@@ -15,13 +14,13 @@ with open('data/limitgroups.txt', 'r') as f:
 with open('data/makuha_kick_list.txt', 'r') as f:
     makuha_kick_id = [int(i.strip()) for i in f.readlines()]
 
+
 # TODO: research the ways of splitting the big handler into smaller pieces
 # TODO: try to merge some conditions into more compact blocks of code
 # TODO: put constants to the separate file/var
 
 
 def text_messages(update: Update, context: CallbackContext) -> None:
-
     if update.edited_message is not None:
         return None
     elif update.message.chat.type == 'private':
@@ -44,31 +43,28 @@ def text_messages(update: Update, context: CallbackContext) -> None:
     wordlist_razum = ['разумный', 'разумного', 'разумным', 'разумному', 'разумная']
     reply_list = [f'{tg_user.first_name} бредит', 'Блядь, опять херню пишешь', 'Ты в школе вообще учился?',
                   'Это знать надо! Если ты учился на ФизТехе. Это классика, блядь!']
-    wordlist_kringe = ['кринж', 'криндж', 'кринге']
+    wordlist_kringe = ['кринж', 'криндж', 'кринге', 'крінж', 'кріндж', 'крінге']
     osk_list = ['орбление', 'Оски (Osci, Opsci, Όσκοι, Όπικοί) — считавшие себя италийскими автохтонами, '
                             'составляли ветвь умбрийского племени и занимали, в доисторическую эпоху, '
-                            'Среднюю Италию, часть Лация и Кампанию.', 'Может сразу голосовые кидать, если писать '
-                                                                       'сложно?']
-    kringe_list = ['КРИИИИИИИИНЖ', 'Кринжовый кринж, кринжанул', f'{tg_user.first_name} опять кринжанул и '
-                                                                 f'сморозил херню', 'ИСПАНСКИЙ СТЫД']
-    wordlist_earth = ['земляной', 'земляного', 'земляному', 'земляным', 'земляном']
-    earth_list = ['Нет, блин, лунный', 'Нет, блин, водный', 'Хто Я?', 'Вийди отсюда розбійник!',
-                  f'Зеленский']
-    wordlist_khashcha = ['хаща', 'хащи', 'хаще', 'хащу']
-    khashcha_list = ['Ліс', 'Бір', 'Діброва', 'Тундра', 'Тайга', 'Пуща']
+                            'Среднюю Италию, часть Лация и Кампанию.', 'Може одразу голосові відправляти, якщо писать '
+                                                                       'складно?', 'образа']
+    kringe_list = ['КРІІІІІІІІІІНЖ', 'Крінжовый крінж, крінжанув', f'{tg_user.first_name} знову крінжанув та й '
+                                                                   f'ляпнув нісенітницю', 'ІСПАНСЬКИЙ СОРОМ']
+    wordlist_khashcha = ['хаща', 'хащи', 'хаще', 'хащу', 'хащі', 'хащою', 'хащо']
+    khashcha_list = ['Ліс', 'Бір', 'Діброва', 'Тундра', 'Тайга', 'Пуща', 'Дубина', 'Нетрища', 'Гуща']
 
     if (pasha400_state or tg_group_id in fullgroups) and len(tg_message) > 300 and tg_user.id == 483029014:
         context.bot.send_message(chat_id=update.effective_chat.id,
-                                 text='Он опять какую-то херню на пол экрана написал',
+                                 text='Він знову якусь фігню на пів екрану написав',
                                  reply_to_message_id=tg_message_id)
         return None
-    if (order66_state or tg_group_id in fullgroups) and 'выполнить приказ 66' in tg_message.lower() and tg_user.id == 483029014:
+    if (order66_state or tg_group_id in fullgroups) and 'виконати наказ 66' in tg_message.lower() and tg_user.id == 483029014:
         context.bot.leaveChat(chat_id=update.effective_chat.id)
         return None
 
     if (order69_state or tg_group_id in fullgroups) and 'виконати наказ 69' in tg_message.lower() and tg_user.id in makuha_kick_id:
         context.bot.ban_chat_member(chat_id=update.effective_chat.id,
-                                   user_id=658890395)
+                                    user_id=658890395)
         return None
 
     if (hhanchenn_state or tg_group_id in fullgroups) and '@hhanchenn' in tg_message.lower():
@@ -89,12 +85,6 @@ def text_messages(update: Update, context: CallbackContext) -> None:
                                  reply_to_message_id=tg_message_id)
         return None
 
-    if (zemlyanoi_state or tg_group_id in fullgroups) and any(c in tg_message.lower() for c in wordlist_earth):
-        context.bot.send_message(chat_id=update.effective_chat.id,
-                                 text=random.choice(earth_list),
-                                 reply_to_message_id=tg_message_id)
-        return None
-
     if (khashcha_state or tg_group_id in fullgroups) and any(c in tg_message.lower() for c in wordlist_khashcha):
         context.bot.send_message(chat_id=update.effective_chat.id,
                                  text=random.choice(khashcha_list),
@@ -109,7 +99,7 @@ def text_messages(update: Update, context: CallbackContext) -> None:
         tg_message = razum_modifier(wordlist_razum, tg_message)
         send = True
     if send:
-        reply = random.choice(reply_list) + '\n' + 'Правильно будет: ' + tg_message
+        reply = random.choice(reply_list) + '\n' + 'Правильно буде: ' + tg_message
         context.bot.send_message(chat_id=update.effective_chat.id,
                                  text=reply,
                                  reply_to_message_id=tg_message_id)

@@ -12,14 +12,14 @@ def server_stats() -> str:
     players = status.players.online
     # max amount of players on the server is 20, so we can simplify the following block
     if players == 1:
-        response += f'На КПИ Крафте {status.players.online} Стив\n'
+        response += f'На КПІ Крафті {status.players.online} Стив\n'
     elif players == 2 or players == 3 or players == 4:
-        response += f'На КПИ Крафте {status.players.online} Стива\n'
+        response += f'На КПІ Крафті {status.players.online} Стива\n'
     else:
-        response += f'На КПИ Крафте {status.players.online} Стивов\n'
+        response += f'На КПІ Крафті {status.players.online} Стивів\n'
     latency = round(server.ping())
     response += f'Пинг: {latency} мс\n'
     # query = server.query()
-    # response += (f'Играют в кубики : {", ".join(query.players.names)}') # нужна двойная кавычка
-    # response += 'Тут должен быть список игроков, но у них запросы к серваку отключены :('
+    # response += (f'Грають у кубиики : {", ".join(query.players.names)}')
+    # response += 'Тут має бути список гравців, але в них запити до серверу вимкнені :('
     return response
