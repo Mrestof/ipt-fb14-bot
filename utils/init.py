@@ -21,23 +21,23 @@ def get_token() -> str:
 # Function to set commands description
 def set_commands(token: str) -> None:
     # TODO: take the names and descriptions of the commands from codebase
-    commands = [BotCommand('hentai', 'Отойти на 5 минут'),
-                BotCommand('ecchi', 'Safe for родители'),
-                BotCommand('ero', 'Кожаные мешки с мясом'),
+    commands = [BotCommand('hentai', 'Відійти на 5 хвилин'),
+                BotCommand('ecchi', 'Safe for батьки'),
+                BotCommand('ero', 'Шкіряні мішки з м`ясом'),
                 BotCommand('auf', 'АУФ'),
-                BotCommand('photo', 'Вах какая красота'),
+                BotCommand('photo', 'Вах яка краса'),
                 BotCommand('deadinside', 'Я умер, прости'),
-                BotCommand('minecraft', 'Ваня хватит фермы строить'),
-                BotCommand('pavelko_markov', 'Запасной Артем Павелко'),
-                BotCommand('razum_markov', 'Запасной Иля Разум'),
-                BotCommand('khashcha_markov', 'Запасная Тайга'),
-                BotCommand('semen_markov', 'Запасная Вежливость'),
-                BotCommand('bolgov_markov', 'Запасной Коля'),
-                BotCommand('frolov_markov', 'Запасной Паша'),
-                BotCommand('makuha_markov', 'Запасной Негр'),
-                BotCommand('david_markov', 'Запасной Давид'),
-                BotCommand('edward_markov', 'Запасной Хром'),
-                BotCommand('oleg_markov', 'Запасной Олег')
+                BotCommand('minecraft', 'Ваня досить ферми будувати'),
+                BotCommand('pavelko_markov', 'Запасний Артем Павелко'),
+                BotCommand('razum_markov', 'Запасний Іля Разум'),
+                BotCommand('khashcha_markov', 'Запасний Бір'),
+                BotCommand('semen_markov', 'Запасна ввічливість.'),
+                BotCommand('bolgov_markov', 'Запасний Коля'),
+                BotCommand('frolov_markov', 'Запасний Паша'),
+                BotCommand('makuha_markov', 'Запасний Негр'),
+                BotCommand('david_markov', 'Запасний Давід'),
+                BotCommand('edward_markov', 'Запасний Хром'),
+                BotCommand('oleg_markov', 'Запасний Олег')
                 ]
     bot = Bot(token)
     bot.set_my_commands(commands)
