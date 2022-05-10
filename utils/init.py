@@ -10,6 +10,7 @@ from handlers.image import photo_messages
 from handlers.video import video_messages
 from handlers.audio import audio_messages
 from handlers.animation import animation_messages
+from handlers.jobs import alive_minute_job
 
 
 # Function to get token from file
@@ -49,6 +50,9 @@ def get_updater(token: str) -> Updater:
     # TODO: make the following code more compact (with the help of for cycle)
     updater = Updater(token=token, use_context=True)
     dispatcher = updater.dispatcher
+
+    alive_minute_handler = CommandHandler('test', alive_minute_job)
+    updater.dispatcher.add_handler(alive_minute_handler)
 
     text_handler = MessageHandler(Filters.text & (~Filters.command), text_messages)
     dispatcher.add_handler(text_handler)

@@ -7,8 +7,8 @@ def main():
     set_commands(token)  # Setting commands description
     updater = get_updater(token)  # Bot Updater (Function for initiation)
     updater.start_polling()  # Bot Start Function
-
     print('Start the bot. Logs go here.')
+    updater.idle()
 
 
 def debug():
