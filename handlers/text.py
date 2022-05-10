@@ -114,5 +114,6 @@ def text_messages(update: Update, context: CallbackContext) -> None:
     if update.message.forward_from_chat is not None:
         if (kiva_state or tg_group_id in fullgroups) and update.message.forward_from_chat.id == -1001235238484:
             context.bot.send_message(chat_id=update.effective_chat.id,
-                                     text=random.choice(kiva_reply))
+                                     text=random.choice(kiva_reply),
+                                     reply_to_message_id=tg_message_id)
             return None
