@@ -13,7 +13,10 @@ def video_messages(update: Update, context: CallbackContext) -> None:
         context.bot.send_message(chat_id=update.effective_chat.id,
                                  text='Chat functions only for groups')
     if update.message.from_user.id == 658890395:
-        context.bot.send_animation(chat_id=update.effective_chat.id, animation=choice(animations))
+        context.bot.send_animation(chat_id=update.effective_chat.id,
+                                   animation=choice(animations))
     if update.message.forward_from_chat is not None:
         if update.message.forward_from_chat.id == -1001235238484:
-            context.bot.send_message(chat_id=update.effective_chat.id, text=choice(kiva_reply))
+            context.bot.send_message(chat_id=update.effective_chat.id,
+                                     text=choice(kiva_reply),
+                                     reply_to_message_id=update.message.message_id)
