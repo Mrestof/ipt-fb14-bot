@@ -52,10 +52,17 @@ def text_messages(update: Update, context: CallbackContext) -> None:
                                                                    f'ляпнув нісенітницю', 'ІСПАНСЬКИЙ СОРОМ']
     wordlist_khashcha = ['хаща', 'хащи', 'хаще', 'хащу', 'хащі', 'хащою', 'хащо']
     khashcha_list = ['Ліс', 'Бір', 'Діброва', 'Тундра', 'Тайга', 'Пуща', 'Дубина', 'Нетрища', 'Гуща']
+    kiva_reply = ['Москаляку на гілляку', 'Бан нахуй', 'Вийди з чату', 'Кива пидор ипанный (c) Макуха']
 
     if (pasha400_state or tg_group_id in fullgroups) and len(tg_message) > 300 and tg_user.id == 483029014:
         context.bot.send_message(chat_id=update.effective_chat.id,
                                  text='Він знову якусь фігню на пів екрану написав',
+                                 reply_to_message_id=tg_message_id)
+        return None
+
+    if (tihenko_state or tg_group_id in fullgroups) and tg_message.isupper() and len(tg_message) >= 8:
+        context.bot.send_message(chat_id=update.effective_chat.id,
+                                 text='Тихенько, дитино',
                                  reply_to_message_id=tg_message_id)
         return None
     if (order66_state or tg_group_id in fullgroups) and 'виконати наказ 66' in tg_message.lower() and tg_user.id == 483029014:
@@ -104,9 +111,8 @@ def text_messages(update: Update, context: CallbackContext) -> None:
                                  text=reply,
                                  reply_to_message_id=tg_message_id)
         return None
-
-    if (tihenko_state or tg_group_id in fullgroups) and tg_message.isupper() and len(tg_message) >= 8:
-        context.bot.send_message(chat_id=update.effective_chat.id,
-                                 text='Тихенько, дитино',
-                                 reply_to_message_id=tg_message_id)
-        return None
+    if update.message.forward_from_chat is not None:
+        if (kiva_state or tg_group_id in fullgroups) and update.message.forward_from_chat.id == -1001235238484:
+            context.bot.send_message(chat_id=update.effective_chat.id,
+                                     text=random.choice(kiva_reply))
+            return None

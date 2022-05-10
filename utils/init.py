@@ -9,6 +9,7 @@ from handlers.commands import hentai, pasha_nick, auf, ero, ecchi, photo, minecr
 from handlers.image import photo_messages
 from handlers.video import video_messages
 from handlers.audio import audio_messages
+from handlers.animation import animation_messages
 
 
 # Function to get token from file
@@ -58,8 +59,11 @@ def get_updater(token: str) -> Updater:
     video_handler = MessageHandler(Filters.video & (~Filters.command), video_messages)
     dispatcher.add_handler(video_handler)
 
-    audio_handler = MessageHandler(Filters.audio, audio_messages)
+    audio_handler = MessageHandler(Filters.audio & (~Filters.command), audio_messages)
     dispatcher.add_handler(audio_handler)
+
+    animation_handler = MessageHandler(Filters.animation & (~Filters.command), animation_messages)
+    dispatcher.add_handler(animation_handler)
 
     pasha_nick_handler = CommandHandler('I3700ch3g0', pasha_nick)
     dispatcher.add_handler(pasha_nick_handler)

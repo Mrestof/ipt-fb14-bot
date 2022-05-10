@@ -1,11 +1,11 @@
 pasha400_state = True
+tihenko_state = True
 order66_state = True
 order69_state = True
 hhanchenn_state = False
 osk_state = True
 kringe_state = True
-zemlyanoi_state = False
+khashcha_state = True
 ilya_state = False
 razum_state = False
-khashcha_state = True
-tihenko_state = True
+kiva_state = True
