@@ -61,8 +61,6 @@ def photo(update: Update, context: CallbackContext) -> None:
 def auf(update: Update, context: CallbackContext) -> None:
     with open('data/pacan.txt') as f:
         lines = f.readlines()
-    with open('data/pacan.txt') as f:
-        lines += f.readlines()
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=random.choice(lines))
 
