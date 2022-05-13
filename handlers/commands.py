@@ -77,52 +77,52 @@ def minecraft(update: Update, context: CallbackContext) -> None:
 
 def pavelko_markov(update: Update, context: CallbackContext) -> None:
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text=markov_sentence('data/users_messages/artem_pavelko.txt') + ' (c) Павелко')
+                             text=markov_sentence('data/users_messages/890603480') + ' (c) Павелко')
 
 
 def razum_markov(update: Update, context: CallbackContext) -> None:
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text=markov_sentence('data/users_messages/ilya_razum.txt') + ' (c) Иля')
+                             text=markov_sentence('data/users_messages/588535976') + ' (c) Иля')
 
 
 def khashcha_markov(update: Update, context: CallbackContext) -> None:
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text=markov_sentence('data/users_messages/ivan_khashcha.txt') + ' (c) Хаща')
+                             text=markov_sentence('data/users_messages/1472956766') + ' (c) Хаща')
 
 
 def semen_markov(update: Update, context: CallbackContext) -> None:
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text=markov_sentence('data/users_messages/semen_derkach.txt') + ' (c) Сэм')
+                             text=markov_sentence('data/users_messages/1399469085') + ' (c) Сэм')
 
 
 def bolgov_markov(update: Update, context: CallbackContext) -> None:
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text=markov_sentence('data/users_messages/kolya_bolgov.txt') + ' (c) Коля')
+                             text=markov_sentence('data/users_messages/619857691') + ' (c) Коля')
 
 
 def frolov_markov(update: Update, context: CallbackContext) -> None:
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text=markov_sentence('data/users_messages/pasha_frolov.txt') + ' (c) Паша')
+                             text=markov_sentence('data/users_messages/483029014') + ' (c) Паша')
 
 
 def makuha_markov(update: Update, context: CallbackContext) -> None:
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text=markov_sentence('data/users_messages/andrey_makuha.txt') + ' (c) Макуха')
+                             text=markov_sentence('data/users_messages/658890395') + ' (c) Макуха')
 
 
 def david_markov(update: Update, context: CallbackContext) -> None:
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text=markov_sentence('data/users_messages/david_gavril.txt') + ' (c) Давид')
+                             text=markov_sentence('data/users_messages/559443434') + ' (c) Давид')
 
 
 def edward_markov(update: Update, context: CallbackContext) -> None:
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text=markov_sentence('data/users_messages/edward_chrome.txt') + ' (c) Эд')
+                             text=markov_sentence('data/users_messages/393560656') + ' (c) Эд')
 
 
 def oleg_markov(update: Update, context: CallbackContext) -> None:
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text=markov_sentence('data/users_messages/oleg_sergayev.txt') + ' (c) Олег')
+                             text=markov_sentence('data/users_messages/367146646') + ' (c) Олег')
 
 
 def deadinside(update: Update, context: CallbackContext) -> None:
