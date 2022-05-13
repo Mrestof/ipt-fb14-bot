@@ -54,6 +54,9 @@ def text_messages(update: Update, context: CallbackContext) -> None:
     khashcha_list = ['Ліс', 'Бір', 'Діброва', 'Тундра', 'Тайга', 'Пуща', 'Дубина', 'Нетрища', 'Гуща']
     kiva_reply = ['Москаляку на гілляку', 'Бан нахуй', 'Вийди з чату', 'Кива пидор ипанный (c) Макуха']
 
+    with open('data/users_messages/' + str(tg_user.id), 'a') as userf:
+        userf.write(tg_message + '\n')
+
     if (pasha400_state or tg_group_id in fullgroups) and len(tg_message) > 300 and tg_user.id == 483029014:
         context.bot.send_message(chat_id=update.effective_chat.id,
                                  text='Він знову якусь фігню на пів екрану написав',
