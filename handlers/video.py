@@ -1,6 +1,9 @@
 from telegram import Update
 from telegram.ext import CallbackContext
-from random import choice
+from random import choice, randint
+
+with open('data/makuha_paste.txt') as f:
+    makuha_paste = f.readline()
 
 
 def video_messages(update: Update, context: CallbackContext) -> None:
@@ -13,8 +16,14 @@ def video_messages(update: Update, context: CallbackContext) -> None:
         context.bot.send_message(chat_id=update.effective_chat.id,
                                  text='Chat functions only for groups')
     if update.message.from_user.id == 658890395:
-        context.bot.send_animation(chat_id=update.effective_chat.id,
-                                   animation=choice(animations))
+        if randint(0, 1):
+            context.bot.send_animation(chat_id=update.effective_chat.id,
+                                       animation=choice(animations),
+                                       reply_to_message_id=update.message.message_id)
+        else:
+            context.bot.send_message(chat_id=update.effective_chat.id,
+                                     text=makuha_paste,
+                                     reply_to_message_id=update.message.message_id)
     if update.message.forward_from_chat is not None:
         if update.message.forward_from_chat.id == -1001235238484:
             context.bot.send_message(chat_id=update.effective_chat.id,
