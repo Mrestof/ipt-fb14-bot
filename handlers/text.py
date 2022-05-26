@@ -53,6 +53,7 @@ def text_messages(update: Update, context: CallbackContext) -> None:
     wordlist_khashcha = ['хаща', 'хащи', 'хаще', 'хащу', 'хащі', 'хащою', 'хащо']
     khashcha_list = ['Ліс', 'Бір', 'Діброва', 'Тундра', 'Тайга', 'Пуща', 'Дубина', 'Нетрища', 'Гуща']
     kiva_reply = ['Москаляку на гілляку', 'Бан нахуй', 'Вийди з чату', 'Кива пидор ипанный (c) Макуха']
+    poroshenko_reply = ['За каденції Петра Олексійовича', 'За каденції Петра Порошенка']
 
     with open('data/users_messages/' + str(tg_user.id), 'a') as userf:
         userf.write(tg_message + '\n')
@@ -98,6 +99,12 @@ def text_messages(update: Update, context: CallbackContext) -> None:
     if (khashcha_state or tg_group_id in fullgroups) and any(c in tg_message.lower() for c in wordlist_khashcha):
         context.bot.send_message(chat_id=update.effective_chat.id,
                                  text=random.choice(khashcha_list),
+                                 reply_to_message_id=tg_message_id)
+        return None
+
+    if (poroshenko_state or tg_group_id in fullgroups) and random.randint(0, 200) == 1:
+        context.bot.send_message(chat_id=update.effective_chat.id,
+                                 text=random.choice(poroshenko_reply),
                                  reply_to_message_id=tg_message_id)
         return None
 
