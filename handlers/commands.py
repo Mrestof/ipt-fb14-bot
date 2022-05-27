@@ -126,15 +126,9 @@ def oleg_markov(update: Update, context: CallbackContext) -> None:
 
 
 def deadinside(update: Update, context: CallbackContext) -> None:
-    item_number = random.randint(-1, 61)
-    if item_number == -1:
-        context.bot.send_audio(chat_id=update.effective_chat.id,
-                               audio=open('data/deadinside/Fem.Love-1000-7.mp3', 'rb'))
-    elif item_number == 0:
-        context.bot.send_audio(chat_id=update.effective_chat.id,
-                               audio=open('data/deadinside/Fem.Love-Zakat.mp3', 'rb'))
-    else:
-        context.bot.send_photo(chat_id=update.effective_chat.id,
-                               photo=open(f'data/deadinside/{item_number}.jpg', 'rb'))
+    with open('data/deadinside.txt', 'r') as f:
+        deadinside_items = list(map(str.strip, f.readlines()))
+    context.bot.send_photo(chat_id=update.effective_chat.id,
+                           photo=random.choice(deadinside_items))
 # TODO: think of a best way to deal with data files
 # TODO: refactor function to be more compact and extensible
