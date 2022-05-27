@@ -5,5 +5,3 @@ from telegram.ext import CallbackContext
 def animation_messages(update: Update, context: CallbackContext) -> None:
     if update.edited_message is not None:
         return None
-    else:
-        pass
