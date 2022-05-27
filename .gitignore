@@ -2,5 +2,7 @@
 __pycache__/
 # bot token
 /data/token.txt
+# folder with .txt files with user's messages
+/data/users_messages/
 # personal files related to project
 /data/personal/
