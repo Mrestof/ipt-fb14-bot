@@ -10,9 +10,12 @@ from handlers.image import photo_messages
 from handlers.video import video_messages
 from handlers.audio import audio_messages
 from handlers.animation import animation_messages
-
+from handlers.video_note import video_note_messages
+from handlers.voice import voice_messages
 
 # Function to get token from file
+
+
 def get_token() -> str:
     with open('data/token.txt', 'r') as f:
         token = f.readline().strip()
@@ -59,8 +62,14 @@ def get_updater(token: str) -> Updater:
     video_handler = MessageHandler(Filters.video & (~Filters.command), video_messages)
     dispatcher.add_handler(video_handler)
 
+    video_note_handler = MessageHandler(Filters.video_note & (~Filters.command), video_note_messages)
+    dispatcher.add_handler(video_note_handler)
+
     audio_handler = MessageHandler(Filters.audio & (~Filters.command), audio_messages)
     dispatcher.add_handler(audio_handler)
+
+    voice_handler = MessageHandler(Filters.voice & (~Filters.command), voice_messages)
+    dispatcher.add_handler(voice_handler)
 
     animation_handler = MessageHandler(Filters.animation & (~Filters.command), animation_messages)
     dispatcher.add_handler(animation_handler)
