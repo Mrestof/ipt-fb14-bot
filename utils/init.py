@@ -6,7 +6,7 @@ from handlers.text import text_messages
 from handlers.command import hentai, pasha_nick, auf, ero, ecchi, photo, minecraft, deadinside, auf_markov,\
     pavelko_markov, razum_markov, khashcha_markov, bolgov_markov, semen_markov, frolov_markov, makuha_markov, \
     david_markov, edward_markov, oleg_markov
-from handlers.image import photo_messages
+from handlers.photo import photo_messages
 from handlers.video import video_messages
 from handlers.audio import audio_messages
 from handlers.animation import animation_messages
