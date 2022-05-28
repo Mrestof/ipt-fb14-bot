@@ -3,16 +3,20 @@ from telegram.ext import Updater
 from telegram.ext import MessageHandler, Filters, CommandHandler
 
 from handlers.text import text_messages
-from handlers.commands import hentai, pasha_nick, auf, ero, ecchi, photo, minecraft, deadinside, auf_markov,\
+from handlers.command import hentai, pasha_nick, auf, ero, ecchi, photo, minecraft, deadinside, auf_markov,\
     pavelko_markov, razum_markov, khashcha_markov, bolgov_markov, semen_markov, frolov_markov, makuha_markov, \
     david_markov, edward_markov, oleg_markov
-from handlers.image import photo_messages
+from handlers.photo import photo_messages
 from handlers.video import video_messages
 from handlers.audio import audio_messages
 from handlers.animation import animation_messages
-
+from handlers.video_note import video_note_messages
+from handlers.voice import voice_messages
+from handlers.sticker import sticker_messages
 
 # Function to get token from file
+
+
 def get_token() -> str:
     with open('data/token.txt', 'r') as f:
         token = f.readline().strip()
@@ -59,11 +63,20 @@ def get_updater(token: str) -> Updater:
     video_handler = MessageHandler(Filters.video & (~Filters.command), video_messages)
     dispatcher.add_handler(video_handler)
 
+    video_note_handler = MessageHandler(Filters.video_note & (~Filters.command), video_note_messages)
+    dispatcher.add_handler(video_note_handler)
+
     audio_handler = MessageHandler(Filters.audio & (~Filters.command), audio_messages)
     dispatcher.add_handler(audio_handler)
 
+    voice_handler = MessageHandler(Filters.voice & (~Filters.command), voice_messages)
+    dispatcher.add_handler(voice_handler)
+
     animation_handler = MessageHandler(Filters.animation & (~Filters.command), animation_messages)
     dispatcher.add_handler(animation_handler)
+
+    sticker_handler = MessageHandler(Filters.animation & (~Filters.command), sticker_messages)
+    dispatcher.add_handler(sticker_handler)
 
     pasha_nick_handler = CommandHandler('I3700ch3g0', pasha_nick)
     dispatcher.add_handler(pasha_nick_handler)

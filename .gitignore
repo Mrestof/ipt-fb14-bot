@@ -8,8 +8,8 @@ __pycache__/
 /data/fullgroups.txt
 # ids of users who can kick Makuha
 /data/makuha_kick_list.txt
-# folder with .jpg files for deadinside command and 2 songs
-/data/deadinside/
+# file ids of photos for deadinside comans
+/data/deadinside.txt
 # folder with .txt files with user's messages
 /data/users_messages/
 # personal files related to project

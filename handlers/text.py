@@ -23,10 +23,6 @@ with open('data/makuha_kick_list.txt', 'r') as f:
 def text_messages(update: Update, context: CallbackContext) -> None:
     if update.edited_message is not None:
         return None
-    elif update.message.chat.type == 'private':
-        context.bot.send_message(chat_id=update.effective_chat.id,
-                                 text='Chat functions only for groups')
-        return None
     elif update.message.chat.id not in fullgroups and update.message.chat.id not in limitgroups:
         '''
         context.bot.send_message(chat_id=update.effective_chat.id,
