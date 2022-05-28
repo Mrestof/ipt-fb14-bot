@@ -11,8 +11,18 @@ from utils.markov_chains import markov_sentence
 __all__ = ['pasha_nick']
 
 
-# Meme function to react on Pasha's nickname
+#
 def pasha_nick(update: Update, context: CallbackContext) -> None:
+    """Meme function to react on Pasha's nickname.
+
+        [description]:
+        [name]:I3700ch3g0
+        [is_hidden]:True
+
+        :param update:
+        :param context:
+        :return:
+        """
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text='Ну тай, хуйовий в мене нік.\nАле це бляха не значить що на нього тикати потрібно!')
 
@@ -35,8 +45,17 @@ def hentai(update: Update, context: CallbackContext) -> None:
     remove_hentai(filename)
 
 
-# Function to download and send Erotic photos and their names
 def ero(update: Update, context: CallbackContext) -> None:
+    """Function to download and send Erotic photos and their names
+
+    [description]:Шкіряні мішки з м`ясом
+    [name]:ero
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
     if update.message.chat_id == -1001698562626:
         context.bot.send_message(chat_id=update.effective_chat.id,
                                  text='Вибач, у цьому чаті без еротики')
@@ -51,6 +70,16 @@ def ero(update: Update, context: CallbackContext) -> None:
 
 # Function to download and send Ecchi pictures SFW
 def ecchi(update: Update, context: CallbackContext) -> None:
+    """Function to download and send Hentai mangas profile pictures and their tags.
+
+    [description]:Safe for батьки
+    [name]:ecchi
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
     path = download_wallhaven('ecchi')
     resize_image(path, 1920)
     context.bot.send_photo(chat_id=update.effective_chat.id,
@@ -61,6 +90,16 @@ def ecchi(update: Update, context: CallbackContext) -> None:
 
 # Function to download and send Photos and their names
 def photo(update: Update, context: CallbackContext) -> None:
+    """Function to download and send Hentai mangas profile pictures and their tags.
+
+    [description]:Вах яка краса
+    [name]:photo
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
     path = download_wallhaven('photo')
     resize_image(path, 1920)
     context.bot.send_photo(chat_id=update.effective_chat.id,
@@ -71,6 +110,16 @@ def photo(update: Update, context: CallbackContext) -> None:
 
 # Function to send quotes from real men
 def auf(update: Update, context: CallbackContext) -> None:
+    """Function to download and send Hentai mangas profile pictures and their tags.
+
+    [description]:АУФ
+    [name]:auf
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
     with open('data/pacan.txt') as f:
         lines = f.readlines()
     context.bot.send_message(chat_id=update.effective_chat.id,
@@ -78,66 +127,196 @@ def auf(update: Update, context: CallbackContext) -> None:
 
 
 def auf_markov(update: Update, context: CallbackContext) -> None:
+    """Function to download and send Hentai mangas profile pictures and their tags.
+
+    [description]:
+    [name]:auf_markov
+    [is_hidden]:True
+
+    :param update:
+    :param context:
+    :return:
+    """
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=markov_sentence('data/pacan.txt'))
 
 
 def minecraft(update: Update, context: CallbackContext) -> None:
+    """Function to download and send Hentai mangas profile pictures and their tags.
+
+    [description]:Ваня досить ферми будувати
+    [name]:minecraft
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
     # if update.message.chat.type != 'private':
     context.bot.send_message(chat_id=update.effective_chat.id, text=server_stats())
 
 
 def pavelko_markov(update: Update, context: CallbackContext) -> None:
+    """Function to download and send Hentai mangas profile pictures and their tags.
+
+    [description]:Запасний Артем Павелко
+    [name]:pavelko_markov
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=markov_sentence('data/users_messages/890603480') + ' (c) Павелко')
 
 
 def razum_markov(update: Update, context: CallbackContext) -> None:
+    """Function to download and send Hentai mangas profile pictures and their tags.
+
+    [description]:Запасний Іля Разум
+    [name]:razum_markov
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=markov_sentence('data/users_messages/588535976') + ' (c) Иля')
 
 
 def khashcha_markov(update: Update, context: CallbackContext) -> None:
+    """Function to download and send Hentai mangas profile pictures and their tags.
+
+    [description]:Запасний Бір
+    [name]:khashcha_markov
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=markov_sentence('data/users_messages/1472956766') + ' (c) Хаща')
 
 
 def semen_markov(update: Update, context: CallbackContext) -> None:
+    """Function to download and send Hentai mangas profile pictures and their tags.
+
+    [description]:Запасна ввічливість
+    [name]:semen_markov
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=markov_sentence('data/users_messages/1399469085') + ' (c) Сэм')
 
 
 def bolgov_markov(update: Update, context: CallbackContext) -> None:
+    """Function to download and send Hentai mangas profile pictures and their tags.
+
+    [description]:Запасний Коля
+    [name]:bolgov_markov
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=markov_sentence('data/users_messages/619857691') + ' (c) Коля')
 
 
 def frolov_markov(update: Update, context: CallbackContext) -> None:
+    """Function to download and send Hentai mangas profile pictures and their tags.
+
+    [description]:Запасний Паша
+    [name]:frolov_markov
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=markov_sentence('data/users_messages/483029014') + ' (c) Паша')
 
 
 def makuha_markov(update: Update, context: CallbackContext) -> None:
+    """Function to download and send Hentai mangas profile pictures and their tags.
+
+    [description]:Запасний Негр
+    [name]:makuha_markov
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=markov_sentence('data/users_messages/658890395') + ' (c) Макуха')
 
 
 def david_markov(update: Update, context: CallbackContext) -> None:
+    """Function to download and send Hentai mangas profile pictures and their tags.
+
+    [description]:Запасний Давід
+    [name]:david_markov
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=markov_sentence('data/users_messages/559443434') + ' (c) Давид')
 
 
 def edward_markov(update: Update, context: CallbackContext) -> None:
+    """Function to download and send Hentai mangas profile pictures and their tags.
+
+    [description]:Запасний Хром
+    [name]:edward_markov
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=markov_sentence('data/users_messages/393560656') + ' (c) Эд')
 
 
 def oleg_markov(update: Update, context: CallbackContext) -> None:
+    """Function to download and send Hentai mangas profile pictures and their tags.
+
+    [description]:Запасний Олег
+    [name]:oleg_markov
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=markov_sentence('data/users_messages/367146646') + ' (c) Олег')
 
 
 def deadinside(update: Update, context: CallbackContext) -> None:
+    """Function to download and send Hentai mangas profile pictures and their tags.
+
+    [description]:Я умер, прости
+    [name]:deadinside
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
     with open('data/deadinside.txt', 'r') as f:
         deadinside_items = list(map(str.strip, f.readlines()))
     context.bot.send_photo(chat_id=update.effective_chat.id,
