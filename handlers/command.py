@@ -11,18 +11,17 @@ from utils.markov_chains import markov_sentence
 __all__ = ['pasha_nick']
 
 
-#
 def pasha_nick(update: Update, context: CallbackContext) -> None:
     """Meme function to react on Pasha's nickname.
 
-        [description]:
-        [name]:I3700ch3g0
-        [is_hidden]:True
+    [description]:
+    [name]:I3700ch3g0
+    [is_hidden]:True
 
-        :param update:
-        :param context:
-        :return:
-        """
+    :param update:
+    :param context:
+    :return:
+    """
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text='Ну тай, хуйовий в мене нік.\nАле це бляха не значить що на нього тикати потрібно!')
 
@@ -68,9 +67,8 @@ def ero(update: Update, context: CallbackContext) -> None:
         remove_wallhaven(path)
 
 
-# Function to download and send Ecchi pictures SFW
 def ecchi(update: Update, context: CallbackContext) -> None:
-    """Function to download and send Hentai mangas profile pictures and their tags.
+    """Function to download and send Ecchi pictures SFW
 
     [description]:Safe for батьки
     [name]:ecchi
@@ -88,9 +86,8 @@ def ecchi(update: Update, context: CallbackContext) -> None:
     remove_wallhaven(path)
 
 
-# Function to download and send Photos and their names
 def photo(update: Update, context: CallbackContext) -> None:
-    """Function to download and send Hentai mangas profile pictures and their tags.
+    """Function to download and send Photos and their names
 
     [description]:Вах яка краса
     [name]:photo
@@ -108,9 +105,8 @@ def photo(update: Update, context: CallbackContext) -> None:
     remove_wallhaven(path)
 
 
-# Function to send quotes from real men
 def auf(update: Update, context: CallbackContext) -> None:
-    """Function to download and send Hentai mangas profile pictures and their tags.
+    """Function to send quotes from real men
 
     [description]:АУФ
     [name]:auf
@@ -127,7 +123,7 @@ def auf(update: Update, context: CallbackContext) -> None:
 
 
 def auf_markov(update: Update, context: CallbackContext) -> None:
-    """Function to download and send Hentai mangas profile pictures and their tags.
+    """...
 
     [description]:
     [name]:auf_markov
@@ -142,7 +138,7 @@ def auf_markov(update: Update, context: CallbackContext) -> None:
 
 
 def minecraft(update: Update, context: CallbackContext) -> None:
-    """Function to download and send Hentai mangas profile pictures and their tags.
+    """...
 
     [description]:Ваня досить ферми будувати
     [name]:minecraft
@@ -157,7 +153,7 @@ def minecraft(update: Update, context: CallbackContext) -> None:
 
 
 def pavelko_markov(update: Update, context: CallbackContext) -> None:
-    """Function to download and send Hentai mangas profile pictures and their tags.
+    """...
 
     [description]:Запасний Артем Павелко
     [name]:pavelko_markov
@@ -172,7 +168,7 @@ def pavelko_markov(update: Update, context: CallbackContext) -> None:
 
 
 def razum_markov(update: Update, context: CallbackContext) -> None:
-    """Function to download and send Hentai mangas profile pictures and their tags.
+    """...
 
     [description]:Запасний Іля Разум
     [name]:razum_markov
@@ -187,7 +183,7 @@ def razum_markov(update: Update, context: CallbackContext) -> None:
 
 
 def khashcha_markov(update: Update, context: CallbackContext) -> None:
-    """Function to download and send Hentai mangas profile pictures and their tags.
+    """...
 
     [description]:Запасний Бір
     [name]:khashcha_markov
@@ -202,7 +198,7 @@ def khashcha_markov(update: Update, context: CallbackContext) -> None:
 
 
 def semen_markov(update: Update, context: CallbackContext) -> None:
-    """Function to download and send Hentai mangas profile pictures and their tags.
+    """...
 
     [description]:Запасна ввічливість
     [name]:semen_markov
@@ -217,7 +213,7 @@ def semen_markov(update: Update, context: CallbackContext) -> None:
 
 
 def bolgov_markov(update: Update, context: CallbackContext) -> None:
-    """Function to download and send Hentai mangas profile pictures and their tags.
+    """...
 
     [description]:Запасний Коля
     [name]:bolgov_markov
@@ -232,7 +228,7 @@ def bolgov_markov(update: Update, context: CallbackContext) -> None:
 
 
 def frolov_markov(update: Update, context: CallbackContext) -> None:
-    """Function to download and send Hentai mangas profile pictures and their tags.
+    """...
 
     [description]:Запасний Паша
     [name]:frolov_markov
@@ -247,7 +243,7 @@ def frolov_markov(update: Update, context: CallbackContext) -> None:
 
 
 def makuha_markov(update: Update, context: CallbackContext) -> None:
-    """Function to download and send Hentai mangas profile pictures and their tags.
+    """...
 
     [description]:Запасний Негр
     [name]:makuha_markov
@@ -262,7 +258,7 @@ def makuha_markov(update: Update, context: CallbackContext) -> None:
 
 
 def david_markov(update: Update, context: CallbackContext) -> None:
-    """Function to download and send Hentai mangas profile pictures and their tags.
+    """...
 
     [description]:Запасний Давід
     [name]:david_markov
@@ -277,7 +273,7 @@ def david_markov(update: Update, context: CallbackContext) -> None:
 
 
 def edward_markov(update: Update, context: CallbackContext) -> None:
-    """Function to download and send Hentai mangas profile pictures and their tags.
+    """...
 
     [description]:Запасний Хром
     [name]:edward_markov
@@ -292,7 +288,7 @@ def edward_markov(update: Update, context: CallbackContext) -> None:
 
 
 def oleg_markov(update: Update, context: CallbackContext) -> None:
-    """Function to download and send Hentai mangas profile pictures and their tags.
+    """...
 
     [description]:Запасний Олег
     [name]:oleg_markov
@@ -307,7 +303,7 @@ def oleg_markov(update: Update, context: CallbackContext) -> None:
 
 
 def deadinside(update: Update, context: CallbackContext) -> None:
-    """Function to download and send Hentai mangas profile pictures and their tags.
+    """...
 
     [description]:Я умер, прости
     [name]:deadinside
