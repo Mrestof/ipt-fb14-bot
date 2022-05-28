@@ -24,8 +24,11 @@ class CommandAttrs:
 
 
 def _get_command_attrs(command: Callable[[Update, CallbackContext], None]) -> CommandAttrs:
-    # TODO: try to beautify this
-    data = command.__doc__.splitlines()
+    # TODO: refactor this to be more readable and less error prone
+    try:
+        data = command.__doc__.splitlines()
+    except AttributeError:
+        raise SystemExit(f'error: {command.__name__:r} command does not have a docstring')
     name, description, is_hidden = '', '', True
     for line in data:
         if line.strip().startswith('[name]'):
@@ -39,7 +42,8 @@ def _get_command_attrs(command: Callable[[Update, CallbackContext], None]) -> Co
             elif is_hidden_raw == 'True':
                 is_hidden = True
             else:
-                raise SystemExit(f'error in docstring for {command.__name__} command')
+                raise SystemExit(f'error: syntax of docstring for {command.__name__:r} command is wrong '
+                                 ' in [is_hidden] section')
     return CommandAttrs(description, name, is_hidden)
 
 
