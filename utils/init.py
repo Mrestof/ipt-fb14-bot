@@ -1,3 +1,4 @@
+# TODO: merge separate methods into one class where makes sense
 from typing import Callable
 from dataclasses import dataclass
 
@@ -23,9 +24,22 @@ class CommandAttrs:
 
 
 def _get_command_attrs(command: Callable[[Update, CallbackContext], None]) -> CommandAttrs:
-    description = ''
-    name = ''
-    is_hidden = False
+    # TODO: try to beautify this
+    data = command.__doc__.splitlines()
+    name, description, is_hidden = '', '', True
+    for line in data:
+        if line.strip().startswith('[name]'):
+            name = line.split(':')[1].strip()
+        if line.strip().startswith('[description]'):
+            description = line.split(':')[1].strip()
+        if line.strip().startswith('[is_hidden]'):
+            is_hidden_raw = line.split(':')[1].strip()
+            if is_hidden_raw == 'False':
+                is_hidden = False
+            elif is_hidden_raw == 'True':
+                is_hidden = True
+            else:
+                raise SystemExit(f'error in docstring for {command.__name__} command')
     return CommandAttrs(description, name, is_hidden)
 
 
@@ -38,31 +52,14 @@ def get_token() -> str:
 
 # Function to set commands description
 def set_commands(token: str) -> None:
-    # TODO: take the names and descriptions of the commands from codebase
-    commands = [BotCommand('hentai', 'Відійти на 5 хвилин'),
-                BotCommand('ecchi', 'Safe for батьки'),
-                BotCommand('ero', 'Шкіряні мішки з м`ясом'),
-                BotCommand('auf', 'АУФ'),
-                BotCommand('photo', 'Вах яка краса'),
-                BotCommand('deadinside', 'Я умер, прости'),
-                BotCommand('minecraft', 'Ваня досить ферми будувати'),
-                BotCommand('pavelko_markov', 'Запасний Артем Павелко'),
-                BotCommand('razum_markov', 'Запасний Іля Разум'),
-                BotCommand('khashcha_markov', 'Запасний Бір'),
-                BotCommand('semen_markov', 'Запасна ввічливість.'),
-                BotCommand('bolgov_markov', 'Запасний Коля'),
-                BotCommand('frolov_markov', 'Запасний Паша'),
-                BotCommand('makuha_markov', 'Запасний Негр'),
-                BotCommand('david_markov', 'Запасний Давід'),
-                BotCommand('edward_markov', 'Запасний Хром'),
-                BotCommand('oleg_markov', 'Запасний Олег')
-                ]
     commands = []
     for cmd_name in command.__all__:
-        is_hidden = False
-        if is_hidden:
+        cmd_func = getattr(command, cmd_name)
+        cmd_attrs = _get_command_attrs(cmd_func)
+        if cmd_attrs.is_hidden:
             continue
-
+        bot_command = BotCommand(cmd_attrs.name, cmd_attrs.description)
+        commands.append(bot_command)
     bot = Bot(token)
     bot.set_my_commands(commands)
 
@@ -73,6 +70,7 @@ def get_updater(token: str) -> Updater:
     updater = Updater(token=token, use_context=True)
     dispatcher = updater.dispatcher
 
+    # text handlers
     text_handler = MessageHandler(Filters.text & (~Filters.command), text_messages)
     dispatcher.add_handler(text_handler)
 
@@ -97,61 +95,11 @@ def get_updater(token: str) -> Updater:
     sticker_handler = MessageHandler(Filters.animation & (~Filters.command), sticker_messages)
     dispatcher.add_handler(sticker_handler)
 
-    pasha_nick_handler = CommandHandler('I3700ch3g0', pasha_nick)
-    dispatcher.add_handler(pasha_nick_handler)
-
-    hentai_handler = CommandHandler('hentai', hentai)
-    dispatcher.add_handler(hentai_handler)
-
-    ero_handler = CommandHandler('ero', ero)
-    dispatcher.add_handler(ero_handler)
-
-    ecchi_handler = CommandHandler('ecchi', ecchi)
-    dispatcher.add_handler(ecchi_handler)
-
-    photo_handler = CommandHandler('photo', photo)
-    dispatcher.add_handler(photo_handler)
-
-    auf_handler = CommandHandler('auf', auf)
-    dispatcher.add_handler(auf_handler)
-
-    auf_markov_handler = CommandHandler('auf_markov', auf_markov)
-    dispatcher.add_handler(auf_markov_handler)
-
-    minecraft_handler = CommandHandler('minecraft', minecraft)
-    dispatcher.add_handler(minecraft_handler)
-
-    deadinside_handler = CommandHandler('deadinside', deadinside)
-    dispatcher.add_handler(deadinside_handler)
-
-    pavelko_markov_handler = CommandHandler('pavelko_markov', pavelko_markov)
-    dispatcher.add_handler(pavelko_markov_handler)
-
-    razum_markov_handler = CommandHandler('razum_markov', razum_markov)
-    dispatcher.add_handler(razum_markov_handler)
-
-    khashcha_markov_handler = CommandHandler('khashcha_markov', khashcha_markov)
-    dispatcher.add_handler(khashcha_markov_handler)
-
-    semen_markov_handler = CommandHandler('semen_markov', semen_markov)
-    dispatcher.add_handler(semen_markov_handler)
-
-    bolgov_markov_handler = CommandHandler('bolgov_markov', bolgov_markov)
-    dispatcher.add_handler(bolgov_markov_handler)
-
-    frolov_markov_handler = CommandHandler('frolov_markov', frolov_markov)
-    dispatcher.add_handler(frolov_markov_handler)
-
-    makuha_markov_handler = CommandHandler('makuha_markov', makuha_markov)
-    dispatcher.add_handler(makuha_markov_handler)
-
-    david_markov_handler = CommandHandler('david_markov', david_markov)
-    dispatcher.add_handler(david_markov_handler)
-
-    edward_markov_handler = CommandHandler('edward_markov', edward_markov)
-    dispatcher.add_handler(edward_markov_handler)
-
-    oleg_markov_handler = CommandHandler('oleg_markov', oleg_markov)
-    dispatcher.add_handler(oleg_markov_handler)
+    # command handlers
+    for cmd_name in command.__all__:
+        cmd_func = getattr(command, cmd_name)
+        cmd_custom_name = _get_command_attrs(cmd_func).name
+        cmd_handler = CommandHandler(cmd_custom_name, cmd_func)
+        dispatcher.add_handler(cmd_handler)
 
     return updater
