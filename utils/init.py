@@ -74,30 +74,18 @@ def get_updater(token: str) -> Updater:
     updater = Updater(token=token, use_context=True)
     dispatcher = updater.dispatcher
 
-    # text handlers
-    text_handler = MessageHandler(Filters.text & (~Filters.command), text_messages)
-    dispatcher.add_handler(text_handler)
-
-    photo_handler = MessageHandler(Filters.photo & (~Filters.command), photo_messages)
-    dispatcher.add_handler(photo_handler)
-
-    video_handler = MessageHandler(Filters.video & (~Filters.command), video_messages)
-    dispatcher.add_handler(video_handler)
-
-    video_note_handler = MessageHandler(Filters.video_note & (~Filters.command), video_note_messages)
-    dispatcher.add_handler(video_note_handler)
-
-    audio_handler = MessageHandler(Filters.audio & (~Filters.command), audio_messages)
-    dispatcher.add_handler(audio_handler)
-
-    voice_handler = MessageHandler(Filters.voice & (~Filters.command), voice_messages)
-    dispatcher.add_handler(voice_handler)
-
-    animation_handler = MessageHandler(Filters.animation & (~Filters.command), animation_messages)
-    dispatcher.add_handler(animation_handler)
-
-    sticker_handler = MessageHandler(Filters.animation & (~Filters.command), sticker_messages)
-    dispatcher.add_handler(sticker_handler)
+    # message handlers
+    text_handlers = {animation_messages: Filters.animation & (~Filters.command),
+                     audio_messages: Filters.audio & (~Filters.command),
+                     photo_messages: Filters.photo & (~Filters.command),
+                     sticker_messages: Filters.sticker & (~Filters.command),
+                     text_messages: Filters.text & (~Filters.command),
+                     video_messages: Filters.video & (~Filters.command),
+                     video_note_messages: Filters.video_note & (~Filters.command),
+                     voice_messages: Filters.voice & (~Filters.command),
+                     }
+    for item in text_handlers.items():
+        dispatcher.add_handler(MessageHandler(item[1], item[0]))
 
     # command handlers
     for cmd_name in command.__all__:
