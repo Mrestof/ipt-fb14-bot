@@ -75,17 +75,17 @@ def get_updater(token: str) -> Updater:
     dispatcher = updater.dispatcher
 
     # message handlers
-    text_handlers = {animation_messages: Filters.animation & (~Filters.command),
-                     audio_messages: Filters.audio & (~Filters.command),
-                     photo_messages: Filters.photo & (~Filters.command),
-                     sticker_messages: Filters.sticker & (~Filters.command),
-                     text_messages: Filters.text & (~Filters.command),
-                     video_messages: Filters.video & (~Filters.command),
-                     video_note_messages: Filters.video_note & (~Filters.command),
-                     voice_messages: Filters.voice & (~Filters.command),
+    text_handlers = {animation_messages: Filters.animation,
+                     audio_messages: Filters.audio,
+                     photo_messages: Filters.photo,
+                     sticker_messages: Filters.sticker,
+                     text_messages: Filters.text,
+                     video_messages: Filters.video,
+                     video_note_messages: Filters.video_note,
+                     voice_messages: Filters.voice,
                      }
-    for item in text_handlers.items():
-        dispatcher.add_handler(MessageHandler(item[1], item[0]))
+    for key, var in text_handlers.items():
+        dispatcher.add_handler(MessageHandler(var & (~Filters.command), key))
 
     # command handlers
     for cmd_name in command.__all__:
