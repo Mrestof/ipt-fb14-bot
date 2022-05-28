@@ -8,14 +8,26 @@ from utils.minecraft import server_stats
 from utils.markov_chains import markov_sentence
 
 
+__all__ = ['pasha_nick']
+
+
 # Meme function to react on Pasha's nickname
 def pasha_nick(update: Update, context: CallbackContext) -> None:
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text='Ну тай, хуйовий в мене нік.\nАле це бляха не значить що на нього тикати потрібно!')
 
 
-# Function to download and send Hentai mangas profile pictures and their tags
 def hentai(update: Update, context: CallbackContext) -> None:
+    """Function to download and send Hentai mangas profile pictures and their tags.
+
+    [description]:Відійти на 5 хвилин
+    [name]:hentai
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
     filename = download_hentai()
     context.bot.send_photo(chat_id=update.effective_chat.id,
                            photo=open(filename, 'rb'),

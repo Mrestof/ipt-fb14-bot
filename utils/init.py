@@ -1,11 +1,11 @@
-from telegram import Bot, BotCommand
-from telegram.ext import Updater
-from telegram.ext import MessageHandler, Filters, CommandHandler
+from typing import Callable
+from dataclasses import dataclass
+
+from telegram import Bot, BotCommand, Update
+from telegram.ext import Updater, MessageHandler, Filters, CommandHandler, CallbackContext
 
 from handlers.text import text_messages
-from handlers.command import hentai, pasha_nick, auf, ero, ecchi, photo, minecraft, deadinside, auf_markov,\
-    pavelko_markov, razum_markov, khashcha_markov, bolgov_markov, semen_markov, frolov_markov, makuha_markov, \
-    david_markov, edward_markov, oleg_markov
+import handlers.command as command
 from handlers.photo import photo_messages
 from handlers.video import video_messages
 from handlers.audio import audio_messages
@@ -14,9 +14,22 @@ from handlers.video_note import video_note_messages
 from handlers.voice import voice_messages
 from handlers.sticker import sticker_messages
 
+
+@dataclass
+class CommandAttrs:
+    description: str
+    name: str
+    is_hidden: bool
+
+
+def _get_command_attrs(command: Callable[[Update, CallbackContext], None]) -> CommandAttrs:
+    description = ''
+    name = ''
+    is_hidden = False
+    return CommandAttrs(description, name, is_hidden)
+
+
 # Function to get token from file
-
-
 def get_token() -> str:
     with open('data/token.txt', 'r') as f:
         token = f.readline().strip()
@@ -44,6 +57,12 @@ def set_commands(token: str) -> None:
                 BotCommand('edward_markov', 'Запасний Хром'),
                 BotCommand('oleg_markov', 'Запасний Олег')
                 ]
+    commands = []
+    for cmd_name in command.__all__:
+        is_hidden = False
+        if is_hidden:
+            continue
+
     bot = Bot(token)
     bot.set_my_commands(commands)
 

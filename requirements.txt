@@ -4,3 +4,4 @@ pillow==9.0.0
 requests==2.27.1
 mcstatus==8.0.0
 nhentai-api==0.0.19
+markovify==0.9.4
