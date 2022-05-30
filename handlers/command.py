@@ -8,7 +8,9 @@ from utils.minecraft import server_stats
 from utils.markov_chains import markov_sentence
 
 
-__all__ = ['pasha_nick', 'hentai', 'ero', 'ecchi', 'photo', 'auf', 'auf_markov', 'minecraft', 'pavelko_markov', 'razum_markov', 'khashcha_markov', 'semen_markov', 'bolgov_markov', 'frolov_markov', 'makuha_markov', 'david_markov', 'edward_markov', 'oleg_markov', 'deadinside']
+__all__ = ['pasha_nick', 'hentai', 'ero', 'ecchi', 'photo', 'auf', 'auf_markov', 'minecraft', 'pavelko_markov',
+           'razum_markov', 'khashcha_markov', 'semen_markov', 'bolgov_markov', 'frolov_markov', 'makuha_markov',
+           'david_markov', 'edward_markov', 'oleg_markov', 'deadinside']
 
 
 def pasha_nick(update: Update, context: CallbackContext) -> None:

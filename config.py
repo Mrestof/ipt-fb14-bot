@@ -1,12 +1,12 @@
 pasha400_state = True
-tihenko_state = True
+tihenko_state = False
 order66_state = True
 order69_state = True
 hhanchenn_state = False
 osk_state = True
-kringe_state = True
+kringe_state = False
 khashcha_state = True
 ilya_state = False
 razum_state = False
 kiva_state = True
-poroshenko_state = True
+poroshenko_state = False
