@@ -5,15 +5,16 @@ from dataclasses import dataclass
 from telegram import Bot, BotCommand, Update
 from telegram.ext import Updater, MessageHandler, Filters, CommandHandler, CallbackContext
 
-from handlers.text import text_messages
-import handlers.command as command
-from handlers.photo import photo_messages
-from handlers.video import video_messages
-from handlers.audio import audio_messages
 from handlers.animation import animation_messages
+from handlers.audio import audio_messages
+import handlers.command as command
+from handlers.jobs import pavelko_notify
+from handlers.photo import photo_messages
+from handlers.sticker import sticker_messages
+from handlers.text import text_messages
+from handlers.video import video_messages
 from handlers.video_note import video_note_messages
 from handlers.voice import voice_messages
-from handlers.sticker import sticker_messages
 
 
 @dataclass
@@ -93,5 +94,8 @@ def get_updater(token: str) -> Updater:
         cmd_custom_name = _get_command_attrs(cmd_func).name
         cmd_handler = CommandHandler(cmd_custom_name, cmd_func)
         dispatcher.add_handler(cmd_handler)
+
+    job_queue = updater.job_queue
+    job_queue.run_repeating(pavelko_notify, interval=10.0, first=0.0)
 
     return updater

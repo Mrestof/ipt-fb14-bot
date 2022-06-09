@@ -9,6 +9,7 @@ def main():
     updater.start_polling()  # Bot Start Function
 
     print('Start the bot. Logs go here.')
+    updater.idle()
 
 
 def debug():
