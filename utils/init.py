@@ -96,6 +96,6 @@ def get_updater(token: str) -> Updater:
         dispatcher.add_handler(cmd_handler)
 
     job_queue = updater.job_queue
-    job_queue.run_repeating(pavelko_notify, interval=10.0, first=0.0)
+    job_queue.run_repeating(pavelko_notify, interval=8700.0, first=0.0)
 
     return updater
