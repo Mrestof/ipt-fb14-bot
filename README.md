@@ -5,4 +5,5 @@
 - Если что-то сломалось - писать Дане 
 - Если комменты вас пугают - писать Эду
 
-## If you use Windows all bugs are not our problem
+---
+<sub><sup>If you use Windows all bugs are not our problem</sub></sup>
