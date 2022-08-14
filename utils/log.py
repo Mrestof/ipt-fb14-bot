@@ -42,10 +42,8 @@ JSON_LOG_FORMAT_ATTRS = (
 def _wrap(attr_name: str) -> str:
     json_attrs_to_wrap = ("name", "levelno", "levelname", "pathname", "filename",
                           "module", "funcName", "asctime", "threadName", "message")
-    if attr_name in json_attrs_to_wrap:
-        return '"{' + attr_name + '}"'
-    else:
-        return '{' + attr_name + '}'
+    br = '"' if attr_name in json_attrs_to_wrap else ''
+    return br+'{' + attr_name + '}'+br
 
 
 JSON_LOG_FORMAT = '{{' + ','.join(f'"{attr}":{_wrap(attr)}' for attr in JSON_LOG_FORMAT_ATTRS) + '}}'
