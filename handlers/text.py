@@ -7,21 +7,13 @@ from telegram.ext import ContextTypes
 from utils.text import ilya_modifier, razum_modifier
 from config import *
 
-with open('data/groups.txt', 'r') as f:
-    groups = [int(i.strip()) for i in f.readlines()]
-
 
 # TODO: research the ways of splitting the big handler into smaller pieces
 # TODO: try to merge some conditions into more compact blocks of code
 # TODO: put constants to the separate file/var
 
-
 async def text_messages(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if update.edited_message is not None:
-        return None
-    elif update.message.chat.id not in groups:
-        await context.bot.send_message(chat_id=update.effective_chat.id,
-                                       text='Group not in group list')
         return None
 
     message_text = update.message.text
