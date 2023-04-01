@@ -1,7 +1,7 @@
-beautifulsoup4==4.10.0
-python-telegram-bot==13.10
-pillow==9.0.0
-requests==2.27.1
-mcstatus==8.0.0
-nhentai-api==0.0.19
+beautifulsoup4==4.12.0
+python-telegram-bot==20.2
+pillow==9.5.0
+requests==2.28.2
+mcstatus==10.0.2
+nhentai-api==1.0.2
 markovify==0.9.4
