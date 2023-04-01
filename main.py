@@ -1,5 +1,5 @@
 from utils.log import get_main_logger
-from utils.init import get_token, get_updater, set_commands
+from utils.init import get_token, get_application, set_commands
 
 
 def main():
@@ -7,8 +7,9 @@ def main():
 
     token = get_token()  # Getting Bot Token from a file
 
-    #set_commands(token)  # Setting commands description
-    application = get_updater(token)  # Bot Updater (Function for initiation)
+    application = get_application(token)  # Bot application (Function for initiation)
+
+    # set_commands(application, token)  # Setting commands description
 
     logger.info('Start the bot. Logs go here.')
     application.run_polling()  # Bot Start Function

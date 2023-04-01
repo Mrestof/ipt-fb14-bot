@@ -8,7 +8,7 @@ from telegram.ext import MessageHandler, filters, CommandHandler, CallbackContex
 from handlers.animation import animation_messages
 from handlers.audio import audio_messages
 import handlers.command as command
-from handlers.jobs import pavelko_notify
+from handlers.jobs import example
 from handlers.photo import photo_messages
 from handlers.sticker import sticker_messages
 from handlers.text import text_messages
@@ -56,7 +56,7 @@ def get_token() -> str:
 
 
 # Function to set commands description
-def set_commands(token: str) -> None:
+def set_commands(appilcation, token: str) -> None:
     commands = []
     for cmd_name in command.__all__:
         cmd_func = getattr(command, cmd_name)
@@ -65,19 +65,18 @@ def set_commands(token: str) -> None:
             continue
         bot_command = BotCommand(cmd_attrs.name, cmd_attrs.description)
         commands.append(bot_command)
-    bot = Bot(token)
-    bot.set_my_commands(commands)
+    appilcation.bot.set_my_commands(commands)
 
 
 # Function to declare all commands handlers for bot (Telegram API)
-def get_updater(token: str) -> Application:
+def get_application(token: str) -> Application:
     application = ApplicationBuilder().token(token).build()
 
     # message handlers
     text_handlers = {animation_messages: filters.ANIMATION,
                      audio_messages: filters.AUDIO,
                      photo_messages: filters.PHOTO,
-                     #sticker_messages: filters.,
+                     sticker_messages: filters.Sticker.ALL,
                      text_messages: filters.TEXT,
                      video_messages: filters.VIDEO,
                      video_note_messages: filters.VIDEO_NOTE,
@@ -94,6 +93,5 @@ def get_updater(token: str) -> Application:
         application.add_handler(cmd_handler)
 
     job_queue = application.job_queue
-    job_queue.run_repeating(pavelko_notify, interval=8700.0, first=0.0)
 
     return application

@@ -1,8 +1,7 @@
 from handlers.text import groups
 
 
-def pavelko_notify(context):
+async def example(context):
     # TODO: rework chat_id source
-    context.bot.send_message(chat_id=groups[0],
-                             text='@maybe_available, лс')
-
+    await context.bot.send_message(chat_id=groups[1],
+                                   text='@maybe_available, лс')

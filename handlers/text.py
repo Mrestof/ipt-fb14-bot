@@ -21,7 +21,7 @@ async def text_messages(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
         return None
     elif update.message.chat.id not in groups:
         await context.bot.send_message(chat_id=update.effective_chat.id,
-                                 text='Group not in group list')
+                                       text='Group not in group list')
         return None
 
     message_text = update.message.text
@@ -43,12 +43,6 @@ async def text_messages(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
     khashcha_list = ['Ліс', 'Бір', 'Діброва', 'Тундра', 'Тайга', 'Пуща', 'Дубина', 'Нетрища', 'Гуща']
     kiva_reply = ['Москаляку на гілляку', 'Бан нахуй', 'Вийди з чату', 'Кива пидор ипанный (c) Макуха']
     poroshenko_reply = ['За каденції Петра Олексійовича', 'За каденції Петра Порошенка']
-
-    with open('data/users_messages/' + str(user.id), 'a') as userf:
-        userf.write(message_text + '\n')
-
-    with open('data/users_messages/' + str(user.id), 'a') as userf:
-        userf.write(message_text + '\n')
 
     if pasha400_state and len(message_text) > 300 and user.id == 483029014:
         await context.bot.send_message(chat_id=update.effective_chat.id,

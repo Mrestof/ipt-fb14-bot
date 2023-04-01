@@ -14,8 +14,7 @@ __all__ = [
     # image
     'hentai', 'ero', 'ecchi', 'photo',
     # markov
-    'pavelko_markov', 'razum_markov', 'khashcha_markov', 'semen_markov', 'bolgov_markov', 'frolov_markov',
-    'makuha_markov', 'david_markov', 'edward_markov', 'oleg_markov', 'auf_markov',
+    'pavelko_markov', 'razum_markov', 'khashcha_markov', 'bolgov_markov', 'makuha_markov', 'auf_markov',
     # other
     'auf', 'minecraft', 'deadinside',
 ]
@@ -221,21 +220,6 @@ async def khashcha_markov(update: Update, context: CallbackContext) -> None:
                                    text=markov_sentence('data/users_messages/1472956766') + ' (c) Хаща')
 
 
-async def semen_markov(update: Update, context: CallbackContext) -> None:
-    """...
-
-    [description]:Запасна ввічливість
-    [name]:semen_markov
-    [is_hidden]:False
-
-    :param update:
-    :param context:
-    :return:
-    """
-    await context.bot.send_message(chat_id=update.effective_chat.id,
-                                   text=markov_sentence('data/users_messages/1399469085') + ' (c) Сэм')
-
-
 async def bolgov_markov(update: Update, context: CallbackContext) -> None:
     """...
 
@@ -251,21 +235,6 @@ async def bolgov_markov(update: Update, context: CallbackContext) -> None:
                                    text=markov_sentence('data/users_messages/619857691') + ' (c) Коля')
 
 
-async def frolov_markov(update: Update, context: CallbackContext) -> None:
-    """...
-
-    [description]:Запасний Паша
-    [name]:frolov_markov
-    [is_hidden]:False
-
-    :param update:
-    :param context:
-    :return:
-    """
-    await context.bot.send_message(chat_id=update.effective_chat.id,
-                                   text=markov_sentence('data/users_messages/483029014') + ' (c) Паша')
-
-
 async def makuha_markov(update: Update, context: CallbackContext) -> None:
     """...
 
@@ -279,51 +248,6 @@ async def makuha_markov(update: Update, context: CallbackContext) -> None:
     """
     await context.bot.send_message(chat_id=update.effective_chat.id,
                                    text=markov_sentence('data/users_messages/658890395') + ' (c) Макуха')
-
-
-async def david_markov(update: Update, context: CallbackContext) -> None:
-    """...
-
-    [description]:Запасний Давід
-    [name]:david_markov
-    [is_hidden]:False
-
-    :param update:
-    :param context:
-    :return:
-    """
-    await context.bot.send_message(chat_id=update.effective_chat.id,
-                                   text=markov_sentence('data/users_messages/559443434') + ' (c) Давид')
-
-
-async def edward_markov(update: Update, context: CallbackContext) -> None:
-    """...
-
-    [description]:Запасний Хром
-    [name]:edward_markov
-    [is_hidden]:False
-
-    :param update:
-    :param context:
-    :return:
-    """
-    await context.bot.send_message(chat_id=update.effective_chat.id,
-                                   text=markov_sentence('data/users_messages/393560656') + ' (c) Эд')
-
-
-async def oleg_markov(update: Update, context: CallbackContext) -> None:
-    """...
-
-    [description]:Запасний Олег
-    [name]:oleg_markov
-    [is_hidden]:False
-
-    :param update:
-    :param context:
-    :return:
-    """
-    await context.bot.send_message(chat_id=update.effective_chat.id,
-                                   text=markov_sentence('data/users_messages/367146646') + ' (c) Олег')
 
 
 async def deadinside(update: Update, context: CallbackContext) -> None:
