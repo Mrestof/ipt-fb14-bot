@@ -2,7 +2,7 @@
 from typing import Callable
 from dataclasses import dataclass
 
-from telegram import Bot, BotCommand, Update
+from telegram import BotCommand, Update
 from telegram.ext import MessageHandler, filters, CommandHandler, CallbackContext, ApplicationBuilder, Application
 
 from handlers.animation import animation_messages
@@ -56,7 +56,7 @@ def get_token() -> str:
 
 
 # Function to set commands description
-def set_commands(appilcation, token: str) -> None:
+async def set_commands(application: Application) -> None:
     commands = []
     for cmd_name in command.__all__:
         cmd_func = getattr(command, cmd_name)
@@ -65,13 +65,12 @@ def set_commands(appilcation, token: str) -> None:
             continue
         bot_command = BotCommand(cmd_attrs.name, cmd_attrs.description)
         commands.append(bot_command)
-    appilcation.bot.set_my_commands(commands)
+    await application.bot.set_my_commands(commands)
 
 
 # Function to declare all commands handlers for bot (Telegram API)
 def get_application(token: str) -> Application:
-    application = ApplicationBuilder().token(token).build()
-
+    application = ApplicationBuilder().token(token).post_init(set_commands).build()
     # message handlers
     text_handlers = {animation_messages: filters.ANIMATION,
                      audio_messages: filters.AUDIO,

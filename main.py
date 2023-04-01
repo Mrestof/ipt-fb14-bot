@@ -8,12 +8,10 @@ def main():
     logger = get_main_logger()
 
     token = get_token()  # Getting Bot Token from a file
-
     application = get_application(token)  # Bot application (Function for initiation)
 
-    # set_commands(application, token)  # Setting commands description
-
     logger.info('Start the bot. Logs go here.')
+
     application.run_polling()  # Bot Start Function
 
 
