@@ -3,7 +3,7 @@ from typing import Callable
 from dataclasses import dataclass
 
 from telegram import Bot, BotCommand, Update
-from telegram.ext import Updater, MessageHandler, Filters, CommandHandler, CallbackContext
+from telegram.ext import MessageHandler, filters, CommandHandler, CallbackContext, ApplicationBuilder, Application
 
 from handlers.animation import animation_messages
 from handlers.audio import audio_messages
@@ -70,32 +70,30 @@ def set_commands(token: str) -> None:
 
 
 # Function to declare all commands handlers for bot (Telegram API)
-def get_updater(token: str) -> Updater:
-    # TODO: make the following code more compact (with the help of for cycle)
-    updater = Updater(token=token, use_context=True)
-    dispatcher = updater.dispatcher
+def get_updater(token: str) -> Application:
+    application = ApplicationBuilder().token(token).build()
 
     # message handlers
-    text_handlers = {animation_messages: Filters.animation,
-                     audio_messages: Filters.audio,
-                     photo_messages: Filters.photo,
-                     sticker_messages: Filters.sticker,
-                     text_messages: Filters.text,
-                     video_messages: Filters.video,
-                     video_note_messages: Filters.video_note,
-                     voice_messages: Filters.voice,
+    text_handlers = {animation_messages: filters.ANIMATION,
+                     audio_messages: filters.AUDIO,
+                     photo_messages: filters.PHOTO,
+                     #sticker_messages: filters.,
+                     text_messages: filters.TEXT,
+                     video_messages: filters.VIDEO,
+                     video_note_messages: filters.VIDEO_NOTE,
+                     voice_messages: filters.VOICE,
                      }
     for key, var in text_handlers.items():
-        dispatcher.add_handler(MessageHandler(var & (~Filters.command), key))
+        application.add_handler(MessageHandler(var & (~filters.COMMAND), key))
 
     # command handlers
     for cmd_name in command.__all__:
         cmd_func = getattr(command, cmd_name)
         cmd_custom_name = _get_command_attrs(cmd_func).name
         cmd_handler = CommandHandler(cmd_custom_name, cmd_func)
-        dispatcher.add_handler(cmd_handler)
+        application.add_handler(cmd_handler)
 
-    job_queue = updater.job_queue
+    job_queue = application.job_queue
     job_queue.run_repeating(pavelko_notify, interval=8700.0, first=0.0)
 
-    return updater
+    return application
