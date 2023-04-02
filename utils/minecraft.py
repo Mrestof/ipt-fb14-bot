@@ -1,9 +1,9 @@
-from mcstatus import MinecraftServer
+from mcstatus import JavaServer
 
 
 def server_stats() -> str:
     response = ''
-    server = MinecraftServer.lookup('92.249.127.225:25565')
+    server = JavaServer.lookup('92.249.127.225:25565')
     try:
         status = server.status()
     except TimeoutError:

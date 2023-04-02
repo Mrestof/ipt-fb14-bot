@@ -20,6 +20,7 @@ async def text_messages(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
     message_id = update.message.message_id
     user = update.message.from_user
 
+
     wordlist_ilya = ['илья', 'ильи', 'илье', 'илью', 'ильей', 'ильёй']
     wordlist_razum = ['разумный', 'разумного', 'разумным', 'разумному', 'разумная']
     reply_list = [f'{user.first_name} бредит', 'Блядь, опять херню пишешь', 'Ты в школе вообще учился?',
