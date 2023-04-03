@@ -46,8 +46,3 @@ async def transcribe(ogg_temp_file: str, update: Update, context: CallbackContex
     if process.returncode != 0:
         print("Error while cleaning .ogg and .wav files")
         return
-
-
-
-
-
