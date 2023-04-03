@@ -12,6 +12,6 @@ async def voice_messages(update: Update, context: CallbackContext) -> None:
 #        print(dir(voice_file))
 
     # download the voice file to your local machine
-    temp_file = f'data/voice_file{voice_file_id}.ogg'
+    temp_file = f'data/input_file{voice_file_id}.ogg'
     await voice_file.download_to_drive(temp_file)
     await transcribe(temp_file, update, context)
