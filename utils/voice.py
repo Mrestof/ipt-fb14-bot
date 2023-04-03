@@ -28,13 +28,11 @@ async def transcribe(ogg_temp_file: str, update: Update, context: CallbackContex
     try:
         rus_response = r.recognize_google(audio, language="ru-RU", show_all=True)
         uk_response = r.recognize_google(audio, language="uk-UA", show_all=True)
-        rus_confidence = rus_response['alternative'][0]['confidence']
         uk_confidence = uk_response['alternative'][0]['confidence']
+        response = f'Бан. Текст в голосовухе:\n\"{rus_response["alternative"][0]["transcript"]}\"'
 
         if uk_confidence > 0.7:
-            response = f'Бан. Текст в голосовухе:\n\"{rus_response["alternative"][0]["transcript"]}\"\n\nАльтернативна транскипція:\n\"{uk_response["alternative"][0]["transcript"]}\"'
-        else:
-            response = f'Бан. Текст в голосовухе:\n\"{rus_response["alternative"][0]["transcript"]}\"'
+            response += f'\n\nАльтернативна транскипція:\n\"{uk_response["alternative"][0]["transcript"]}\"'
 
         await context.bot.send_message(chat_id=chat_id, text=response, reply_to_message_id=msg_id)
 
