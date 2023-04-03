@@ -1,6 +1,5 @@
 from telegram import Update
 from telegram.ext import CallbackContext
-from pydub import AudioSegment
 import speech_recognition as sr
 import subprocess
 
@@ -14,8 +13,10 @@ async def transcribe(ogg_temp_file: str, update: Update, context: CallbackContex
     wav_temp_file = f'data/output_{voice_file_id}.wav'
 
     # Load the ogg file and convert to WAV format
-    ogg_audio = AudioSegment.from_file(ogg_temp_file, format="ogg")
-    ogg_audio.export(wav_temp_file, format="wav")
+    process = subprocess.run(['ffmpeg', '-i', ogg_temp_file, wav_temp_file])
+    if process.returncode != 0:
+        print("Error while converting .ogg file to .wav file")
+        return
 
     # Initialize recognizer
     r = sr.Recognizer()
