@@ -5,7 +5,7 @@ from telegram.ext import CallbackContext
 
 from utils.image import download_wallhaven, remove_wallhaven, resize_image, download_hentai, remove_hentai
 from utils.minecraft import server_stats
-from utils.markov_chains import markov_sentence
+from utils.markov_chains import markov_sentence, markov_user
 
 
 __all__ = [
@@ -54,7 +54,7 @@ async def hentai(update: Update, context: CallbackContext) -> None:
 
     [description]:Відійти на 5 хвилин
     [name]:hentai
-    [is_hidden]:False
+    [is_hidden]:True
 
     :param update:
     :param context:
@@ -187,7 +187,7 @@ async def pavelko_markov(update: Update, context: CallbackContext) -> None:
     :return:
     """
     await context.bot.send_message(chat_id=update.effective_chat.id,
-                                   text=markov_sentence('data/users_messages/890603480') + ' (c) Павелко')
+                                   text=markov_user('pavelko') + ' (c) Павелко')
 
 
 async def razum_markov(update: Update, context: CallbackContext) -> None:
@@ -202,7 +202,7 @@ async def razum_markov(update: Update, context: CallbackContext) -> None:
     :return:
     """
     await context.bot.send_message(chat_id=update.effective_chat.id,
-                                   text=markov_sentence('data/users_messages/588535976') + ' (c) Иля')
+                                   text=markov_user('razum') + ' (c) Иля')
 
 
 async def khashcha_markov(update: Update, context: CallbackContext) -> None:
@@ -217,7 +217,7 @@ async def khashcha_markov(update: Update, context: CallbackContext) -> None:
     :return:
     """
     await context.bot.send_message(chat_id=update.effective_chat.id,
-                                   text=markov_sentence('data/users_messages/1472956766') + ' (c) Хаща')
+                                   text=markov_user('khashcha') + ' (c) Хаща')
 
 
 async def bolgov_markov(update: Update, context: CallbackContext) -> None:
@@ -232,7 +232,7 @@ async def bolgov_markov(update: Update, context: CallbackContext) -> None:
     :return:
     """
     await context.bot.send_message(chat_id=update.effective_chat.id,
-                                   text=markov_sentence('data/users_messages/619857691') + ' (c) Коля')
+                                   text=markov_user('bolgov') + ' (c) Коля')
 
 
 async def makuha_markov(update: Update, context: CallbackContext) -> None:
@@ -247,7 +247,7 @@ async def makuha_markov(update: Update, context: CallbackContext) -> None:
     :return:
     """
     await context.bot.send_message(chat_id=update.effective_chat.id,
-                                   text=markov_sentence('data/users_messages/658890395') + ' (c) Макуха')
+                                   text=markov_user('makuha') + ' (c) Макуха')
 
 
 async def deadinside(update: Update, context: CallbackContext) -> None:
