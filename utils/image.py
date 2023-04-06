@@ -8,17 +8,18 @@ from bs4 import BeautifulSoup
 from NHentai import NHentai
 
 
+# TODO: rewrite
 def crawl(images_type):
     url = ''
     if images_type == 'photo':
         url = 'https://wallhaven.cc/search?categories=100&purity=100&ratios=16x9&topRange=1y&sorting=toplist&order' \
-              f'=desc&page={random.randint(1, 50)} '
+              f'=desc&page={random.randint(1, 100)} '
     elif images_type == 'ero':
         url = 'https://wallhaven.cc/search?categories=001&purity=010&topRange=1y&sorting=toplist&order=desc&page=' \
-              f'{random.randint(1, 100)}'
+              f'{random.randint(1, 300)}'
     elif images_type == 'ecchi':
         url = 'https://wallhaven.cc/search?categories=010&purity=010&topRange=1y&sorting=toplist&order=desc&page=' \
-              f'{random.randint(1, 100)}'
+              f'{random.randint(1, 300)}'
     r = requests.get(url)
     soup = BeautifulSoup(r.content, features="html.parser")
     ss = soup.findAll('a', {'class': 'preview'})
@@ -37,24 +38,22 @@ def url_check(url):
     r = requests.get(url)
     if r.status_code == 404:
         url = url[:-3] + "png"
-        return url
-    else:
-        return url
+    return url
 
 
 def download_wallhaven(image_type):
-    image_info = url_check(crawl(image_type))
-    filename = image_info[31:47]
-    os.system(f'wget --limit-rate=2m -O {filename} {image_info}')
+    image_url = url_check(crawl(image_type))
+    filename = image_url[31:47]
+    os.system(f'wget --limit-rate=2m -O {filename} {image_url}')
     return filename
 
-
+# TODO: redo using more than 1 brain cell (try implementing with custom `with` API)
 def remove_wallhaven(path):
     os.remove(path)
 
 
 def resize_image(path, max_size):
-
+    # TODO: cut indents
     if os.path.isfile(path):
         try:
             im = Image.open(path)
@@ -84,9 +83,9 @@ def resize_image(path, max_size):
                 if im.format == 'JPEG':
                     im_resized.save(f + e, 'JPEG', quality=80)  # does overwrite file
                 elif im.format == 'PNG':
-                    im_resized.save(f + e, 'PNG', quality=80)
+                    im_resized.save(f + e, 'PNG', quality=80)  # format
                 else:
-                    print(im.format+' Unknown format')
+                    print(str(im.format)+' Unknown format')
                 # im_resized.save('resized_' + f + '.jpg', 'JPEG', quality=100)
         except Exception as e:
             print(e)

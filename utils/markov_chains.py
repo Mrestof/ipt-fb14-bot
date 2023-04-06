@@ -1,5 +1,7 @@
 import markovify
 
+# TODO: unify for auf and others
+# TODO: make it into class URGENT
 try:
     with open('data/users_messages/658890395', 'r', encoding="utf8") as f:
         text_model_makuha = markovify.Text(f)
@@ -9,8 +11,8 @@ try:
         text_model_khashcha = markovify.Text(f)
     with open('data/users_messages/588535976', 'r', encoding="utf8") as f:
         text_model_razum = markovify.Text(f)
-    with open('data/users_messages/890603480', 'r', encoding="utf8") as f:
-        text_model_pavelko = markovify.Text(f)
+    with open('data/users_messages/1399469085', 'r', encoding="utf8") as f:
+        text_model_semen = markovify.Text(f)
 except FileNotFoundError as e:
     print(f'There was an error: {e}')
 
@@ -35,8 +37,6 @@ def markov_user(user):
             sentence = text_model_khashcha.make_sentence()
         elif user == 'razum':
             sentence = text_model_razum.make_sentence()
-        elif user == 'pavelko':
-            sentence = text_model_pavelko.make_sentence()
+        elif user == 'semen':
+            sentence = text_model_semen.make_sentence()
     return sentence
-
-

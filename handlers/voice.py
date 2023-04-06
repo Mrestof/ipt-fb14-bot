@@ -2,6 +2,7 @@ from telegram import Update
 from telegram.ext import CallbackContext
 from utils.voice import transcribe
 
+
 async def voice_messages(update: Update, context: CallbackContext) -> None:
     if update.edited_message is not None:
         return None
@@ -9,7 +10,7 @@ async def voice_messages(update: Update, context: CallbackContext) -> None:
 
     # get the file object for the voice file
     voice_file = await context.bot.get_file(voice_file_id)
-#        print(dir(voice_file))
+    #        print(dir(voice_file))
 
     # download the voice file to your local machine
     temp_file = f'data/input_file{voice_file_id}.ogg'

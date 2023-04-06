@@ -8,7 +8,6 @@ from telegram.ext import MessageHandler, filters, CommandHandler, CallbackContex
 from handlers.animation import animation_messages
 from handlers.audio import audio_messages
 import handlers.command as command
-from handlers.jobs import example
 from handlers.photo import photo_messages
 from handlers.sticker import sticker_messages
 from handlers.text import text_messages
@@ -59,6 +58,7 @@ def get_token() -> str:
 async def set_commands(application: Application) -> None:
     commands = []
     for cmd_name in command.__all__:
+        # TODO: think of a way to move command extraction to seperate function
         cmd_func = getattr(command, cmd_name)
         cmd_attrs = _get_command_attrs(cmd_func)
         if cmd_attrs.is_hidden:
@@ -91,6 +91,8 @@ def get_application(token: str) -> Application:
         cmd_handler = CommandHandler(cmd_custom_name, cmd_func)
         application.add_handler(cmd_handler)
 
-    job_queue = application.job_queue
+    # example for jobs (commands that launch every N minutes/hours)
+    # from handlers.jobs import example
+    # job_queue = application.job_queue
 
     return application

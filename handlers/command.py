@@ -10,13 +10,13 @@ from utils.markov_chains import markov_sentence, markov_user
 
 __all__ = [
     # hidden
-    'ping', 'pasha_nick',
+    'ping', 'auf_markov', 'minecraft',
     # image
     'hentai', 'ero', 'ecchi', 'photo',
     # markov
-    'pavelko_markov', 'razum_markov', 'khashcha_markov', 'bolgov_markov', 'makuha_markov', 'auf_markov',
+    'semen_markov', 'razum_markov', 'khashcha_markov', 'bolgov_markov', 'makuha_markov',
     # other
-    'auf', 'minecraft', 'deadinside',
+    'auf', 'deadinside',
 ]
 
 
@@ -34,21 +34,8 @@ async def ping(update: Update, context: CallbackContext) -> None:
     await context.bot.send_message(chat_id=update.effective_chat.id, text='pong')
 
 
-async def pasha_nick(update: Update, context: CallbackContext) -> None:
-    """Meme function to react on Pasha's nickname.
-
-    [description]:
-    [name]:I3700ch3g0
-    [is_hidden]:True
-
-    :param update:
-    :param context:
-    :return:
-    """
-    await context.bot.send_message(chat_id=update.effective_chat.id,
-                                   text='Ну тай, хуйовий в мене нік.\nАле це бляха не значить що на нього тикати потрібно!')
-
-
+# TODO:fix hentai function
+# TODO:[optional, for images] check if file descriptor is closed correctly
 async def hentai(update: Update, context: CallbackContext) -> None:
     """Function to download and send Hentai mangas profile pictures and their tags.
 
@@ -78,16 +65,12 @@ async def ero(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
-    if update.message.chat_id == -1001698562626:
-        await context.bot.send_message(chat_id=update.effective_chat.id,
-                                       text='Вибач, у цьому чаті без еротики')
-    else:
-        path = download_wallhaven('ero')
-        resize_image(path, 1920)
-        await context.bot.send_photo(chat_id=update.effective_chat.id,
-                                     photo=open(path, 'rb'),
-                                     caption=path)
-        remove_wallhaven(path)
+    path = download_wallhaven('ero')
+    resize_image(path, 1920)
+    await context.bot.send_photo(chat_id=update.effective_chat.id,
+                                 photo=open(path, 'rb'),
+                                 caption=path)
+    remove_wallhaven(path)
 
 
 async def ecchi(update: Update, context: CallbackContext) -> None:
@@ -165,21 +148,20 @@ async def minecraft(update: Update, context: CallbackContext) -> None:
 
     [description]:Ваня досить ферми будувати
     [name]:minecraft
-    [is_hidden]:False
+    [is_hidden]:True
 
     :param update:
     :param context:
     :return:
     """
-    # if update.message.chat.type != 'private':
     await context.bot.send_message(chat_id=update.effective_chat.id, text=server_stats())
 
 
-async def pavelko_markov(update: Update, context: CallbackContext) -> None:
+async def semen_markov(update: Update, context: CallbackContext) -> None:
     """...
 
-    [description]:Запасний Артем Павелко
-    [name]:pavelko_markov
+    [description]:Запасний Сем
+    [name]:semen_markov
     [is_hidden]:False
 
     :param update:
@@ -187,7 +169,7 @@ async def pavelko_markov(update: Update, context: CallbackContext) -> None:
     :return:
     """
     await context.bot.send_message(chat_id=update.effective_chat.id,
-                                   text=markov_user('pavelko') + ' (c) Павелко')
+                                   text=markov_user('semen') + ' (c) Семен')
 
 
 async def razum_markov(update: Update, context: CallbackContext) -> None:
@@ -250,6 +232,7 @@ async def makuha_markov(update: Update, context: CallbackContext) -> None:
                                    text=markov_user('makuha') + ' (c) Макуха')
 
 
+# TODO: move photo ids to new config system
 async def deadinside(update: Update, context: CallbackContext) -> None:
     """...
 
@@ -267,3 +250,4 @@ async def deadinside(update: Update, context: CallbackContext) -> None:
                                  photo=random.choice(deadinside_items))
 # TODO: think of a best way to deal with data files
 # TODO: refactor function to be more compact and extensible
+# TODO: merge some functions (markov)

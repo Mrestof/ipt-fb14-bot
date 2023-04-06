@@ -1,8 +1,10 @@
 from telegram import Update
 from telegram.ext import CallbackContext
-import speech_recognition as sr
+import speech_recognition
 import subprocess
 
+
+# TODO: BIIIIIG refactor
 async def transcribe(ogg_temp_file: str, update: Update, context: CallbackContext) -> None:
 
     voice_file_id = update.message.voice.file_id
@@ -19,15 +21,15 @@ async def transcribe(ogg_temp_file: str, update: Update, context: CallbackContex
         return
 
     # Initialize recognizer
-    r = sr.Recognizer()
+    recongizer = speech_recognition.Recognizer()
 
     # Open audio file and read data into audio variable
-    with sr.AudioFile(wav_temp_file) as source:
-        audio = r.record(source)
+    with speech_recognition.AudioFile(wav_temp_file) as source:
+        audio = recongizer.record(source)
 
     try:
-        rus_response = r.recognize_google(audio, language="ru-RU", show_all=True)
-        uk_response = r.recognize_google(audio, language="uk-UA", show_all=True)
+        rus_response = recongizer.recognize_google(audio, language="ru-RU", show_all=True)
+        uk_response = recongizer.recognize_google(audio, language="uk-UA", show_all=True)
         uk_confidence = uk_response['alternative'][0]['confidence']
         response = f'Бан. Текст в голосовухе:\n\"{rus_response["alternative"][0]["transcript"]}\"'
 
@@ -36,10 +38,10 @@ async def transcribe(ogg_temp_file: str, update: Update, context: CallbackContex
 
         await context.bot.send_message(chat_id=chat_id, text=response, reply_to_message_id=msg_id)
 
-    except sr.UnknownValueError:
+    except speech_recognition.UnknownValueError:
         print('Google Speech Recognition could not understand audio')
 
-    except sr.RequestError as e:
+    except speech_recognition.RequestError as e:
         print(f'Could not request results from Google Speech Recognition service; {e}')
 
     process = subprocess.run(['rm', ogg_temp_file, wav_temp_file])
