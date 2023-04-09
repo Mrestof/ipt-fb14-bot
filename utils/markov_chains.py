@@ -33,7 +33,6 @@ def _check_and_generate_model(model_name: str) -> None:
 
 
 def generate_markov_sentence(model_name: str) -> str:
-    print(f'{model_name}', len(_text_models))
     _check_and_generate_model(model_name)
     model = _text_models[model_name]
     sentence = None
