@@ -5,7 +5,7 @@ from telegram.ext import CallbackContext
 
 from utils.image import download_wallhaven, remove_wallhaven, resize_image, download_hentai, remove_hentai
 from utils.minecraft import server_stats
-from utils.markov_chains import markov_sentence, markov_user
+from utils.markov_chains import generate_markov_sentence
 
 
 __all__ = [
@@ -128,21 +128,6 @@ async def auf(update: Update, context: CallbackContext) -> None:
                                    text=random.choice(lines))
 
 
-async def auf_markov(update: Update, context: CallbackContext) -> None:
-    """...
-
-    [description]:
-    [name]:auf_markov
-    [is_hidden]:True
-
-    :param update:
-    :param context:
-    :return:
-    """
-    await context.bot.send_message(chat_id=update.effective_chat.id,
-                                   text=markov_sentence('data/pacan.txt'))
-
-
 async def minecraft(update: Update, context: CallbackContext) -> None:
     """...
 
@@ -157,6 +142,24 @@ async def minecraft(update: Update, context: CallbackContext) -> None:
     await context.bot.send_message(chat_id=update.effective_chat.id, text=server_stats())
 
 
+
+async def auf_markov(update: Update, context: CallbackContext) -> None:
+    """...
+
+    [description]:
+    [name]:auf_markov
+    [is_hidden]:True
+
+    :param update:
+    :param context:
+    :return:
+    """
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=generate_markov_sentence('auf')
+    )
+
+
 async def semen_markov(update: Update, context: CallbackContext) -> None:
     """...
 
@@ -168,8 +171,10 @@ async def semen_markov(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
-    await context.bot.send_message(chat_id=update.effective_chat.id,
-                                   text=markov_user('semen') + ' (c) Семен')
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=generate_markov_sentence('semen') + ' (c) Семен'
+    )
 
 
 async def razum_markov(update: Update, context: CallbackContext) -> None:
@@ -183,8 +188,10 @@ async def razum_markov(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
-    await context.bot.send_message(chat_id=update.effective_chat.id,
-                                   text=markov_user('razum') + ' (c) Иля')
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=generate_markov_sentence('razum') + ' (c) Иля'
+    )
 
 
 async def khashcha_markov(update: Update, context: CallbackContext) -> None:
@@ -198,8 +205,10 @@ async def khashcha_markov(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
-    await context.bot.send_message(chat_id=update.effective_chat.id,
-                                   text=markov_user('khashcha') + ' (c) Хаща')
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=generate_markov_sentence('khashcha') + ' (c) Хаща'
+    )
 
 
 async def bolgov_markov(update: Update, context: CallbackContext) -> None:
@@ -213,8 +222,10 @@ async def bolgov_markov(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
-    await context.bot.send_message(chat_id=update.effective_chat.id,
-                                   text=markov_user('bolgov') + ' (c) Коля')
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=generate_markov_sentence('bolgov') + ' (c) Коля'
+    )
 
 
 async def makuha_markov(update: Update, context: CallbackContext) -> None:
@@ -228,8 +239,10 @@ async def makuha_markov(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
-    await context.bot.send_message(chat_id=update.effective_chat.id,
-                                   text=markov_user('makuha') + ' (c) Макуха')
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=generate_markov_sentence('makuha') + ' (c) Макуха'
+    )
 
 
 # TODO: move photo ids to new config system

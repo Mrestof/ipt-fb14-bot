@@ -20,10 +20,11 @@ from utils.init import get_token, get_application
 #   -move check for edited messages to decorator
 #   -guard anything comnig from Update to ensure it is not None
 
+
 def main():
     logger = get_main_logger()
     token = get_token()  # Getting Bot Token from a file
-    application = get_application(token)  # Bot application (Function for initiation)
+    application = get_application(token)  # Bot setup
     logger.info('Start the bot. Logs go here.')
     application.run_polling()  # Bot Start Function
 

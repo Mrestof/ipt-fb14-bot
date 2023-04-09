@@ -1,42 +1,42 @@
-import markovify
-
-# TODO: unify for auf and others
-# TODO: make it into class URGENT
-try:
-    with open('data/users_messages/658890395', 'r', encoding="utf8") as f:
-        text_model_makuha = markovify.Text(f)
-    with open('data/users_messages/619857691', 'r', encoding="utf8") as f:
-        text_model_bolgov = markovify.Text(f)
-    with open('data/users_messages/1472956766', 'r', encoding="utf8") as f:
-        text_model_khashcha = markovify.Text(f)
-    with open('data/users_messages/588535976', 'r', encoding="utf8") as f:
-        text_model_razum = markovify.Text(f)
-    with open('data/users_messages/1399469085', 'r', encoding="utf8") as f:
-        text_model_semen = markovify.Text(f)
-except FileNotFoundError as e:
-    print(f'There was an error: {e}')
+from markovify import Text as MText
 
 
-def markov_sentence(path) -> str:
-    with open(path, 'r', encoding="utf8") as f:
-        text_model = markovify.Text(f)
-        sentence = None
-        while sentence is None:
-            sentence = text_model.make_sentence()
-        return sentence
+# TODO: refactor:
+#   - [ ] general
+#   - [ ] get rid of dicts, maybe make it into class
+#     (reasoning: access by strings is too much error prone)
+#   - [x] unify for auf and others
 
 
-def markov_user(user):
+MODELNAME_TO_FILENAME: dict[str, str] = {
+    'khashcha': 'data/users_messages/1472956766',
+    'makuha': 'data/users_messages/658890395',
+    'bolgov': 'data/users_messages/619857691',
+    'razum': 'data/users_messages/588535976',
+    'semen': 'data/users_messages/1399469085',
+    'auf': 'data/pacan.txt',
+}
+_text_models = dict[str, MText]()
+
+
+def _check_and_generate_model(model_name: str) -> None:
+    # if model is in place, exit
+    if _text_models.get(model_name) is not None:
+        return
+    # else: generate the model
+    try:
+        with open(MODELNAME_TO_FILENAME[model_name], 'r', encoding="utf8") as f:
+            model = MText(f)
+        _text_models[model_name] = model
+    except FileNotFoundError as e:
+        print(f'There was an error: {e}')
+
+
+def generate_markov_sentence(model_name: str) -> str:
+    print(f'{model_name}', len(_text_models))
+    _check_and_generate_model(model_name)
+    model = _text_models[model_name]
     sentence = None
     while sentence is None:
-        if user == 'makuha':
-            sentence = text_model_makuha.make_sentence()
-        elif user == 'bolgov':
-            sentence = text_model_bolgov.make_sentence()
-        elif user == 'khashcha':
-            sentence = text_model_khashcha.make_sentence()
-        elif user == 'razum':
-            sentence = text_model_razum.make_sentence()
-        elif user == 'semen':
-            sentence = text_model_semen.make_sentence()
+        sentence = model.make_sentence()
     return sentence
