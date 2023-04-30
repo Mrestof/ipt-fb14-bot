@@ -1,5 +1,5 @@
 from markovify import Text as MText
-
+from random import randint
 
 # TODO: refactor:
 #   - [ ] general
@@ -37,5 +37,5 @@ def generate_markov_sentence(model_name: str) -> str:
     model = _text_models[model_name]
     sentence = None
     while sentence is None:
-        sentence = model.make_sentence()
+        sentence = model.make_sentence(min_words=randint(5, 40))
     return sentence

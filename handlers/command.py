@@ -3,10 +3,9 @@ import random
 from telegram import Update
 from telegram.ext import CallbackContext
 
-from utils.image import download_wallhaven, remove_wallhaven, resize_image, download_hentai, remove_hentai
+from utils.image import download_wallhaven, remove_file, resize_image, download_hentai
 from utils.minecraft import server_stats
 from utils.markov_chains import generate_markov_sentence
-
 
 __all__ = [
     # hidden
@@ -51,7 +50,7 @@ async def hentai(update: Update, context: CallbackContext) -> None:
     await context.bot.send_photo(chat_id=update.effective_chat.id,
                                  photo=open(filename, 'rb'),
                                  caption="nhentai-" + filename)
-    remove_hentai(filename)
+    remove_file(filename)
 
 
 async def ero(update: Update, context: CallbackContext) -> None:
@@ -70,7 +69,7 @@ async def ero(update: Update, context: CallbackContext) -> None:
     await context.bot.send_photo(chat_id=update.effective_chat.id,
                                  photo=open(path, 'rb'),
                                  caption=path)
-    remove_wallhaven(path)
+    remove_file(path)
 
 
 async def ecchi(update: Update, context: CallbackContext) -> None:
@@ -89,7 +88,7 @@ async def ecchi(update: Update, context: CallbackContext) -> None:
     await context.bot.send_photo(chat_id=update.effective_chat.id,
                                  photo=open(path, 'rb'),
                                  caption=path)
-    remove_wallhaven(path)
+    remove_file(path)
 
 
 async def photo(update: Update, context: CallbackContext) -> None:
@@ -108,7 +107,7 @@ async def photo(update: Update, context: CallbackContext) -> None:
     await context.bot.send_photo(chat_id=update.effective_chat.id,
                                  photo=open(path, 'rb'),
                                  caption=path)
-    remove_wallhaven(path)
+    remove_file(path)
 
 
 async def auf(update: Update, context: CallbackContext) -> None:
@@ -140,7 +139,6 @@ async def minecraft(update: Update, context: CallbackContext) -> None:
     :return:
     """
     await context.bot.send_message(chat_id=update.effective_chat.id, text=server_stats())
-
 
 
 async def auf_markov(update: Update, context: CallbackContext) -> None:

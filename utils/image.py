@@ -47,8 +47,9 @@ def download_wallhaven(image_type):
     os.system(f'wget --limit-rate=2m -O {filename} {image_url}')
     return filename
 
+
 # TODO: redo using more than 1 brain cell (try implementing with custom `with` API)
-def remove_wallhaven(path):
+def remove_file(path):
     os.remove(path)
 
 
@@ -85,7 +86,7 @@ def resize_image(path, max_size):
                 elif im.format == 'PNG':
                     im_resized.save(f + e, 'PNG', quality=80)  # format
                 else:
-                    print(str(im.format)+' Unknown format')
+                    print(str(im.format) + ' Unknown format')
                 # im_resized.save('resized_' + f + '.jpg', 'JPEG', quality=100)
         except Exception as e:
             print(e)
@@ -93,12 +94,8 @@ def resize_image(path, max_size):
 
 def download_hentai():
     nhentai = NHentai()
-    Doujin = nhentai.get_random()
-    image_info = Doujin.images[0].src  # link to the found picture
-    filename = str(Doujin.id)
+    doujin = nhentai.get_random()
+    image_info = doujin.images[0].src  # link to the found picture
+    filename = str(doujin.id)
     os.system(f'wget --limit-rate=1m -O {filename} {image_info}')
     return filename
-
-
-def remove_hentai(path):
-    os.remove(path)
