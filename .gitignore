@@ -8,6 +8,8 @@ __pycache__/
 /data/userids.txt
 # folder with .txt files with user's messages
 /data/birthdays.py
+# file with data of diaty
+/data/diary.json
 # folder with .txt files with user's birthdays
 /data/users_messages/
 # personal files related to project

@@ -3,6 +3,7 @@ import random
 from telegram import Update
 from telegram.ext import CallbackContext
 
+from utils.diary import diary_read_one, diary_write_one, diary_delete_one, diary_read_full
 from utils.image import download_wallhaven, remove_file, resize_image, download_hentai
 from utils.minecraft import server_stats
 from utils.markov_chains import generate_markov_sentence
@@ -14,8 +15,10 @@ __all__ = [
     'hentai', 'ero', 'ecchi', 'photo',
     # markov
     'semen_markov', 'razum_markov', 'khashcha_markov', 'bolgov_markov', 'makuha_markov',
+    # diary
+    'diary_read_day', 'diary_write', 'diary_delete', 'diary_read_all',
     # other
-    'auf', 'deadinside', 'call_all'
+    'auf', 'deadinside', 'call_all',
 ]
 
 
@@ -305,9 +308,135 @@ async def call_all(update: Update, context: CallbackContext) -> None:
         userstring += fr'[\|](tg://user?id={userid})'
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
-        text='Заклик ФБ14\n'+userstring,
+        text='Заклик ФБ14\n' + userstring,
         parse_mode='MarkdownV2'
     )
+
+
+async def diary_read_day(update: Update, context: CallbackContext) -> None:
+    """...
+
+    [description]:Щоденник-1
+    [name]:diary_read_day
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
+    # TODO: if else to text then sendmessage outside
+
+    if len(context.args) == 1:
+        date = context.args[0]
+
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text=diary_read_one(date),
+            reply_to_message_id=update.message.message_id
+        )
+    else:
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text='Потрібно 1 аргумент',
+            reply_to_message_id=update.message.message_id
+        )
+
+
+async def diary_read_all(update: Update, context: CallbackContext) -> None:
+    """...
+
+    [description]:Щоденник-4
+    [name]:diary_read_all
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
+
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=diary_read_full(),
+        reply_to_message_id=update.message.message_id
+    )
+
+
+async def diary_write(update: Update, context: CallbackContext) -> None:
+    """...
+
+    [description]:Щоденник-2
+    [name]:diary_write
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
+    # TODO: if else to text then sendmessage outside
+    with open('data/userids.txt', 'r') as f:
+        userids = map(str.strip, f.readlines())
+    if str(update.message.from_user.id) not in userids:
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text='Вам не дозволено викликати цю команду',
+            reply_to_message_id=update.message.message_id
+        )
+        return None
+
+    if len(context.args) >= 2:
+        date = context.args[0]
+        text = ' '.join(context.args[1:])
+
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text=diary_write_one(date, text),
+            reply_to_message_id=update.message.message_id
+        )
+    else:
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text='Потрібно 2 аргументи',
+            reply_to_message_id=update.message.message_id
+        )
+
+
+async def diary_delete(update: Update, context: CallbackContext) -> None:
+    """...
+
+    [description]:Щоденник-3
+    [name]:diary_delete
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
+    # TODO: if else to text then sendmessage outside
+    with open('data/userids.txt', 'r') as f:
+        userids = list(map(str.strip, f.readlines()))
+    if str(update.message.from_user.id) not in userids:
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text='Вам не дозволено викликати цю команду',
+            reply_to_message_id=update.message.message_id
+        )
+        return None
+
+    if len(context.args) == 2:
+        date = context.args[0]
+        number = context.args[1]
+
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text=diary_delete_one(date, number),
+            reply_to_message_id=update.message.message_id
+        )
+    else:
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text='Потрібно 2 аргументи',
+            reply_to_message_id=update.message.message_id
+        )
 
 # TODO: think of a best way to deal with data files
 # TODO: refactor function to be more compact and extensible
