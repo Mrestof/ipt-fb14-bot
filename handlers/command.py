@@ -15,7 +15,7 @@ __all__ = [
     # markov
     'semen_markov', 'razum_markov', 'khashcha_markov', 'bolgov_markov', 'makuha_markov',
     # other
-    'auf', 'deadinside',
+    'auf', 'deadinside', 'call_all'
 ]
 
 
@@ -30,7 +30,10 @@ async def ping(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
-    await context.bot.send_message(chat_id=update.effective_chat.id, text='pong')
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text='pong'
+    )
 
 
 # TODO:fix hentai function
@@ -47,9 +50,11 @@ async def hentai(update: Update, context: CallbackContext) -> None:
     :return:
     """
     filename = download_hentai()
-    await context.bot.send_photo(chat_id=update.effective_chat.id,
-                                 photo=open(filename, 'rb'),
-                                 caption="nhentai-" + filename)
+    await context.bot.send_photo(
+        chat_id=update.effective_chat.id,
+        photo=open(filename, 'rb'),
+        caption="nhentai-" + filename
+    )
     remove_file(filename)
 
 
@@ -66,9 +71,11 @@ async def ero(update: Update, context: CallbackContext) -> None:
     """
     path = download_wallhaven('ero')
     resize_image(path, 1920)
-    await context.bot.send_photo(chat_id=update.effective_chat.id,
-                                 photo=open(path, 'rb'),
-                                 caption=path)
+    await context.bot.send_photo(
+        chat_id=update.effective_chat.id,
+        photo=open(path, 'rb'),
+        caption=path
+    )
     remove_file(path)
 
 
@@ -85,9 +92,11 @@ async def ecchi(update: Update, context: CallbackContext) -> None:
     """
     path = download_wallhaven('ecchi')
     resize_image(path, 1920)
-    await context.bot.send_photo(chat_id=update.effective_chat.id,
-                                 photo=open(path, 'rb'),
-                                 caption=path)
+    await context.bot.send_photo(
+        chat_id=update.effective_chat.id,
+        photo=open(path, 'rb'),
+        caption=path
+    )
     remove_file(path)
 
 
@@ -104,9 +113,11 @@ async def photo(update: Update, context: CallbackContext) -> None:
     """
     path = download_wallhaven('photo')
     resize_image(path, 1920)
-    await context.bot.send_photo(chat_id=update.effective_chat.id,
-                                 photo=open(path, 'rb'),
-                                 caption=path)
+    await context.bot.send_photo(
+        chat_id=update.effective_chat.id,
+        photo=open(path, 'rb'),
+        caption=path
+    )
     remove_file(path)
 
 
@@ -123,8 +134,10 @@ async def auf(update: Update, context: CallbackContext) -> None:
     """
     with open('data/pacan.txt') as f:
         lines = f.readlines()
-    await context.bot.send_message(chat_id=update.effective_chat.id,
-                                   text=random.choice(lines))
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=random.choice(lines)
+    )
 
 
 async def minecraft(update: Update, context: CallbackContext) -> None:
@@ -138,7 +151,10 @@ async def minecraft(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
-    await context.bot.send_message(chat_id=update.effective_chat.id, text=server_stats())
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=server_stats()
+    )
 
 
 async def auf_markov(update: Update, context: CallbackContext) -> None:
@@ -257,8 +273,42 @@ async def deadinside(update: Update, context: CallbackContext) -> None:
     """
     with open('data/deadinside.txt', 'r') as f:
         deadinside_items = list(map(str.strip, f.readlines()))
-    await context.bot.send_photo(chat_id=update.effective_chat.id,
-                                 photo=random.choice(deadinside_items))
+    await context.bot.send_photo(
+        chat_id=update.effective_chat.id,
+        photo=random.choice(deadinside_items)
+    )
+
+
+async def call_all(update: Update, context: CallbackContext) -> None:
+    """...
+
+    [description]:Закликати всіх нагору!
+    [name]:call_all
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
+    allowed_users = [1399469085]
+    if update.message.from_user.id not in allowed_users:
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text='Вам не дозволено викликати цю команду'
+        )
+        return None
+
+    with open('data/userids.txt', 'r') as f:
+        userids = map(str.strip, f.readlines())
+    userstring = ''
+    for userid in userids:
+        userstring += fr'[\|](tg://user?id={userid})'
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text='Заклик ФБ14\n'+userstring,
+        parse_mode='MarkdownV2'
+    )
+
 # TODO: think of a best way to deal with data files
 # TODO: refactor function to be more compact and extensible
 # TODO: merge some functions (markov)

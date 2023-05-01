@@ -4,6 +4,8 @@ __pycache__/
 /data/token.txt
 # file ids of photos for deadinside comans
 /data/deadinside.txt
+# file with ids of users
+/data/userids.txt
 # folder with .txt files with user's messages
 /data/users_messages/
 # personal files related to project
