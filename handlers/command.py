@@ -290,7 +290,7 @@ async def call_all(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
-    allowed_users = [1399469085]
+    allowed_users = [1399469085]  # toconf
     if update.message.from_user.id not in allowed_users:
         await context.bot.send_message(
             chat_id=update.effective_chat.id,

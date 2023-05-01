@@ -1,4 +1,5 @@
 # TODO: merge separate methods into one class where makes sense
+import datetime
 from typing import Callable
 from dataclasses import dataclass
 
@@ -8,13 +9,13 @@ from telegram.ext import MessageHandler, filters, CommandHandler, CallbackContex
 from handlers.animation import animation_messages
 from handlers.audio import audio_messages
 import handlers.command as command
+from handlers.jobs import birthday_check
 from handlers.photo import photo_messages
 from handlers.sticker import sticker_messages
 from handlers.text import text_messages
 from handlers.video import video_messages
 from handlers.video_note import video_note_messages
 from handlers.voice import voice_messages
-
 
 @dataclass
 class CommandAttrs:
@@ -91,8 +92,7 @@ def get_application(token: str) -> Application:
         cmd_handler = CommandHandler(cmd_custom_name, cmd_func)
         application.add_handler(cmd_handler)
 
-    # example for jobs (commands that launch every N minutes/hours)
-    # from handlers.jobs import example
-    # job_queue = application.job_queue
+    job_queue = application.job_queue
+    job_queue.run_daily(birthday_check, time=datetime.time(hour=12, minute=0))  # UTC timezone
 
     return application
