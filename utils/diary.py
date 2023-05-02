@@ -3,9 +3,9 @@ import datetime
 
 DIARY_DT = dict[str, list[str]]
 
-
 # TODO: check for file existence
 # TODO: split repeating code into functions
+# TODO: check for a note's text length limit
 
 def diary_read_one(date: str) -> str:
     response = f'Записи на {date}\n\n'
