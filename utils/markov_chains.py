@@ -8,7 +8,6 @@ import os
 #   - [ ] get rid of dicts, maybe make it into class
 #     (reasoning: access by strings is too much error prone)
 #   - [x] unify for auf and others
-#   - [ ] Fix memory overload
 
 
 MODELNAME_TO_FILENAME: dict[str, str] = {
@@ -40,9 +39,6 @@ def _generate_model(model_name: str) -> MText:
 
 
 def _check_and_generate_model(model_name: str) -> MText:
-    # if model is in place, exit
-
-    # else: generate the model
     try:
         filename = f'{MODELNAME_TO_FILENAME[model_name]}.pickle'
         with open(filename, 'rb') as pickle_f:
