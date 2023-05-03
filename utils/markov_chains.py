@@ -1,7 +1,6 @@
 from markovify import Text as MText
 from random import randint
 import pickle
-import os
 
 # TODO: refactor:
 #   - [ ] general
