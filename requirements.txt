@@ -6,3 +6,4 @@ mcstatus==10.0.2
 nhentai-api==1.0.2
 markovify==0.9.4
 SpeechRecognition==3.10.0
+python-telegram-bot[job-queue]
