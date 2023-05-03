@@ -1,5 +1,7 @@
 from markovify import Text as MText
 from random import randint
+import pickle
+import os
 
 # TODO: refactor:
 #   - [ ] general
@@ -16,25 +18,39 @@ MODELNAME_TO_FILENAME: dict[str, str] = {
     'semen': 'data/users_messages/1399469085',
     'auf': 'data/pacan.txt',
 }
-_text_models = dict[str, MText]()
 
 
-def _check_and_generate_model(model_name: str) -> None:
-    # if model is in place, exit
-    if _text_models.get(model_name) is not None:
-        return
-    # else: generate the model
+def _dump_model(model_name: str, model: MText) -> None:
+    filename = f'{MODELNAME_TO_FILENAME[model_name]}.pickle'
+    with open(filename, 'wb') as pickle_f:
+        pickle.dump(model, pickle_f)
+
+
+def _generate_model(model_name: str) -> MText:
     try:
+        model = None
         with open(MODELNAME_TO_FILENAME[model_name], 'r', encoding="utf8") as f:
             model = MText(f)
-        _text_models[model_name] = model
+            _dump_model(model_name, model)
+        return model
+
+    except FileNotFoundError as e:
+        print(f'No model:{model_name} exists; {e}')
+
+
+def _check_and_generate_model(model_name: str) -> MText:
+    try:
+        filename = f'{MODELNAME_TO_FILENAME[model_name]}.pickle'
+        with open(filename, 'rb') as pickle_f:
+            return pickle.load(pickle_f)
     except FileNotFoundError as e:
         print(f'There was an error: {e}')
+        print(f'Creating a model named {filename}')
+        return _generate_model(model_name)
 
 
 def generate_markov_sentence(model_name: str) -> str:
-    _check_and_generate_model(model_name)
-    model = _text_models[model_name]
+    model = _check_and_generate_model(model_name)
     sentence = None
     while sentence is None:
         sentence = model.make_sentence(min_words=randint(5, 40))
