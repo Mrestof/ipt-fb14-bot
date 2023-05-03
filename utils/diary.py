@@ -4,15 +4,18 @@ import datetime
 DIARY_DT = dict[str, list[str]]
 
 # TODO: check for file existence
-# TODO: split repeating code into functions
-# TODO: check for a note's text length limit
+
 
 def diary_read_one(date: str) -> str:
-    response = f'Записи на {date}\n\n'
-    date = date.replace('.', '/')
+    check_result, check_date = diary_check_date(date)
+    if not check_result:
+        return check_date
+    else:
+        date = check_date
 
-    with open('data/diary.json', 'r') as f:
-        diary: DIARY_DT = json.load(f)
+    diary = diary_read_file()
+
+    response = f'Записи на {date}\n\n'
 
     try:
         for pos, notes in enumerate(diary[date]):
@@ -24,8 +27,7 @@ def diary_read_one(date: str) -> str:
 
 def diary_read_full() -> str:
     response = ''
-    with open('data/diary.json', 'r') as f:
-        diary: DIARY_DT = json.load(f)
+    diary = diary_read_file()
 
     dates = sorted(diary.keys(), key=lambda d: datetime.datetime.strptime(d, "%d/%m"))
 
@@ -38,17 +40,17 @@ def diary_read_full() -> str:
 
 
 def diary_write_one(date: str, notes: str) -> str:
-    date = date.replace('.', '/')
-    try:
-        day, month = date.split('/')
-        day, month = int(day), int(month)
-        date = f'{day}/{month}'
-        datetime.datetime(year=datetime.datetime.now().year, month=month, day=day)
-    except ValueError:
-        return 'Вірний формат дати: 31/12 або 31.12'
 
-    with open('data/diary.json', 'r') as f:
-        diary: DIARY_DT = json.load(f)
+    check_result, check_date = diary_check_date(date)
+    if not check_result:
+        return check_date
+    else:
+        date = check_date
+
+    if len(notes) > 100:
+        return 'Довжина запису більше 100 символів'
+
+    diary = diary_read_file()
 
     # TODO: redo with default dict
     if date in diary.keys():
@@ -56,38 +58,59 @@ def diary_write_one(date: str, notes: str) -> str:
     else:
         diary[date] = [notes]
 
-    with open('data/diary.json', 'w') as f:
-        json.dump(diary, f)
+    diary_write_file(diary)
 
     return 'Додано'
 
 
-def diary_delete_one(date: str, notes_pos: int) -> str:
+def diary_delete_one(date: str, notes_pos: str) -> str:
     date = date.replace('.', '/')
 
-    try:
-        notes_pos = int(notes_pos)
-        if notes_pos < 0:
-            return 'Число не може бути відємне'
-        day, month = date.split('/')
-        datetime.datetime(year=datetime.datetime.now().year, month=int(month), day=int(day))
-    except ValueError:
-        return 'Вірний формат дати: 31/12 або 31.12'
+    if not notes_pos.isdigit():
+        return "Номер запису невірний"
+    notes_pos = int(notes_pos)
 
-    with open('data/diary.json', 'r') as f:
-        diary: DIARY_DT = json.load(f)
+    check_result, check_date = diary_check_date(date)
+    if not check_result:
+        return check_date
+    else:
+        date = check_date
+
+    diary = diary_read_file()
 
     if date in diary.keys():
-        # TODO: move 0 len check to the end
-        if len(diary[date]) == 0:
-            diary.pop(date)
-        elif len(diary[date]) > notes_pos:
+        if len(diary[date]) > notes_pos:
             del diary[date][notes_pos]
+            if len(diary[date]) == 0:
+                diary.pop(date)
         else:
-            return 'Такого запису на цю дату немає'
+            return 'Цього запису на цю дату немає'
     else:
         return 'Записів на цю дату немає'
+
+    diary_write_file(diary)
+
+    return 'Видалено'
+
+
+def diary_read_file() -> DIARY_DT:
+    with open('data/diary.json', 'r') as f:
+        diary: DIARY_DT = json.load(f)
+    return diary
+
+
+def diary_write_file(diary: DIARY_DT):
     with open('data/diary.json', 'w') as f:
         json.dump(diary, f)
 
-    return 'Видалено'
+
+def diary_check_date(date: str) -> (bool, str):
+    try:
+        date = date.replace('.', '/')
+        day, month = date.split('/')
+        day, month = int(day), int(month)
+        date = f'{day}/{month}'
+        datetime.datetime(year=datetime.datetime.now().year, month=month, day=day)
+        return True, date
+    except ValueError:
+        return False, 'Вірний формат дати: 7/12 або 7.12'
