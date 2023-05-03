@@ -1,4 +1,4 @@
-#!/bin/env python3.11
+#!/bin/env python3
 
 from utils.log import get_main_logger
 from utils.init import get_token, get_application
