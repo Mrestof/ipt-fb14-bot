@@ -81,9 +81,9 @@ def _output_day(
       day = f'{td_tags[option].text}\n\n'
       schedule += day
     else:
-      td_content = td_tags[option].contents
-      if td_content:
-        subject_type = f'{td_tags[option].contents[-1].strip()}'
+      td_text = td_tags[option].text.split()
+      if td_text:
+        subject_type = ' '.join(td_text[-2:])
 
     a_tags = td_tags[option].find_all('a')
     subjects_and_professors = _get_subjects_and_professors(a_tags)
