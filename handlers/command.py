@@ -7,6 +7,7 @@ from utils.diary import diary_read_one, diary_write_one, diary_delete_one, diary
 from utils.image import download_wallhaven, remove_file, resize_image, download_hentai
 from utils.minecraft import server_stats
 from utils.markov_chains import generate_markov_sentence
+from utils.schedule import get_schedule
 
 __all__ = [
     # hidden
@@ -17,6 +18,8 @@ __all__ = [
     'semen_markov', 'razum_markov', 'khashcha_markov', 'bolgov_markov', 'makuha_markov',
     # diary
     'diary_read_day', 'diary_write', 'diary_delete', 'diary_read_all',
+    # schedule
+    'schedule_today', 'schedule_tomorrow', 'schedule_this_week_day', 'schedule_next_week_day',
     # other
     'auf', 'deadinside', 'call_all',
 ]
@@ -437,6 +440,95 @@ async def diary_delete(update: Update, context: CallbackContext) -> None:
             text='Потрібно 2 аргументи',
             reply_to_message_id=update.message.message_id
         )
+
+
+async def schedule_today(update: Update, context: CallbackContext) -> None:
+    """Function to get schedule for today
+
+    [description]:Розклад на сьогодні
+    [name]:schedule_today
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
+
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=get_schedule(),
+    )
+
+
+async def schedule_tomorrow(update: Update, context: CallbackContext) -> None:
+    """Function to get schedule for tomorrow
+
+    [description]:Розклад на завтра
+    [name]:schedule_tomorrow
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=get_schedule(is_next_day=True),
+    )
+
+
+async def schedule_this_week_day(update: Update, context: CallbackContext) -> None:
+    """Function to get schedule for this week's day
+
+    [description]:Розклад дня на цьому тижні
+    [name]:schedule_this_week_day
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
+    if len(context.args) > 0:
+        day = context.args[0]
+
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text=get_schedule(day=day),
+        )
+
+    else:
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text='Потрібно 1 аргумент - день тижня',
+            reply_to_message_id=update.message.message_id
+        )
+
+
+async def schedule_next_week_day(update: Update, context: CallbackContext) -> None:
+    """Function to get schedule for next week's day
+
+    [description]:Розклад дня з наступного тижня
+    [name]:schedule_next_week_day
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
+    if len(context.args) > 0:
+        day = context.args[0]
+
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text=get_schedule(day=day, is_this_week=False),
+        )
+    else:
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text='Потрібно 1 аргумент - день тижня',
+            reply_to_message_id=update.message.message_id
+        )
+
 
 # TODO: think of a best way to deal with data files
 # TODO: refactor function to be more compact and extensible
