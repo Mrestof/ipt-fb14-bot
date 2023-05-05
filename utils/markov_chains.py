@@ -21,8 +21,11 @@ MODELNAME_TO_FILENAME: dict[str, str] = {
 
 def _dump_model(model_name: str, model: MText) -> None:
     filename = f'{MODELNAME_TO_FILENAME[model_name]}.pickle'
-    with open(filename, 'wb') as pickle_f:
-        pickle.dump(model, pickle_f)
+    try:
+        with open(filename, 'wb') as pickle_f:
+            pickle.dump(model, pickle_f)
+    except FileNotFoundError as e:
+        print(f'Could not dump an object to a file; Error: {e}')
 
 
 def _generate_model(model_name: str) -> MText:

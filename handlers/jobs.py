@@ -1,9 +1,10 @@
-import requests
 import datetime
+import requests
 from data.birthdays import fb14_birthday_dates_to_names
+from telegram.ext import CallbackContext
 
 
-async def birthday_check(context):
+async def birthday_check(context: CallbackContext) -> None:
     fb14_chatid = -1001698562626  # toconf
     today = datetime.date.today()
     delta7 = datetime.timedelta(days=+7)
@@ -17,8 +18,12 @@ async def birthday_check(context):
         return None
 
 
-async def update_schedule(context):
+async def update_schedule(context: CallbackContext) -> None:
     url = 'http://epi.kpi.ua/Schedules/ViewSchedule.aspx?g=aaa20291-ed32-46ad-b75f-853fb7480aa6'
     response = requests.get(url)
-    with open('data/schedule/schedule.html', 'w') as file:
-        file.write(response.text)
+    try:
+        with open('data/schedule/schedule.html', 'w') as file:
+            file.write(response.text)
+    except FileNotFoundError as e:
+        print(f'Could not write to a file; Error: {e}')
+
