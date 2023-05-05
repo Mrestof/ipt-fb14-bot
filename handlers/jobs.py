@@ -17,8 +17,8 @@ async def birthday_check(context):
         return None
 
 
-async def update_schedule():
+async def update_schedule(context):
     url = 'http://epi.kpi.ua/Schedules/ViewSchedule.aspx?g=aaa20291-ed32-46ad-b75f-853fb7480aa6'
     response = requests.get(url)
-    with open('../data/schedule/schedule.html', 'w') as file:
+    with open('data/schedule/schedule.html', 'w') as file:
         file.write(response.text)
