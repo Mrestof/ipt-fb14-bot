@@ -91,7 +91,8 @@ def _output_day(
         a_tags = td_tags[option].find_all('a')
         subjects_and_professors = _get_subjects_and_professors(a_tags)
 
-        if subjects_and_professors is not None:
+        print(subjects_and_professors)
+        if subjects_and_professors != '':
             time = td_tags[0].text[1:]
             schedule += f'{time}. {subject_type}\n{subjects_and_professors}'
 
