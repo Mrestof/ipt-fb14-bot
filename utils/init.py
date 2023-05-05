@@ -17,6 +17,7 @@ from handlers.video import video_messages
 from handlers.video_note import video_note_messages
 from handlers.voice import voice_messages
 
+
 @dataclass
 class CommandAttrs:
     description: str
@@ -50,9 +51,13 @@ def _get_command_attrs(cmd: Callable[[Update, CallbackContext], None]) -> Comman
 
 # Function to get token from file
 def get_token() -> str:
-    with open('data/token.txt', 'r') as f:
-        token = f.readline().strip()
-    return token
+    try:
+        with open('data/token.txt', 'r') as f:
+            token = f.readline().strip()
+        return token
+    except FileNotFoundError:
+        print('error: data/token.txt does not exist')
+        exit()
 
 
 # Function to set commands description
