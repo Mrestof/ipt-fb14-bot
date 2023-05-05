@@ -3,8 +3,6 @@ import datetime
 
 DIARY_DT = dict[str, list[str]]
 
-# TODO: check for file existence
-
 
 def diary_read_one(date: str) -> str:
     check_result, check_date = diary_check_date(date)
@@ -18,11 +16,13 @@ def diary_read_one(date: str) -> str:
     response = f'Записи на {date}\n\n'
 
     try:
-        for pos, notes in enumerate(diary[date]):
-            response += f'{pos}: {notes}\n'
-        return response
+        notes_list = diary[date]
     except KeyError:
-        return f'{response}Записів немає'
+        response += 'Записів немає'
+    else:
+        for pos, notes in enumerate(notes_list):
+            response += f'{pos}: {notes}\n'
+    return response
 
 
 def diary_read_full() -> str:
@@ -36,7 +36,7 @@ def diary_read_full() -> str:
         for pos, notes in enumerate(diary[date]):
             response += f'{pos}: {notes}\n'
         response += '\n\n'
-    return response
+    return response if response else 'Помилка'
 
 
 def diary_write_one(date: str, notes: str) -> str:
@@ -94,9 +94,12 @@ def diary_delete_one(date: str, notes_pos: str) -> str:
 
 
 def diary_read_file() -> DIARY_DT:
-    with open('data/diary.json', 'r') as f:
-        diary: DIARY_DT = json.load(f)
-    return diary
+    try:
+        with open('data/diary.json', 'r') as f:
+            diary: DIARY_DT = json.load(f)
+        return diary
+    except FileNotFoundError:
+        return DIARY_DT()
 
 
 def diary_write_file(diary: DIARY_DT):
