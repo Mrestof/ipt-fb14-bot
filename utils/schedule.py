@@ -1,4 +1,3 @@
-from typing import Optional
 from bs4 import BeautifulSoup, ResultSet
 
 
@@ -7,7 +6,7 @@ from bs4 import BeautifulSoup, ResultSet
 #   - [ ] think of a better way to write _output_day function
 
 
-def _get_subjects_and_professors(a_tags: ResultSet) -> Optional[str]:
+def _get_subjects_and_professors(a_tags: ResultSet) -> str:
     subject = ''
     professor = ''
     for a_tag in a_tags:
@@ -20,18 +19,18 @@ def _get_subjects_and_professors(a_tags: ResultSet) -> Optional[str]:
     if subject and professor:
         return f'{subject}\n{professor}\n\n'
 
-    return None
+    return ''
 
 
-def _is_first_week_current(tr_tags: BeautifulSoup) -> bool:
-    for index, tr in enumerate(tr_tags):
+def _is_first_week_current(tr_tags: ResultSet) -> bool:
+    for tr in tr_tags:
         if tr.find('td', class_='current_pair') is not None:
             return True
 
     return False
 
 
-def _find_a_class(td_tags: BeautifulSoup) -> int:
+def _find_a_class(td_tags: ResultSet) -> int:
     # If a tag has class attribute - its index is the day option
     for index, td in enumerate(td_tags):
         if td.get('class') is not None:
@@ -55,7 +54,7 @@ def _output_day(
         html: str,
         is_this_week: bool,
         is_next_day: bool,
-        option: int = None
+        option: int = -1
 ) -> str:
     schedule = ''
     # Create a new instance of the BeautifulSoup class from the HTML content
@@ -63,7 +62,7 @@ def _output_day(
 
     # Find all needed tags in the HTML content
     table_tags = soup.find_all('table')
-    if option is None:
+    if option == -1:
         option = _find_current_day(table_tags)
     if is_next_day and option < 6:
         option += 1
@@ -101,7 +100,7 @@ def _output_day(
 
 def get_schedule(
         *,
-        day: str = None,
+        day: str = '',
         is_this_week=True,
         is_next_day=False
 ) -> str:
@@ -116,7 +115,7 @@ def get_schedule(
         'пн': 1, 'вт': 2, 'ср': 3, 'чт': 4, 'пт': 5, 'сб': 6
     }
 
-    if day is None:
+    if day == '':
         return _output_day(template, is_this_week, is_next_day)
     if day not in options:
         return 'Введіть день у форматі "пн", "вт", "ср", "чт", "пт", "сб"'
