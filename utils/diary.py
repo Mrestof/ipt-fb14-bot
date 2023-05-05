@@ -4,7 +4,7 @@ import datetime
 DIARY_DT = dict[str, list[str]]
 
 
-def diary_read_one(date: str) -> str:
+def diary_read_one_date(date: str) -> str:
     check_result, check_date = diary_check_date(date)
     if not check_result:
         return check_date
@@ -39,7 +39,7 @@ def diary_read_full() -> str:
     return response if response else 'Помилка'
 
 
-def diary_write_one(date: str, notes: str) -> str:
+def diary_write_one_note(date: str, notes: str) -> str:
 
     check_result, check_date = diary_check_date(date)
     if not check_result:
@@ -63,7 +63,7 @@ def diary_write_one(date: str, notes: str) -> str:
     return 'Додано'
 
 
-def diary_delete_one(date: str, notes_pos: str) -> str:
+def diary_delete_one_note(date: str, notes_pos: str) -> str:
     date = date.replace('.', '/')
 
     if not notes_pos.isdigit():
@@ -85,6 +85,28 @@ def diary_delete_one(date: str, notes_pos: str) -> str:
                 diary.pop(date)
         else:
             return 'Цього запису на цю дату немає'
+    else:
+        return 'Записів на цю дату немає'
+
+    diary_write_file(diary)
+
+    return 'Видалено'
+
+
+def diary_delete_date(date: str) -> str:
+    date = date.replace('.', '/')
+
+    check_result, check_date = diary_check_date(date)
+
+    if not check_result:
+        return check_date
+    else:
+        date = check_date
+
+    diary = diary_read_file()
+
+    if date in diary.keys():
+        diary.pop(date)
     else:
         return 'Записів на цю дату немає'
 

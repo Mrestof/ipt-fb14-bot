@@ -3,7 +3,7 @@ import random
 from telegram import Update
 from telegram.ext import CallbackContext
 
-from utils.diary import diary_read_one, diary_write_one, diary_delete_one, diary_read_full
+from utils.diary import diary_read_one_date, diary_write_one_note, diary_delete_one_note, diary_read_full
 from utils.image import download_wallhaven, remove_file, resize_image, download_hentai
 from utils.minecraft import server_stats
 from utils.markov_chains import generate_markov_sentence
@@ -17,7 +17,9 @@ __all__ = [
     # markov
     'semen_markov', 'razum_markov', 'khashcha_markov', 'bolgov_markov', 'makuha_markov',
     # diary
-    'diary_read_day', 'diary_write', 'diary_delete', 'diary_read_all',
+    'diary_write', 'diary_delete', 'diary_read_all',
+    # diary hidden
+    'diary_read_day',
     # schedule
     'schedule_today', 'schedule_tomorrow', 'schedule_this_week_day', 'schedule_next_week_day',
     # other
@@ -330,7 +332,7 @@ async def diary_read_day(update: Update, context: CallbackContext) -> None:
 
     [description]:Щоденник-1
     [name]:diary_read_day
-    [is_hidden]:False
+    [is_hidden]:True
 
     :param update:
     :param context:
@@ -339,7 +341,7 @@ async def diary_read_day(update: Update, context: CallbackContext) -> None:
 
     if len(context.args) == 1:
         date = context.args[0]
-        response = diary_read_one(date)
+        response = diary_read_one_date(date)
     else:
         response = 'Потрібно 1 аргумент'
 
@@ -390,7 +392,7 @@ async def diary_write(update: Update, context: CallbackContext) -> None:
         elif len(context.args) >= 2:
             date = context.args[0]
             text = ' '.join(context.args[1:])
-            response = diary_write_one(date, text)
+            response = diary_write_one_note(date, text)
         else:
             response = 'Потрібно 2 аргументи'
 
@@ -424,7 +426,7 @@ async def diary_delete(update: Update, context: CallbackContext) -> None:
         elif len(context.args) == 2:
             date = context.args[0]
             number = context.args[1]
-            response = diary_delete_one(date, number)
+            response = diary_delete_one_note(date, number)
         else:
             response = 'Потрібно 2 аргументи'
 
