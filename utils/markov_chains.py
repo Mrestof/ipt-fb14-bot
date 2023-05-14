@@ -2,12 +2,6 @@ from markovify import Text as MText
 from random import randint
 import pickle
 
-# TODO: refactor:
-#   - [ ] general
-#   - [ ] get rid of dicts, maybe make it into class
-#     (reasoning: access by strings is too much error prone)
-#   - [x] unify for auf and others
-
 
 MODELNAME_TO_FILENAME: dict[str, str] = {
     'khashcha': 'data/users_messages/1472956766',

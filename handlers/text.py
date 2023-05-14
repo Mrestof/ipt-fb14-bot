@@ -8,11 +8,6 @@ from utils.text import ilya_modifier, razum_modifier
 from config import *
 
 
-# TODO: BIG refactor
-# TODO: research the ways of splitting the big handler into smaller pieces
-# TODO: try to merge some conditions into more compact blocks of code
-# TODO: put constants to the new config system
-
 async def text_messages(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if update.edited_message is not None:
         return None

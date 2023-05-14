@@ -1,4 +1,3 @@
-# TODO: merge separate methods into one class where makes sense
 import datetime
 from typing import Callable
 from dataclasses import dataclass
@@ -26,7 +25,6 @@ class CommandAttrs:
 
 
 def _get_command_attrs(cmd: Callable[[Update, CallbackContext], None]) -> CommandAttrs:
-    # TODO: refactor this to be more readable and less error prone
     try:
         data = cmd.__doc__.splitlines()
     except AttributeError:
@@ -64,7 +62,6 @@ def get_token() -> str:
 async def set_commands(application: Application) -> None:
     commands = []
     for cmd_name in command.__all__:
-        # TODO: think of a way to move command extraction to seperate function
         cmd_func = getattr(command, cmd_name)
         cmd_attrs = _get_command_attrs(cmd_func)
         if cmd_attrs.is_hidden:

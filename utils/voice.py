@@ -4,7 +4,6 @@ import speech_recognition
 import subprocess
 
 
-# TODO: BIIIIIG refactor
 async def transcribe(ogg_temp_file: str, update: Update, context: CallbackContext) -> None:
 
     voice_file_id = update.message.voice.file_id

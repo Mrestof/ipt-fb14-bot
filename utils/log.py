@@ -11,7 +11,6 @@ JSON_LOG_FORMAT_ATTRS = (
 )
 
 
-# TODO: refactor this cringe piece
 def _wrap(attr_name: str) -> str:
     json_attrs_to_wrap = ("name", "levelno", "levelname", "pathname", "filename",
                           "module", "funcName", "asctime", "threadName", "message")

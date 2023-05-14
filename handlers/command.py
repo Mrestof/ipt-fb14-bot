@@ -44,8 +44,6 @@ async def ping(update: Update, context: CallbackContext) -> None:
     )
 
 
-# TODO:fix hentai function
-# TODO:[optional, for images] check if file descriptor is closed correctly
 async def hentai(update: Update, context: CallbackContext) -> None:
     """Function to download and send Hentai mangas profile pictures and their tags.
 
@@ -270,7 +268,6 @@ async def makuha_markov(update: Update, context: CallbackContext) -> None:
     )
 
 
-# TODO: move photo ids to new config system
 async def deadinside(update: Update, context: CallbackContext) -> None:
     """...
 
@@ -525,7 +522,3 @@ async def schedule_next_week_day(update: Update, context: CallbackContext) -> No
             text='Потрібно 1 аргумент - день тижня',
             reply_to_message_id=update.message.message_id
         )
-
-# TODO: think of a best way to deal with data files
-# TODO: refactor function to be more compact and extensible
-# TODO: merge some functions (markov)

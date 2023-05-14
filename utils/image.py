@@ -55,7 +55,6 @@ def download_wallhaven(image_type) -> str:
     return filename
 
 
-# TODO: redo using more than 1 brain cell (try implementing with custom `with` API)
 def remove_file(path):
     os.remove(path)
 

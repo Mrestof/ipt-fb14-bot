@@ -52,7 +52,6 @@ def diary_write_one_note(date: str, notes: str) -> str:
 
     diary = diary_read_file()
 
-    # TODO: redo with default dict
     if date in diary.keys():
         diary[date].append(notes)
     else:

@@ -1,5 +1,3 @@
-# TODO: be more pythonic (use python dict and so on)
-# TODO: think of a better structure for configs
 pasha400_state = True
 tihenko_state = False
 order66_state = True

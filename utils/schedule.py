@@ -1,11 +1,6 @@
 from bs4 import BeautifulSoup, ResultSet
 
 
-# TODO: refactor:
-#   - [ ] general
-#   - [ ] think of a better way to write _output_day function
-
-
 def _get_subjects_and_professors(a_tags: ResultSet) -> str:
     subject = ''
     professor = ''
