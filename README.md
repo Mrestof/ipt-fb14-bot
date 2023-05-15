@@ -43,15 +43,15 @@ plan to implement
   - [ ] guard anything coming from `Update` to ensure it is not None
 #### command:
 - [ ] refactor
-  - [ ] fix hentai function
+  - [ ] rename hentai function to get_cultured and fix (hidden)
   - [ ] join markov functions to be more compact
 - [ ] improvement
     - [ ] check if file descriptors are closed correctly
 #### text:
 - [ ] refactor
-  - [ ] one big refactor
   - [ ] split the big handler into smaller pieces
   - [ ] merge some conditions into more compact blocks of code
+  - [ ] minor stuff
 
 ### utils:
 #### log:
@@ -61,8 +61,8 @@ plan to implement
   - [ ] general (explain?)
   - [ ] rewrite `_output_day`
 #### markov:
+- [ ] review the file
 - [ ] refactor:
-  - [ ] general
   - [ ] get rid of dicts, maybe make it into class
     (reasoning: access by strings is too much error prone)
   - [x] unify for auf and others
@@ -79,7 +79,9 @@ plan to implement
 - [ ] refactor: use `defaultdict` where applicable (ex: in `diary_write_one`)
 #### image:
 - [ ] refactor
-  - [ ] rewrite `crawl` function (make match statement more compact)
+  - [ ] rewrite `crawl` function
+    - [ ] make match statement more compact
+    - [ ] use wallhaven V1 API
   - [ ] redo `remove_file` using more than 1 brain cell
     (try implementing via custom `with` API)
   - [x] cut indents in `resize_image`
