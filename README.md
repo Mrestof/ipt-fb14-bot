@@ -1,8 +1,9 @@
 ## FAQ:
-- Any general, organizational or backend question - contact Mrestof
-- Якщо щось з кодом - писати Паші
-- Если что-то сломалось - писать Дане
-- Если комменты вас пугают - писать Эду
+- Any general, organizational or backend question -
+    contact [mrestof](https://github.com/Mrestof)
+- Any user-end features or backend question -
+    contact [netrunner](https://github.com/netrunner4)
+    or [syitb](https://github.com/GMtranscendence)
 
 
 ## Features
