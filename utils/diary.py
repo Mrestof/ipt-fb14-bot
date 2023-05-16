@@ -92,7 +92,7 @@ def diary_delete_one_note(date: str, notes_pos: str) -> str:
     return 'Видалено'
 
 
-def diary_delete_date(date: str) -> str:
+def diary_delete_one_date(date: str) -> str:
     date = date.replace('.', '/')
 
     check_result, check_date = diary_check_date(date)

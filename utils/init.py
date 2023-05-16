@@ -8,7 +8,7 @@ from telegram.ext import MessageHandler, filters, CommandHandler, CallbackContex
 from handlers.animation import animation_messages
 from handlers.audio import audio_messages
 import handlers.command as command
-from handlers.jobs import birthday_check, update_schedule, diary_remove_day
+from handlers.jobs import birthday_check, update_schedule, diary_remove_day, diary_remind
 from handlers.photo import photo_messages
 from handlers.sticker import sticker_messages
 from handlers.text import text_messages
@@ -96,6 +96,7 @@ def get_application(token: str) -> Application:
 
     job_queue = application.job_queue
     job_queue.run_daily(birthday_check, time=datetime.time(hour=12, minute=0))  # UTC timezone
+    job_queue.run_daily(diary_remind, time=datetime.time(hour=12, minute=0))  # UTC timezone
     job_queue.run_daily(diary_remove_day, time=datetime.time(hour=0, minute=0))  # UTC timezone
     job_queue.run_daily(update_schedule, time=datetime.time(hour=0, minute=0))
 
