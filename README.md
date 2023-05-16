@@ -9,8 +9,11 @@
 ## Features
 
 ### frontend:
-Pavlo and Oleg describe the user end features you implemented and the ones you
-plan to implement
+- [x] diary
+  - [x] look at saved notes
+  - [x] ping opted-in users a day before the note date
+  - [x] add, remove notes by date
+  - [x] automatically delete expired notes
 
 ### backend:
 - [ ] logging support
