@@ -1,7 +1,8 @@
 from bs4 import BeautifulSoup, ResultSet
+from data.schedule.links import subject_to_link
 
 
-def _get_subjects_and_professors(a_tags: ResultSet) -> str:
+def _get_subjects_and_professors(a_tags: ResultSet) -> tuple[str, tuple[str, str]]:
     subject = ''
     professor = ''
     for a_tag in a_tags:
@@ -12,16 +13,19 @@ def _get_subjects_and_professors(a_tags: ResultSet) -> str:
             professor += f'{a_tag.text} '
 
     if subject and professor:
-        return f'{subject}\n{professor}\n\n'
+        try:
+            link_tuple = subject_to_link[subject.strip()]
+            return f'{subject}\n{professor}\n', link_tuple
+        except KeyError:
+            return f'{subject}\n{professor}', ('','')
 
-    return ''
+    return '', ('', '')
 
 
 def _is_first_week_current(tr_tags: ResultSet) -> bool:
     for tr in tr_tags:
-        if tr.find('td', class_='current_pair') is not None:
+        if tr.find('td', class_='day_backlight') is not None:
             return True
-
     return False
 
 
@@ -84,11 +88,16 @@ def _output_day(
                 subject_type = ' '.join(td_text[-2:])
 
         a_tags = td_tags[option].find_all('a')
-        subjects_and_professors = _get_subjects_and_professors(a_tags)
+        subjects_and_professors, link_type = _get_subjects_and_professors(a_tags)
 
+        link = ''
+        if subject_type.strip() == 'Лек on-line':
+            link = link_type[0]
+        else:
+            link = link_type[1]
         if subjects_and_professors != '':
             time = td_tags[0].text[1:]
-            schedule += f'{time}. {subject_type}\n{subjects_and_professors}'
+            schedule += f'{time}. {subject_type}\n{subjects_and_professors}лінк: {link}\n\n'
 
     return schedule
 

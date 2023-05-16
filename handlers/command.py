@@ -451,6 +451,7 @@ async def schedule_today(update: Update, context: CallbackContext) -> None:
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
         text=get_schedule(),
+        disable_web_page_preview=True,
     )
 
 
@@ -468,6 +469,7 @@ async def schedule_tomorrow(update: Update, context: CallbackContext) -> None:
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
         text=get_schedule(is_next_day=True),
+        disable_web_page_preview=True,
     )
 
 
@@ -488,6 +490,7 @@ async def schedule_this_week_day(update: Update, context: CallbackContext) -> No
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
             text=get_schedule(day=day),
+            disable_web_page_preview=True,
         )
 
     else:
@@ -515,6 +518,7 @@ async def schedule_next_week_day(update: Update, context: CallbackContext) -> No
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
             text=get_schedule(day=day, is_this_week=False),
+            disable_web_page_preview=True,
         )
     else:
         await context.bot.send_message(
