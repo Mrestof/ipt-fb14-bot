@@ -1,9 +1,10 @@
+import json
 import random
 
 from telegram import Update
 from telegram.ext import CallbackContext
 
-from utils.diary import diary_read_one, diary_write_one, diary_delete_one, diary_read_full
+from utils.diary import diary_read_one_date, diary_write_one_note, diary_delete_one_note, diary_read_full
 from utils.image import download_wallhaven, remove_file, resize_image, download_hentai
 from utils.minecraft import server_stats
 from utils.markov_chains import generate_markov_sentence
@@ -17,7 +18,9 @@ __all__ = [
     # markov
     'semen_markov', 'razum_markov', 'khashcha_markov', 'bolgov_markov', 'makuha_markov',
     # diary
-    'diary_read_day', 'diary_write', 'diary_delete', 'diary_read_all',
+    'diary_write', 'diary_delete', 'diary_read_all', 'diary_remind',
+    # diary hidden
+    'diary_read_day',
     # schedule
     'schedule_today', 'schedule_tomorrow', 'schedule_this_week_day', 'schedule_next_week_day',
     # other
@@ -42,8 +45,6 @@ async def ping(update: Update, context: CallbackContext) -> None:
     )
 
 
-# TODO:fix hentai function
-# TODO:[optional, for images] check if file descriptor is closed correctly
 async def hentai(update: Update, context: CallbackContext) -> None:
     """Function to download and send Hentai mangas profile pictures and their tags.
 
@@ -138,12 +139,15 @@ async def auf(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
-    with open('data/pacan.txt') as f:
-        lines = f.readlines()
-    await context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text=random.choice(lines)
-    )
+    try:
+        with open('data/pacan.txt') as f:
+            lines = f.readlines()
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text=random.choice(lines)
+        )
+    except FileNotFoundError:
+        print('error: data/pacan.txt does not exist')
 
 
 async def minecraft(update: Update, context: CallbackContext) -> None:
@@ -265,7 +269,6 @@ async def makuha_markov(update: Update, context: CallbackContext) -> None:
     )
 
 
-# TODO: move photo ids to new config system
 async def deadinside(update: Update, context: CallbackContext) -> None:
     """...
 
@@ -277,12 +280,15 @@ async def deadinside(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
-    with open('data/deadinside.txt', 'r') as f:
-        deadinside_items = list(map(str.strip, f.readlines()))
-    await context.bot.send_photo(
-        chat_id=update.effective_chat.id,
-        photo=random.choice(deadinside_items)
-    )
+    try:
+        with open('data/deadinside.txt', 'r') as f:
+            deadinside_items = list(map(str.strip, f.readlines()))
+        await context.bot.send_photo(
+            chat_id=update.effective_chat.id,
+            photo=random.choice(deadinside_items)
+        )
+    except FileNotFoundError:
+        print('error: data/deadinside.txt does not exist')
 
 
 async def call_all(update: Update, context: CallbackContext) -> None:
@@ -304,16 +310,19 @@ async def call_all(update: Update, context: CallbackContext) -> None:
         )
         return None
 
-    with open('data/userids.txt', 'r') as f:
-        userids = map(str.strip, f.readlines())
-    userstring = ''
-    for userid in userids:
-        userstring += fr'[\|](tg://user?id={userid})'
-    await context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text='Заклик ФБ14\n' + userstring,
-        parse_mode='MarkdownV2'
-    )
+    try:
+        with open('data/userids.txt', 'r') as f:
+            userids = map(str.strip, f.readlines())
+        userstring = ''
+        for userid in userids:
+            userstring += fr'[\|](tg://user?id={userid})'
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text='Заклик ФБ14\n' + userstring,
+            parse_mode='MarkdownV2'
+        )
+    except FileNotFoundError:
+        print('error: data/userids.txt does not exist')
 
 
 async def diary_read_day(update: Update, context: CallbackContext) -> None:
@@ -321,28 +330,24 @@ async def diary_read_day(update: Update, context: CallbackContext) -> None:
 
     [description]:Щоденник-1
     [name]:diary_read_day
-    [is_hidden]:False
+    [is_hidden]:True
 
     :param update:
     :param context:
     :return:
     """
-    # TODO: if else to text then sendmessage outside
 
     if len(context.args) == 1:
         date = context.args[0]
-
-        await context.bot.send_message(
-            chat_id=update.effective_chat.id,
-            text=diary_read_one(date),
-            reply_to_message_id=update.message.message_id
-        )
+        response = diary_read_one_date(date)
     else:
-        await context.bot.send_message(
-            chat_id=update.effective_chat.id,
-            text='Потрібно 1 аргумент',
-            reply_to_message_id=update.message.message_id
-        )
+        response = 'Потрібно 1 аргумент'
+
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=response,
+        reply_to_message_id=update.message.message_id
+    )
 
 
 async def diary_read_all(update: Update, context: CallbackContext) -> None:
@@ -375,32 +380,27 @@ async def diary_write(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
-    # TODO: if else to text then sendmessage outside
-    with open('data/userids.txt', 'r') as f:
-        userids = map(str.strip, f.readlines())
-    if str(update.message.from_user.id) not in userids:
-        await context.bot.send_message(
-            chat_id=update.effective_chat.id,
-            text='Вам не дозволено викликати цю команду',
-            reply_to_message_id=update.message.message_id
-        )
-        return None
 
-    if len(context.args) >= 2:
-        date = context.args[0]
-        text = ' '.join(context.args[1:])
+    try:
+        with open('data/userids.txt', 'r') as f:
+            userids = map(str.strip, f.readlines())
+
+        if str(update.message.from_user.id) not in userids:
+            response = 'Вам не дозволено викликати цю команду'
+        elif len(context.args) >= 2:
+            date = context.args[0]
+            text = ' '.join(context.args[1:])
+            response = diary_write_one_note(date, text)
+        else:
+            response = 'Потрібно 2 аргументи'
 
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
-            text=diary_write_one(date, text),
+            text=response,
             reply_to_message_id=update.message.message_id
         )
-    else:
-        await context.bot.send_message(
-            chat_id=update.effective_chat.id,
-            text='Потрібно 2 аргументи',
-            reply_to_message_id=update.message.message_id
-        )
+    except FileNotFoundError:
+        print('error: data/userids.txt does not exist')
 
 
 async def diary_delete(update: Update, context: CallbackContext) -> None:
@@ -414,32 +414,64 @@ async def diary_delete(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
-    # TODO: if else to text then sendmessage outside
-    with open('data/userids.txt', 'r') as f:
-        userids = list(map(str.strip, f.readlines()))
-    if str(update.message.from_user.id) not in userids:
-        await context.bot.send_message(
-            chat_id=update.effective_chat.id,
-            text='Вам не дозволено викликати цю команду',
-            reply_to_message_id=update.message.message_id
-        )
-        return None
 
-    if len(context.args) == 2:
-        date = context.args[0]
-        number = context.args[1]
+    try:
+        with open('data/userids.txt', 'r') as f:
+            userids = list(map(str.strip, f.readlines()))
+
+        if str(update.message.from_user.id) not in userids:
+            response = 'Вам не дозволено викликати цю команду'
+        elif len(context.args) == 2:
+            date = context.args[0]
+            number = context.args[1]
+            response = diary_delete_one_note(date, number)
+        else:
+            response = 'Потрібно 2 аргументи'
 
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
-            text=diary_delete_one(date, number),
+            text=response,
             reply_to_message_id=update.message.message_id
         )
-    else:
+    except FileNotFoundError:
+        print('error: data/userids.txt does not exist')
+
+
+async def diary_remind(update: Update, context: CallbackContext) -> None:
+    """...
+
+    [description]:Вимкає або вимикає нагадування про записи в щоденнику
+    [name]:diary_remind
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
+    try:
+        used_id = update.message.from_user.id
+        with open('data/diary_remind.json', 'r') as f:
+            diary_remind_users: list = json.load(f)
+
+        if used_id not in diary_remind_users:
+            diary_remind_users.append(used_id)
+            with open('data/diary_remind.json', 'w') as f:
+                json.dump(diary_remind_users, f)
+            response = 'Вас тепер буде тегати за день до записів'
+
+        else:
+            diary_remind_users.remove(used_id)
+            with open('data/diary_remind.json', 'w') as f:
+                json.dump(diary_remind_users, f)
+            response = 'Вас тепер не буде тегати за день до записів'
+
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
-            text='Потрібно 2 аргументи',
+            text=response,
             reply_to_message_id=update.message.message_id
         )
+    except FileNotFoundError:
+        print('error: data/diary_remind.json does not exist')
 
 
 async def schedule_today(update: Update, context: CallbackContext) -> None:
@@ -457,6 +489,7 @@ async def schedule_today(update: Update, context: CallbackContext) -> None:
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
         text=get_schedule(),
+        disable_web_page_preview=True,
     )
 
 
@@ -474,6 +507,7 @@ async def schedule_tomorrow(update: Update, context: CallbackContext) -> None:
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
         text=get_schedule(is_next_day=True),
+        disable_web_page_preview=True,
     )
 
 
@@ -494,6 +528,7 @@ async def schedule_this_week_day(update: Update, context: CallbackContext) -> No
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
             text=get_schedule(day=day),
+            disable_web_page_preview=True,
         )
 
     else:
@@ -521,6 +556,7 @@ async def schedule_next_week_day(update: Update, context: CallbackContext) -> No
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
             text=get_schedule(day=day, is_this_week=False),
+            disable_web_page_preview=True,
         )
     else:
         await context.bot.send_message(
@@ -528,8 +564,3 @@ async def schedule_next_week_day(update: Update, context: CallbackContext) -> No
             text='Потрібно 1 аргумент - день тижня',
             reply_to_message_id=update.message.message_id
         )
-
-
-# TODO: think of a best way to deal with data files
-# TODO: refactor function to be more compact and extensible
-# TODO: merge some functions (markov)

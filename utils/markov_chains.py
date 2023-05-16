@@ -2,12 +2,6 @@ from markovify import Text as MText
 from random import randint
 import pickle
 
-# TODO: refactor:
-#   - [ ] general
-#   - [ ] get rid of dicts, maybe make it into class
-#     (reasoning: access by strings is too much error prone)
-#   - [x] unify for auf and others
-
 
 MODELNAME_TO_FILENAME: dict[str, str] = {
     'khashcha': 'data/users_messages/1472956766',
@@ -21,8 +15,11 @@ MODELNAME_TO_FILENAME: dict[str, str] = {
 
 def _dump_model(model_name: str, model: MText) -> None:
     filename = f'{MODELNAME_TO_FILENAME[model_name]}.pickle'
-    with open(filename, 'wb') as pickle_f:
-        pickle.dump(model, pickle_f)
+    try:
+        with open(filename, 'wb') as pickle_f:
+            pickle.dump(model, pickle_f)
+    except FileNotFoundError as e:
+        print(f'Could not dump an object to a file; Error: {e}')
 
 
 def _generate_model(model_name: str) -> MText:

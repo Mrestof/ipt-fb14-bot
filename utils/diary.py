@@ -3,10 +3,8 @@ import datetime
 
 DIARY_DT = dict[str, list[str]]
 
-# TODO: check for file existence
 
-
-def diary_read_one(date: str) -> str:
+def diary_read_one_date(date: str) -> str:
     check_result, check_date = diary_check_date(date)
     if not check_result:
         return check_date
@@ -18,11 +16,13 @@ def diary_read_one(date: str) -> str:
     response = f'Записи на {date}\n\n'
 
     try:
-        for pos, notes in enumerate(diary[date]):
-            response += f'{pos}: {notes}\n'
-        return response
+        notes_list = diary[date]
     except KeyError:
-        return f'{response}Записів немає'
+        response += 'Записів немає'
+    else:
+        for pos, notes in enumerate(notes_list):
+            response += f'{pos}: {notes}\n'
+    return response
 
 
 def diary_read_full() -> str:
@@ -36,10 +36,10 @@ def diary_read_full() -> str:
         for pos, notes in enumerate(diary[date]):
             response += f'{pos}: {notes}\n'
         response += '\n\n'
-    return response
+    return response if response else 'Помилка'
 
 
-def diary_write_one(date: str, notes: str) -> str:
+def diary_write_one_note(date: str, notes: str) -> str:
 
     check_result, check_date = diary_check_date(date)
     if not check_result:
@@ -52,7 +52,6 @@ def diary_write_one(date: str, notes: str) -> str:
 
     diary = diary_read_file()
 
-    # TODO: redo with default dict
     if date in diary.keys():
         diary[date].append(notes)
     else:
@@ -63,7 +62,7 @@ def diary_write_one(date: str, notes: str) -> str:
     return 'Додано'
 
 
-def diary_delete_one(date: str, notes_pos: str) -> str:
+def diary_delete_one_note(date: str, notes_pos: str) -> str:
     date = date.replace('.', '/')
 
     if not notes_pos.isdigit():
@@ -93,10 +92,35 @@ def diary_delete_one(date: str, notes_pos: str) -> str:
     return 'Видалено'
 
 
+def diary_delete_one_date(date: str) -> str:
+    date = date.replace('.', '/')
+
+    check_result, check_date = diary_check_date(date)
+
+    if not check_result:
+        return check_date
+    else:
+        date = check_date
+
+    diary = diary_read_file()
+
+    if date in diary.keys():
+        diary.pop(date)
+    else:
+        return 'Записів на цю дату немає'
+
+    diary_write_file(diary)
+
+    return 'Видалено'
+
+
 def diary_read_file() -> DIARY_DT:
-    with open('data/diary.json', 'r') as f:
-        diary: DIARY_DT = json.load(f)
-    return diary
+    try:
+        with open('data/diary.json', 'r') as f:
+            diary: DIARY_DT = json.load(f)
+        return diary
+    except FileNotFoundError:
+        return DIARY_DT()
 
 
 def diary_write_file(diary: DIARY_DT):

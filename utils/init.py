@@ -1,4 +1,3 @@
-# TODO: merge separate methods into one class where makes sense
 import datetime
 from typing import Callable
 from dataclasses import dataclass
@@ -9,13 +8,14 @@ from telegram.ext import MessageHandler, filters, CommandHandler, CallbackContex
 from handlers.animation import animation_messages
 from handlers.audio import audio_messages
 import handlers.command as command
-from handlers.jobs import birthday_check, update_schedule
+from handlers.jobs import birthday_check, update_schedule, diary_remove_day, diary_remind
 from handlers.photo import photo_messages
 from handlers.sticker import sticker_messages
 from handlers.text import text_messages
 from handlers.video import video_messages
 from handlers.video_note import video_note_messages
 from handlers.voice import voice_messages
+
 
 @dataclass
 class CommandAttrs:
@@ -25,7 +25,6 @@ class CommandAttrs:
 
 
 def _get_command_attrs(cmd: Callable[[Update, CallbackContext], None]) -> CommandAttrs:
-    # TODO: refactor this to be more readable and less error prone
     try:
         data = cmd.__doc__.splitlines()
     except AttributeError:
@@ -50,16 +49,19 @@ def _get_command_attrs(cmd: Callable[[Update, CallbackContext], None]) -> Comman
 
 # Function to get token from file
 def get_token() -> str:
-    with open('data/token.txt', 'r') as f:
-        token = f.readline().strip()
-    return token
+    try:
+        with open('data/token.txt', 'r') as f:
+            token = f.readline().strip()
+        return token
+    except FileNotFoundError:
+        print('error: data/token.txt does not exist')
+        exit()
 
 
 # Function to set commands description
 async def set_commands(application: Application) -> None:
     commands = []
     for cmd_name in command.__all__:
-        # TODO: think of a way to move command extraction to seperate function
         cmd_func = getattr(command, cmd_name)
         cmd_attrs = _get_command_attrs(cmd_func)
         if cmd_attrs.is_hidden:
@@ -93,7 +95,9 @@ def get_application(token: str) -> Application:
         application.add_handler(cmd_handler)
 
     job_queue = application.job_queue
-    job_queue.run_daily(birthday_check, time=datetime.time(hour=12, minute=0))  # UTC timezone
+    job_queue.run_daily(birthday_check, time=datetime.time(hour=10, minute=0))  # UTC timezone
+    job_queue.run_daily(diary_remind, time=datetime.time(hour=10, minute=0))  # UTC timezone
+    job_queue.run_daily(diary_remove_day, time=datetime.time(hour=0, minute=0))  # UTC timezone
     job_queue.run_daily(update_schedule, time=datetime.time(hour=0, minute=0))
 
     return application
