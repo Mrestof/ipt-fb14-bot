@@ -1,4 +1,5 @@
 import datetime
+import json
 import requests
 from data.birthdays import fb14_birthday_dates_to_names
 from telegram.ext import CallbackContext
@@ -19,7 +20,7 @@ async def birthday_check(context: CallbackContext) -> None:
         return None
 
 
-async def update_schedule(context: CallbackContext) -> None:
+async def update_schedule(_: CallbackContext) -> None:
     url = 'http://epi.kpi.ua/Schedules/ViewSchedule.aspx?g=aaa20291-ed32-46ad-b75f-853fb7480aa6'
     response = requests.get(url)
     try:
@@ -42,8 +43,18 @@ async def diary_remind(context: CallbackContext) -> None:
     tomorrow = today + datetime.timedelta(days=+1)
     tomorrow_date = tomorrow.strftime('%d/%m')
     response = "\n".join(diary_read_one_date(tomorrow_date).split("\n")[1:])  # removes first line with date
+
+    try:
+        with open('data/diary_remind.json', 'r') as f:
+            diary_remind_users: list = json.load(f)
+        for userid in diary_remind_users:
+            response += fr'[\|](tg://user?id={userid})'
+    except FileNotFoundError:
+        print('error: data/diary_remind.json does not exist')
+
     if 'Записів немає' not in response:
         await context.bot.send_message(
             chat_id=fb14_chatid,
-            text=f'Завтра буде:\n{response}'
+            text=f'Завтра буде:\n{response}',
+            parse_mode='MarkdownV2'
         )

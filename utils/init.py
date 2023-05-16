@@ -95,8 +95,8 @@ def get_application(token: str) -> Application:
         application.add_handler(cmd_handler)
 
     job_queue = application.job_queue
-    job_queue.run_daily(birthday_check, time=datetime.time(hour=12, minute=0))  # UTC timezone
-    job_queue.run_daily(diary_remind, time=datetime.time(hour=12, minute=0))  # UTC timezone
+    job_queue.run_daily(birthday_check, time=datetime.time(hour=10, minute=0))  # UTC timezone
+    job_queue.run_daily(diary_remind, time=datetime.time(hour=10, minute=0))  # UTC timezone
     job_queue.run_daily(diary_remove_day, time=datetime.time(hour=0, minute=0))  # UTC timezone
     job_queue.run_daily(update_schedule, time=datetime.time(hour=0, minute=0))
 

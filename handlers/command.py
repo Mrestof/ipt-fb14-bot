@@ -1,3 +1,4 @@
+import json
 import random
 
 from telegram import Update
@@ -17,7 +18,7 @@ __all__ = [
     # markov
     'semen_markov', 'razum_markov', 'khashcha_markov', 'bolgov_markov', 'makuha_markov',
     # diary
-    'diary_write', 'diary_delete', 'diary_read_all',
+    'diary_write', 'diary_delete', 'diary_read_all', 'diary_remind',
     # diary hidden
     'diary_read_day',
     # schedule
@@ -434,6 +435,43 @@ async def diary_delete(update: Update, context: CallbackContext) -> None:
         )
     except FileNotFoundError:
         print('error: data/userids.txt does not exist')
+
+
+async def diary_remind(update: Update, context: CallbackContext) -> None:
+    """...
+
+    [description]:Вимкає або вимикає нагадування про записи в щоденнику
+    [name]:diary_remind
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
+    try:
+        used_id = update.message.from_user.id
+        with open('data/diary_remind.json', 'r') as f:
+            diary_remind_users: list = json.load(f)
+
+        if used_id not in diary_remind_users:
+            diary_remind_users.append(used_id)
+            with open('data/diary_remind.json', 'w') as f:
+                json.dump(diary_remind_users, f)
+            response = 'Вас тепер буде тегати за день до записів'
+
+        else:
+            diary_remind_users.remove(used_id)
+            with open('data/diary_remind.json', 'w') as f:
+                json.dump(diary_remind_users, f)
+            response = 'Вас тепер не буде тегати за день до записів'
+
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text=response,
+            reply_to_message_id=update.message.message_id
+        )
+    except FileNotFoundError:
+        print('error: data/diary_remind.json does not exist')
 
 
 async def schedule_today(update: Update, context: CallbackContext) -> None:

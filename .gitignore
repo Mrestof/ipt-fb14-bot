@@ -9,8 +9,10 @@ __pycache__/
 /data/userids.txt
 # folder with .txt files with user's messages
 /data/birthdays.py
-# file with data of diaty
+# file with data of diary
 /data/diary.json
+# file with ids of users who enabled remind
+/data/diary_remind.json
 # folder with .txt files with user's birthdays
 /data/users_messages/
 # personal files related to project
