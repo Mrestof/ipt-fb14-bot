@@ -4,14 +4,14 @@ import datetime
 DIARY_DT = dict[str, list[str]]
 
 
-def diary_read_one_date(date: str) -> str:
-    check_result, check_date = diary_check_date(date)
+def read_one_date(date: str) -> str:
+    check_result, check_date = _check_date(date)
     if not check_result:
         return check_date
     else:
         date = check_date
 
-    diary = diary_read_file()
+    diary = _read_file()
 
     response = f'Записи на {date}\n\n'
 
@@ -25,9 +25,9 @@ def diary_read_one_date(date: str) -> str:
     return response
 
 
-def diary_read_full() -> str:
+def read_full() -> str:
     response = ''
-    diary = diary_read_file()
+    diary = _read_file()
 
     dates = sorted(diary.keys(), key=lambda d: datetime.datetime.strptime(d, "%d/%m"))
 
@@ -39,9 +39,9 @@ def diary_read_full() -> str:
     return response if response else 'Помилка'
 
 
-def diary_write_one_note(date: str, notes: str) -> str:
+def write_one_note(date: str, notes: str) -> str:
 
-    check_result, check_date = diary_check_date(date)
+    check_result, check_date = _check_date(date)
     if not check_result:
         return check_date
     else:
@@ -50,32 +50,32 @@ def diary_write_one_note(date: str, notes: str) -> str:
     if len(notes) > 100:
         return 'Довжина запису більше 100 символів'
 
-    diary = diary_read_file()
+    diary = _read_file()
 
     if date in diary.keys():
         diary[date].append(notes)
     else:
         diary[date] = [notes]
 
-    diary_write_file(diary)
+    _write_file(diary)
 
     return 'Додано'
 
 
-def diary_delete_one_note(date: str, notes_pos: str) -> str:
+def delete_one_note(date: str, notes_pos: str) -> str:
     date = date.replace('.', '/')
 
     if not notes_pos.isdigit():
         return "Номер запису невірний"
     notes_pos = int(notes_pos)
 
-    check_result, check_date = diary_check_date(date)
+    check_result, check_date = _check_date(date)
     if not check_result:
         return check_date
     else:
         date = check_date
 
-    diary = diary_read_file()
+    diary = _read_file()
 
     if date in diary.keys():
         if len(diary[date]) > notes_pos:
@@ -87,34 +87,34 @@ def diary_delete_one_note(date: str, notes_pos: str) -> str:
     else:
         return 'Записів на цю дату немає'
 
-    diary_write_file(diary)
+    _write_file(diary)
 
     return 'Видалено'
 
 
-def diary_delete_one_date(date: str) -> str:
+def delete_one_date(date: str) -> str:
     date = date.replace('.', '/')
 
-    check_result, check_date = diary_check_date(date)
+    check_result, check_date = _check_date(date)
 
     if not check_result:
         return check_date
     else:
         date = check_date
 
-    diary = diary_read_file()
+    diary = _read_file()
 
     if date in diary.keys():
         diary.pop(date)
     else:
         return 'Записів на цю дату немає'
 
-    diary_write_file(diary)
+    _write_file(diary)
 
     return 'Видалено'
 
 
-def diary_read_file() -> DIARY_DT:
+def _read_file() -> DIARY_DT:
     try:
         with open('data/diary.json', 'r') as f:
             diary: DIARY_DT = json.load(f)
@@ -123,12 +123,12 @@ def diary_read_file() -> DIARY_DT:
         return DIARY_DT()
 
 
-def diary_write_file(diary: DIARY_DT):
+def _write_file(diary: DIARY_DT):
     with open('data/diary.json', 'w') as f:
         json.dump(diary, f)
 
 
-def diary_check_date(date: str) -> (bool, str):
+def _check_date(date: str) -> (bool, str):
     try:
         date = date.replace('.', '/')
         day, month = date.split('/')

@@ -4,7 +4,7 @@ import random
 from telegram import Update
 from telegram.ext import CallbackContext
 
-from utils.diary import diary_read_one_date, diary_write_one_note, diary_delete_one_note, diary_read_full
+from utils import diary
 from utils.image import download_wallhaven, remove_file, resize_image, download_hentai
 from utils.minecraft import server_stats
 from utils.markov_chains import generate_markov_sentence
@@ -20,7 +20,7 @@ __all__ = [
     # diary
     'diary_write', 'diary_delete', 'diary_read_all', 'diary_remind',
     # diary hidden
-    'diary_read_day',
+    'diary_read_date',
     # schedule
     'schedule_today', 'schedule_tomorrow', 'schedule_this_week_day', 'schedule_next_week_day',
     # other
@@ -325,11 +325,11 @@ async def call_all(update: Update, context: CallbackContext) -> None:
         print('error: data/userids.txt does not exist')
 
 
-async def diary_read_day(update: Update, context: CallbackContext) -> None:
+async def diary_read_date(update: Update, context: CallbackContext) -> None:
     """...
 
     [description]:Щоденник-1
-    [name]:diary_read_day
+    [name]:diary_read_date
     [is_hidden]:True
 
     :param update:
@@ -339,7 +339,7 @@ async def diary_read_day(update: Update, context: CallbackContext) -> None:
 
     if len(context.args) == 1:
         date = context.args[0]
-        response = diary_read_one_date(date)
+        response = diary.read_one_date(date)
     else:
         response = 'Потрібно 1 аргумент'
 
@@ -364,7 +364,7 @@ async def diary_read_all(update: Update, context: CallbackContext) -> None:
 
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
-        text=diary_read_full(),
+        text=diary.read_full(),
         reply_to_message_id=update.message.message_id
     )
 
@@ -390,7 +390,7 @@ async def diary_write(update: Update, context: CallbackContext) -> None:
         elif len(context.args) >= 2:
             date = context.args[0]
             text = ' '.join(context.args[1:])
-            response = diary_write_one_note(date, text)
+            response = diary.write_one_note(date, text)
         else:
             response = 'Потрібно 2 аргументи'
 
@@ -424,7 +424,7 @@ async def diary_delete(update: Update, context: CallbackContext) -> None:
         elif len(context.args) == 2:
             date = context.args[0]
             number = context.args[1]
-            response = diary_delete_one_note(date, number)
+            response = diary.delete_one_note(date, number)
         else:
             response = 'Потрібно 2 аргументи'
 

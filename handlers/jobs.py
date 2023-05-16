@@ -3,7 +3,7 @@ import json
 import requests
 from data.birthdays import fb14_birthday_dates_to_names
 from telegram.ext import CallbackContext
-from utils.diary import diary_delete_one_date, diary_read_one_date
+from utils.diary import delete_one_date, read_one_date
 
 
 async def birthday_check(context: CallbackContext) -> None:
@@ -34,7 +34,7 @@ async def diary_remove_day(_: CallbackContext) -> None:
     today = datetime.date.today()
     yesterday = today + datetime.timedelta(days=-1)
     yesterday_date = yesterday.strftime('%d/%m')
-    diary_delete_one_date(yesterday_date)
+    delete_one_date(yesterday_date)
 
 
 async def diary_remind(context: CallbackContext) -> None:
@@ -42,7 +42,7 @@ async def diary_remind(context: CallbackContext) -> None:
     today = datetime.date.today()
     tomorrow = today + datetime.timedelta(days=+1)
     tomorrow_date = tomorrow.strftime('%d/%m')
-    response = "\n".join(diary_read_one_date(tomorrow_date).split("\n")[1:])  # removes first line with date
+    response = "\n".join(read_one_date(tomorrow_date).split("\n")[1:])  # removes first line with date
 
     try:
         with open('data/diary_remind.json', 'r') as f:
