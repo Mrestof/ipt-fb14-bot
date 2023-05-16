@@ -1,9 +1,9 @@
 import datetime
 import json
 import requests
-from data.birthdays import fb14_birthday_dates_to_names
 from telegram.ext import CallbackContext
 from utils.diary import delete_one_date, read_one_date
+from config import fb14_birthday_dates_to_names
 
 
 async def birthday_check(context: CallbackContext) -> None:

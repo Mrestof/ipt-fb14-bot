@@ -5,7 +5,8 @@ from telegram import Update
 from telegram.ext import ContextTypes
 
 from utils.text import ilya_modifier, razum_modifier
-from config import *
+from config import pasha400_state, tihenko_state, order66_state, order69_state, hhanchenn_state, osk_state, \
+    kringe_state, khashcha_state, ilya_state, razum_state, kiva_state, poroshenko_state
 
 
 async def text_messages(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
