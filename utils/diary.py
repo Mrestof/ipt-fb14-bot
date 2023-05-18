@@ -35,7 +35,7 @@ def read_full() -> str:
         response += f'Записи на {date}\n'
         for pos, notes in enumerate(diary[date]):
             response += f'{pos}: {notes}\n'
-        response += '\n\n'
+        response += '\n'
     return response if response else 'Помилка'
 
 
