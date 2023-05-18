@@ -4,6 +4,7 @@ import random
 from telegram import Update
 from telegram.ext import CallbackContext
 
+from utils.log import get_logger
 from utils import diary
 from utils.image import download_wallhaven, remove_file, resize_image, download_hentai
 from utils.minecraft import server_stats
@@ -27,6 +28,8 @@ __all__ = [
     'auf', 'deadinside', 'call_all',
 ]
 
+logger = get_logger(__name__)
+
 
 async def ping(update: Update, context: CallbackContext) -> None:
     """Function for tests.
@@ -39,6 +42,7 @@ async def ping(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
+    logger.debug('execute command `ping`')
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
         text='pong'
