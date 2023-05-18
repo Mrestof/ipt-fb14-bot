@@ -14,24 +14,31 @@
   - [x] ping opted-in users a day before the note date
   - [x] add, remove notes by date
   - [x] automatically delete expired notes
+- [ ] optional dev mode: clean the message:response pairs once in a while
 
 ### backend:
 - [ ] logging support
+  - [ ] log default stuff: startup, utils usage, warnings and errors
+  - [ ] log message:response pairs
 - [ ] code formatter (probably black)
 - [ ] pythonic configs
   - [ ] create the config system with default python objects
   - [ ] put all constants there
 - [ ] tests
+- [ ] support for bot management from console (with TUI or techs alike)
 
 
 ## TODO
 
 ### global:
+- [ ] find a more suitable project hierarchy
 - [ ] discuss the usefulness of "general refactor" todo's and notes
 - [ ] refactor
   - [ ] change variable names to make more sense
   - [ ] expand unreadable oneliners
   - [ ] replace OS calls with python alternatives
+  - [ ] save temp files in temp directories, not inside the bot module hierarchy
+    (don't hardcode tmp dir pathes, use `tempfile` module)
 - [ ] improvement
   - [ ] add function descriptions for those which lack it
   - [ ] add type annotation to all places in code
@@ -86,7 +93,7 @@
     - [ ] make match statement more compact
     - [ ] use wallhaven V1 API
   - [ ] redo `remove_file` using more than 1 brain cell
-    (try implementing via custom `with` API)
+    (try implementing via custom `with` API with dunder methods)
   - [x] cut indents in `resize_image`
 - [ ] improvement
   - [ ] explain magic numbers
