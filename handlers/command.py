@@ -440,7 +440,7 @@ async def diary_delete(update: Update, context: CallbackContext) -> None:
 async def diary_remind(update: Update, context: CallbackContext) -> None:
     """...
 
-    [description]:Вимкає або вимикає нагадування про записи в щоденнику
+    [description]:Вмикає або вимикає нагадування про записи в щоденнику
     [name]:diary_remind
     [is_hidden]:False
 
@@ -455,15 +455,13 @@ async def diary_remind(update: Update, context: CallbackContext) -> None:
 
         if used_id not in diary_remind_users:
             diary_remind_users.append(used_id)
-            with open('data/diary_remind.json', 'w') as f:
-                json.dump(diary_remind_users, f)
-            response = 'Вас тепер буде тегати за день до записів'
-
+            response = 'Вас тепер БУДЕ тегати за день до записів'
         else:
             diary_remind_users.remove(used_id)
-            with open('data/diary_remind.json', 'w') as f:
-                json.dump(diary_remind_users, f)
-            response = 'Вас тепер не буде тегати за день до записів'
+            response = 'Вас тепер НЕ БУДЕ тегати за день до записів'
+
+        with open('data/diary_remind.json', 'w') as f:
+            json.dump(diary_remind_users, f)
 
         await context.bot.send_message(
             chat_id=update.effective_chat.id,

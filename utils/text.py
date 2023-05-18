@@ -29,3 +29,10 @@ def razum_modifier(wordlist, tg_message):
                 pos2 = realword.lower().find("н")
                 tg_message = tg_message.replace(realword, realword[:pos2])
     return tg_message
+
+
+def escape_tg_markdown(message: str) -> str:
+    to_escape = ('_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!')  # toconf
+    for symbol in to_escape:
+        message = message.replace(symbol, '\\' + symbol)
+    return message

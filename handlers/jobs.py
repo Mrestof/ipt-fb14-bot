@@ -3,6 +3,7 @@ import json
 import requests
 from telegram.ext import CallbackContext
 from utils.diary import delete_one_date, read_one_date
+from utils.text import escape_tg_markdown
 from config import fb14_birthday_dates_to_names
 
 
@@ -43,18 +44,19 @@ async def diary_remind(context: CallbackContext) -> None:
     tomorrow = today + datetime.timedelta(days=+1)
     tomorrow_date = tomorrow.strftime('%d/%m')
     response = "\n".join(read_one_date(tomorrow_date).split("\n")[1:])  # removes first line with date
+    escaped_response = escape_tg_markdown(response)
 
     try:
         with open('data/diary_remind.json', 'r') as f:
             diary_remind_users: list = json.load(f)
         for userid in diary_remind_users:
-            response += fr'[\|](tg://user?id={userid})'
+            escaped_response += fr'[\|](tg://user?id={userid})'
     except FileNotFoundError:
         print('error: data/diary_remind.json does not exist')
 
-    if 'Записів немає' not in response:
+    if 'Записів немає' not in escaped_response:
         await context.bot.send_message(
             chat_id=fb14_chatid,
-            text=f'Завтра буде:\n{response}',
+            text=f'Завтра буде:\n{escaped_response}',
             parse_mode='MarkdownV2'
         )
