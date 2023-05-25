@@ -6,7 +6,7 @@ from telegram.ext import CallbackContext
 
 from utils.log import get_logger
 from utils import diary
-from utils.image import download_wallhaven, remove_file, resize_image, download_hentai
+from utils.image import download_wallhaven, remove_file, resize_image
 from utils.minecraft import server_stats
 from utils.markov_chains import generate_markov_sentence
 from utils.schedule import get_schedule
@@ -15,7 +15,7 @@ __all__ = [
     # hidden
     'ping', 'auf_markov', 'minecraft',
     # image
-    'hentai', 'ero', 'ecchi', 'photo',
+    'ero', 'ecchi', 'photo',
     # markov
     'semen_markov', 'razum_markov', 'khashcha_markov', 'bolgov_markov', 'makuha_markov',
     # diary
@@ -47,26 +47,6 @@ async def ping(update: Update, context: CallbackContext) -> None:
         chat_id=update.effective_chat.id,
         text='pong'
     )
-
-
-async def hentai(update: Update, context: CallbackContext) -> None:
-    """Function to download and send Hentai mangas profile pictures and their tags.
-
-    [description]:Відійти на 5 хвилин
-    [name]:hentai
-    [is_hidden]:True
-
-    :param update:
-    :param context:
-    :return:
-    """
-    filename = download_hentai()
-    await context.bot.send_photo(
-        chat_id=update.effective_chat.id,
-        photo=open(filename, 'rb'),
-        caption="nhentai-" + filename
-    )
-    remove_file(filename)
 
 
 async def ero(update: Update, context: CallbackContext) -> None:

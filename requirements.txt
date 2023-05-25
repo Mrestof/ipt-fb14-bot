@@ -3,7 +3,6 @@ python-telegram-bot==20.2
 pillow==9.5.0
 requests==2.28.2
 mcstatus==10.0.2
-nhentai-api==1.0.2
 markovify==0.9.4
 SpeechRecognition==3.10.0
 python-telegram-bot[job-queue]

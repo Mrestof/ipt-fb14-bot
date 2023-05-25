@@ -4,7 +4,6 @@ import os
 
 from PIL import Image
 from bs4 import BeautifulSoup
-from NHentai import NHentai
 
 
 def crawl(images_type) -> str:
@@ -91,12 +90,3 @@ def resize_image(path, max_size):
             print(str(im.format) + ' Unknown format')
     except Exception as e:
         print(e)
-
-
-def download_hentai():
-    nhentai = NHentai()
-    doujin = nhentai.get_random()
-    image_info = doujin.images[0].src  # link to the found picture
-    filename = str(doujin.id)
-    os.system(f'wget --limit-rate=1m -O {filename} {image_info}')
-    return filename

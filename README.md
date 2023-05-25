@@ -53,7 +53,6 @@
   - [ ] guard anything coming from `Update` to ensure it is not None
 #### command:
 - [ ] refactor
-  - [ ] rename hentai function to get_cultured and fix (hidden)
   - [ ] join markov functions to be more compact
 - [ ] improvement
     - [ ] check if file descriptors are closed correctly
