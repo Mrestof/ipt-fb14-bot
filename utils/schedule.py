@@ -1,8 +1,13 @@
 from bs4 import BeautifulSoup, ResultSet
 from data.schedule.links import subject_to_link
+from utils.log import get_logger
+
+logger = get_logger(__name__)
 
 
 def _get_subjects_and_professors(a_tags: ResultSet) -> tuple[str, tuple[str, str]]:
+    logger.debug('start func')
+
     subject = ''
     professor = ''
     for a_tag in a_tags:
@@ -17,12 +22,14 @@ def _get_subjects_and_professors(a_tags: ResultSet) -> tuple[str, tuple[str, str
             link_tuple = subject_to_link[subject.strip()]
             return f'{subject}\n{professor}\n', link_tuple
         except KeyError:
-            return f'{subject}\n{professor}', ('','')
+            return f'{subject}\n{professor}', ('', '')
 
     return '', ('', '')
 
 
 def _is_first_week_current(tr_tags: ResultSet) -> bool:
+    logger.debug('start func')
+
     for tr in tr_tags:
         if tr.find('td', class_='day_backlight') is not None:
             return True
@@ -30,6 +37,8 @@ def _is_first_week_current(tr_tags: ResultSet) -> bool:
 
 
 def _find_a_class(td_tags: ResultSet) -> int:
+    logger.debug('start func')
+
     # If a tag has class attribute - its index is the day option
     for index, td in enumerate(td_tags):
         if td.get('class') is not None:
@@ -39,6 +48,8 @@ def _find_a_class(td_tags: ResultSet) -> int:
 
 
 def _find_current_day(table_tags: ResultSet) -> int:
+    logger.debug('start func')
+
     for table_tag in table_tags:
         tr_tags = table_tag.find_all('tr')
         for tr in tr_tags:
@@ -55,6 +66,8 @@ def _output_day(
         is_next_day: bool,
         option: int = -1
 ) -> str:
+    logger.debug('start func, is_this_week=%s, is_next_day=%s, option=%d', is_this_week, is_next_day, option)
+
     schedule = ''
     # Create a new instance of the BeautifulSoup class from the HTML content
     soup = BeautifulSoup(html, 'html.parser')
@@ -108,11 +121,13 @@ def get_schedule(
         is_this_week=True,
         is_next_day=False
 ) -> str:
+    logger.debug('start func, day=%s, is_this_week=%s, is_next_day=%s', day, is_this_week, is_next_day)
+
     try:
         with open('data/schedule/schedule.html', 'r') as file:
             template = file.read()
     except FileNotFoundError as e:
-        print(f'Could not read a file; Error: {e}')
+        logger.error(f'Could not read a file; Error: {e}')
         return 'There is a server problem. contact an admin'
 
     options: dict[str, int] = {

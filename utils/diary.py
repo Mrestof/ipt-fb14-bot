@@ -1,10 +1,15 @@
 import json
 import datetime
+from utils.log import get_logger
+
+logger = get_logger(__name__)
 
 DIARY_DT = dict[str, list[str]]
 
 
 def read_one_date(date: str) -> str:
+    logger.debug('start func, date=%s', date)
+
     check_result, check_date = _check_date(date)
     if not check_result:
         return check_date
@@ -26,6 +31,8 @@ def read_one_date(date: str) -> str:
 
 
 def read_full() -> str:
+    logger.debug('start func')
+
     response = ''
     diary = _read_file()
 
@@ -40,6 +47,7 @@ def read_full() -> str:
 
 
 def write_one_note(date: str, notes: str) -> str:
+    logger.debug('start func, date=%s, notes=%s', date, notes)
 
     check_result, check_date = _check_date(date)
     if not check_result:
@@ -63,6 +71,8 @@ def write_one_note(date: str, notes: str) -> str:
 
 
 def delete_one_note(date: str, notes_pos: str) -> str:
+    logger.debug('start func, date=%s, notes_pos=%s', date, notes_pos)
+
     date = date.replace('.', '/')
 
     if not notes_pos.isdigit():
@@ -93,6 +103,8 @@ def delete_one_note(date: str, notes_pos: str) -> str:
 
 
 def delete_one_date(date: str) -> str:
+    logger.debug('start func, date=%s', date)
+
     date = date.replace('.', '/')
 
     check_result, check_date = _check_date(date)
@@ -115,20 +127,24 @@ def delete_one_date(date: str) -> str:
 
 
 def _read_file() -> DIARY_DT:
+    logger.debug('open data/diary.json for read')
     try:
         with open('data/diary.json', 'r') as f:
             diary: DIARY_DT = json.load(f)
         return diary
     except FileNotFoundError:
+        logger.error('data/diary.json does not exist')
         return DIARY_DT()
 
 
 def _write_file(diary: DIARY_DT):
+    logger.debug('open data/diary.json for write')
     with open('data/diary.json', 'w') as f:
         json.dump(diary, f)
 
 
-def _check_date(date: str) -> (bool, str):
+def _check_date(date: str) -> tuple[bool, str]:
+    logger.debug('start func, date=%s', date)
     try:
         date = date.replace('.', '/')
         day, month = date.split('/')

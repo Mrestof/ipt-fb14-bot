@@ -1,7 +1,12 @@
 from mcstatus import JavaServer
+from utils.log import get_logger
+
+logger = get_logger(__name__)
 
 
 def server_stats() -> str:
+    logger.debug('start func')
+
     response = ''
     server = JavaServer.lookup('92.249.127.225:25565')
     try:
