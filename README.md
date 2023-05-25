@@ -14,6 +14,7 @@
   - [x] ping opted-in users a day before the note date
   - [x] add, remove notes by date
   - [x] automatically delete expired notes
+  - [ ] modify notes
 - [ ] optional dev mode: clean the message:response pairs once in a while
 
 ### backend:
