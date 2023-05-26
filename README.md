@@ -33,6 +33,7 @@
   - [ ] put all constants there
 - [ ] tests
 - [ ] support for bot management from console (with TUI or techs alike)
+- [ ] manage dependencies with pipenv
 
 
 ## TODO
@@ -45,10 +46,11 @@
   - [ ] expand unreadable oneliners
   - [ ] replace OS calls with python alternatives
   - [ ] save temp files in temp directories, not inside the bot module hierarchy
-    (don't hardcode tmp dir pathes, use `tempfile` module)
+    (don't hardcode tmp dir paths, use `tempfile` module)
 - [ ] improvement
   - [ ] add function descriptions for those which lack it
   - [ ] add type annotation to all places in code
+  - [ ] add decorator (or other mechanism) to log function start
 
 ### handlers:
 - [ ] refactor
@@ -81,6 +83,7 @@
 - [ ] refactor:
   - [ ] get rid of dicts, maybe make it into class
     (reasoning: access by strings is too much error prone)
+  - [ ] fix all incorrect try except blocks
   - [x] unify for auf and others
 #### init:
 - [ ] refactor:
