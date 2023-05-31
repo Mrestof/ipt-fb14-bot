@@ -15,6 +15,12 @@
   - [x] add, remove notes by date
   - [x] automatically delete expired notes
   - [ ] modify notes
+- [x] schedule
+  - [x] get list of subject and links to them for any day
+- [x] markov
+  - [x] imitate user's messages using markov chains
+- [ ] wallhaven
+  - [ ] show random beautiful images
 - [ ] optional dev mode: clean the message:response pairs once in a while
 
 ### backend:
