@@ -25,7 +25,8 @@
 
 ### backend:
 - [ ] logging support
-  - [ ] log default stuff: startup, utils usage, warnings and errors
+  - [x] log default stuff: startup, utils usage, warnings and errors
+  - [ ] log different levels with different handlers
   - [ ] log message:response pairs
 - [ ] code formatter (probably black)
 - [ ] pythonic configs
