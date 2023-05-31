@@ -73,8 +73,6 @@ def write_one_note(date: str, notes: str) -> str:
 def delete_one_note(date: str, notes_pos: str) -> str:
     logger.debug('start func, date=%s, notes_pos=%s', date, notes_pos)
 
-    date = date.replace('.', '/')
-
     if not notes_pos.isdigit():
         return "Номер запису невірний"
     notes_pos = int(notes_pos)
@@ -105,10 +103,7 @@ def delete_one_note(date: str, notes_pos: str) -> str:
 def delete_one_date(date: str) -> str:
     logger.debug('start func, date=%s', date)
 
-    date = date.replace('.', '/')
-
     check_result, check_date = _check_date(date)
-
     if not check_result:
         return check_date
     else:
@@ -124,6 +119,39 @@ def delete_one_date(date: str) -> str:
     _write_file(diary)
 
     return 'Видалено'
+
+
+def modify(date: str, notes_pos: str, notes: str) -> str:
+    logger.debug('start func, date=%s, notes_pos=%s, notes=%s', date, notes_pos, notes)
+
+    if not notes_pos.isdigit():
+        return "Номер запису невірний"
+    notes_pos = int(notes_pos)
+
+    check_result, check_date = _check_date(date)
+    if not check_result:
+        return check_date
+    else:
+        date = check_date
+
+    if len(notes) > 100:
+        return 'Довжина запису більше 100 символів'
+
+    diary = _read_file()
+
+    if date in diary.keys():
+        if len(diary[date]) > notes_pos:
+            diary[date][notes_pos] = notes
+        else:
+            return 'Цього запису на цю дату немає'
+    else:
+        return 'Записів на цю дату немає'
+
+    _write_file(diary)
+
+    return 'Модифіковано'
+
+
 
 
 def _read_file() -> DIARY_DT:

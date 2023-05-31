@@ -19,7 +19,7 @@ __all__ = [
     # markov
     'semen_markov', 'razum_markov', 'khashcha_markov', 'bolgov_markov', 'makuha_markov',
     # diary
-    'diary_write', 'diary_delete', 'diary_read_all', 'diary_remind',
+    'diary_write', 'diary_delete', 'diary_read_all', 'diary_remind', 'diary_modify',
     # diary hidden
     'diary_read_date',
     # schedule
@@ -453,7 +453,7 @@ async def diary_write(update: Update, context: CallbackContext) -> None:
             text = ' '.join(context.args[1:])
             response = diary.write_one_note(date, text)
         else:
-            response = 'Потрібно 2 аргументи'
+            response = 'Потрібно 2 аргументи (дата, текст)'
 
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
@@ -491,7 +491,47 @@ async def diary_delete(update: Update, context: CallbackContext) -> None:
             number = context.args[1]
             response = diary.delete_one_note(date, number)
         else:
-            response = 'Потрібно 2 аргументи'
+            response = 'Потрібно 2 аргументи (дата, позиція)'
+
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text=response,
+            reply_to_message_id=update.message.message_id
+        )
+    except FileNotFoundError as e:
+        logger.error(e)
+
+
+async def diary_modify(update: Update, context: CallbackContext) -> None:
+    """...
+
+    [description]:Щоденник-5
+    [name]:diary_modify
+    [is_hidden]:False
+
+    :param update:
+    :param context:
+    :return:
+    """
+    if update.edited_message is not None:
+        return None
+    user_id = update.message.from_user.id
+    logger.info('executed command diary_modify by %s. Arguments: [%s]', user_id, ','.join(context.args))
+
+    try:
+        with open('data/userids.txt', 'r') as f:
+            userids = list(map(str.strip, f.readlines()))
+
+        if str(user_id) not in userids:
+            response = 'Вам не дозволено викликати цю команду'
+        elif len(context.args) == 3:
+            date = context.args[0]
+            number = context.args[1]
+            text = ' '.join(context.args[2:])
+
+            response = diary.modify(date, number, text)
+        else:
+            response = 'Потрібно 3 аргументи (дата, позиція, текст)'
 
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
