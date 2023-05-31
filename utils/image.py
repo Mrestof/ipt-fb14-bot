@@ -4,9 +4,14 @@ import os
 
 from PIL import Image
 from bs4 import BeautifulSoup
+from utils.log import get_logger
+
+logger = get_logger(__name__)
 
 
 def crawl(images_type) -> str:
+    logger.debug('start func, images_type=%s', images_type)
+
     url = ''
     photo_page_range = (1, 100)
     ero_page_range = (1, 300)
@@ -40,6 +45,8 @@ def crawl(images_type) -> str:
 
 
 def url_check(url) -> str:
+    logger.debug('start func, url=%s', url)
+
     r = requests.get(url)
     if r.status_code != 200:
         url = url[:-3] + "png"
@@ -47,6 +54,8 @@ def url_check(url) -> str:
 
 
 def download_wallhaven(image_type) -> str:
+    logger.debug('start func, image_type=%s', image_type)
+
     image_url = url_check(crawl(image_type))
     filename_slice = slice(31, 47)
     filename = image_url[filename_slice]
@@ -55,10 +64,12 @@ def download_wallhaven(image_type) -> str:
 
 
 def remove_file(path):
+    logger.debug('start func, path=%s', path)
     os.remove(path)
 
 
 def resize_image(path, max_size):
+    logger.debug('start func, path=%s, max_size=%s', path, str(max_size))
     try:
         im = Image.open(path)
         if not im.height > max_size or not im.width > max_size:
@@ -87,6 +98,6 @@ def resize_image(path, max_size):
         elif im.format == 'PNG':
             im_resized.save(f + e, 'PNG', quality=80)  # format
         else:
-            print(str(im.format) + ' Unknown format')
+            logger.error(str(im.format) + ' Unknown format')
     except Exception as e:
-        print(e)
+        logger.error(e)

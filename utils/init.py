@@ -15,6 +15,9 @@ from handlers.text import text_messages
 from handlers.video import video_messages
 from handlers.video_note import video_note_messages
 from handlers.voice import voice_messages
+from utils.log import get_logger
+
+logger = get_logger(__name__)
 
 
 @dataclass
@@ -49,12 +52,13 @@ def _get_command_attrs(cmd: Callable[[Update, CallbackContext], None]) -> Comman
 
 # Function to get token from file
 def get_token() -> str:
+    logger.debug('start func')
     try:
         with open('data/token.txt', 'r') as f:
             token = f.readline().strip()
         return token
-    except FileNotFoundError:
-        print('error: data/token.txt does not exist')
+    except FileNotFoundError as e:
+        logger.error(e)
         exit()
 
 

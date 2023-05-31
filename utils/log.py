@@ -20,6 +20,7 @@ JSON_LOG_FORMAT_ATTRS = (
     'message',
 )
 
+
 def _wrap(attr_name: str) -> str:
     """
     Wrap the attribute name in parentheses if the value is of the string format
@@ -28,12 +29,12 @@ def _wrap(attr_name: str) -> str:
     :return: attribute name wrapped correctly to preserve the correct JSON format
     """
     br = '"' if attr_name in JSON_ATTRS_TO_WRAP else ''
-    return br+'{' + attr_name + '}'+br
+    return br + '{' + attr_name + '}' + br
 
 
 JSON_LOG_FORMAT = '{{' \
-    + ','.join(f'"{attr}":{_wrap(attr)}' for attr in JSON_LOG_FORMAT_ATTRS) \
-    + '}}'
+                  + ','.join(f'"{attr}":{_wrap(attr)}' for attr in JSON_LOG_FORMAT_ATTRS) \
+                  + '}}'
 
 
 # ------------------------------------------------------------------------------

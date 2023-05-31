@@ -2,9 +2,13 @@ from telegram import Update
 from telegram.ext import CallbackContext
 import speech_recognition
 import subprocess
+from utils.log import get_logger
+
+logger = get_logger(__name__)
 
 
 async def transcribe(ogg_temp_file: str, update: Update, context: CallbackContext) -> None:
+    logger.debug('start func, ogg_temp_file=%s', ogg_temp_file)
 
     voice_file_id = update.message.voice.file_id
     msg_id = update.message.message_id
@@ -16,7 +20,7 @@ async def transcribe(ogg_temp_file: str, update: Update, context: CallbackContex
     # Load the ogg file and convert to WAV format
     process = subprocess.run(['ffmpeg', '-i', ogg_temp_file, wav_temp_file])
     if process.returncode != 0:
-        print("Error while converting .ogg file to .wav file")
+        logger.error("Error while converting .ogg file to .wav file")
         return
 
     # Initialize recognizer
@@ -38,12 +42,12 @@ async def transcribe(ogg_temp_file: str, update: Update, context: CallbackContex
         await context.bot.send_message(chat_id=chat_id, text=response, reply_to_message_id=msg_id)
 
     except speech_recognition.UnknownValueError:
-        print('Google Speech Recognition could not understand audio')
+        logger.error('Google Speech Recognition could not understand audio')
 
     except speech_recognition.RequestError as e:
-        print(f'Could not request results from Google Speech Recognition service; {e}')
+        logger.error(f'Could not request results from Google Speech Recognition service; {e}')
 
     process = subprocess.run(['rm', ogg_temp_file, wav_temp_file])
     if process.returncode != 0:
-        print("Error while cleaning .ogg and .wav files")
+        logger.error("Error while cleaning .ogg and .wav files")
         return

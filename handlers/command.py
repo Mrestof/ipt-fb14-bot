@@ -60,6 +60,11 @@ async def ero(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
+    if update.edited_message is not None:
+        return None
+    user_id = update.message.from_user.id
+    logger.info('executed command ero by %s', user_id)
+
     path = download_wallhaven('ero')
     resize_image(path, 1920)
     await context.bot.send_photo(
@@ -81,6 +86,11 @@ async def ecchi(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
+    if update.edited_message is not None:
+        return None
+    user_id = update.message.from_user.id
+    logger.info('executed command ecchi by %s', user_id)
+
     path = download_wallhaven('ecchi')
     resize_image(path, 1920)
     await context.bot.send_photo(
@@ -102,6 +112,11 @@ async def photo(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
+    if update.edited_message is not None:
+        return None
+    user_id = update.message.from_user.id
+    logger.info('executed command photo by %s', user_id)
+
     path = download_wallhaven('photo')
     resize_image(path, 1920)
     await context.bot.send_photo(
@@ -123,6 +138,11 @@ async def auf(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
+    if update.edited_message is not None:
+        return None
+    user_id = update.message.from_user.id
+    logger.info('executed command auf by %s', user_id)
+
     try:
         with open('data/pacan.txt') as f:
             lines = f.readlines()
@@ -130,8 +150,8 @@ async def auf(update: Update, context: CallbackContext) -> None:
             chat_id=update.effective_chat.id,
             text=random.choice(lines)
         )
-    except FileNotFoundError:
-        print('error: data/pacan.txt does not exist')
+    except FileNotFoundError as e:
+        logger.error(e)
 
 
 async def minecraft(update: Update, context: CallbackContext) -> None:
@@ -145,6 +165,11 @@ async def minecraft(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
+    if update.edited_message is not None:
+        return None
+    user_id = update.message.from_user.id
+    logger.info('executed command minecraft by %s', user_id)
+
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
         text=server_stats()
@@ -162,6 +187,11 @@ async def auf_markov(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
+    if update.edited_message is not None:
+        return None
+    user_id = update.message.from_user.id
+    logger.info('executed command auf_markov by %s', user_id)
+
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
         text=generate_markov_sentence('auf')
@@ -179,6 +209,11 @@ async def semen_markov(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
+    if update.edited_message is not None:
+        return None
+    user_id = update.message.from_user.id
+    logger.info('executed command semen_markov by %s', user_id)
+
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
         text=generate_markov_sentence('semen') + ' (c) Семен'
@@ -196,6 +231,11 @@ async def razum_markov(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
+    if update.edited_message is not None:
+        return None
+    user_id = update.message.from_user.id
+    logger.info('executed command razum_markov by %s', user_id)
+
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
         text=generate_markov_sentence('razum') + ' (c) Иля'
@@ -213,6 +253,11 @@ async def khashcha_markov(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
+    if update.edited_message is not None:
+        return None
+    user_id = update.message.from_user.id
+    logger.info('executed command khashcha_markov by %s', user_id)
+
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
         text=generate_markov_sentence('khashcha') + ' (c) Хаща'
@@ -230,6 +275,11 @@ async def bolgov_markov(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
+    if update.edited_message is not None:
+        return None
+    user_id = update.message.from_user.id
+    logger.info('executed command bolgov_markov by %s', user_id)
+
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
         text=generate_markov_sentence('bolgov') + ' (c) Коля'
@@ -247,6 +297,11 @@ async def makuha_markov(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
+    if update.edited_message is not None:
+        return None
+    user_id = update.message.from_user.id
+    logger.info('executed command makuha_markov by %s', user_id)
+
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
         text=generate_markov_sentence('makuha') + ' (c) Макуха'
@@ -264,6 +319,11 @@ async def deadinside(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
+    if update.edited_message is not None:
+        return None
+    user_id = update.message.from_user.id
+    logger.info('executed command deadinside by %s', user_id)
+
     try:
         with open('data/deadinside.txt', 'r') as f:
             deadinside_items = list(map(str.strip, f.readlines()))
@@ -271,8 +331,8 @@ async def deadinside(update: Update, context: CallbackContext) -> None:
             chat_id=update.effective_chat.id,
             photo=random.choice(deadinside_items)
         )
-    except FileNotFoundError:
-        print('error: data/deadinside.txt does not exist')
+    except FileNotFoundError as e:
+        logger.error(e)
 
 
 async def call_all(update: Update, context: CallbackContext) -> None:
@@ -286,8 +346,13 @@ async def call_all(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
+    if update.edited_message is not None:
+        return None
+    user_id = update.message.from_user.id
+    logger.info('executed command call_all by %s', user_id)
+
     allowed_users = [1399469085]  # toconf
-    if update.message.from_user.id not in allowed_users:
+    if user_id not in allowed_users:
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
             text='Вам не дозволено викликати цю команду'
@@ -298,15 +363,15 @@ async def call_all(update: Update, context: CallbackContext) -> None:
         with open('data/userids.txt', 'r') as f:
             userids = map(str.strip, f.readlines())
         userstring = ''
-        for userid in userids:
-            userstring += fr'[\|](tg://user?id={userid})'
+        for user_id in userids:  # TODO: rename variables (user_id repeating), maybe rename userids here and diary
+            userstring += fr'[\|](tg://user?id={user_id})'
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
             text='Заклик ФБ14\n' + userstring,
             parse_mode='MarkdownV2'
         )
-    except FileNotFoundError:
-        print('error: data/userids.txt does not exist')
+    except FileNotFoundError as e:
+        logger.error(e)
 
 
 async def diary_read_date(update: Update, context: CallbackContext) -> None:
@@ -320,6 +385,10 @@ async def diary_read_date(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
+    if update.edited_message is not None:
+        return None
+    user_id = update.message.from_user.id
+    logger.info('executed command diary_read_date by %s. Arguments: [%s]', user_id, ','.join(context.args))
 
     if len(context.args) == 1:
         date = context.args[0]
@@ -345,6 +414,10 @@ async def diary_read_all(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
+    if update.edited_message is not None:
+        return None
+    user_id = update.message.from_user.id
+    logger.info('executed command diary_read_all by %s', user_id)
 
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
@@ -364,12 +437,16 @@ async def diary_write(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
+    if update.edited_message is not None:
+        return None
+    user_id = update.message.from_user.id
+    logger.info('executed command diary_write by %s. Arguments: [%s]', user_id, ','.join(context.args))
 
     try:
         with open('data/userids.txt', 'r') as f:
             userids = map(str.strip, f.readlines())
 
-        if str(update.message.from_user.id) not in userids:
+        if str(user_id) not in userids:
             response = 'Вам не дозволено викликати цю команду'
         elif len(context.args) >= 2:
             date = context.args[0]
@@ -383,8 +460,8 @@ async def diary_write(update: Update, context: CallbackContext) -> None:
             text=response,
             reply_to_message_id=update.message.message_id
         )
-    except FileNotFoundError:
-        print('error: data/userids.txt does not exist')
+    except FileNotFoundError as e:
+        logger.error(e)
 
 
 async def diary_delete(update: Update, context: CallbackContext) -> None:
@@ -398,12 +475,16 @@ async def diary_delete(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
+    if update.edited_message is not None:
+        return None
+    user_id = update.message.from_user.id
+    logger.info('executed command diary_delete by %s. Arguments: [%s]', user_id, ','.join(context.args))
 
     try:
         with open('data/userids.txt', 'r') as f:
             userids = list(map(str.strip, f.readlines()))
 
-        if str(update.message.from_user.id) not in userids:
+        if str(user_id) not in userids:
             response = 'Вам не дозволено викликати цю команду'
         elif len(context.args) == 2:
             date = context.args[0]
@@ -417,8 +498,8 @@ async def diary_delete(update: Update, context: CallbackContext) -> None:
             text=response,
             reply_to_message_id=update.message.message_id
         )
-    except FileNotFoundError:
-        print('error: data/userids.txt does not exist')
+    except FileNotFoundError as e:
+        logger.error(e)
 
 
 async def diary_remind(update: Update, context: CallbackContext) -> None:
@@ -432,16 +513,20 @@ async def diary_remind(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
+    if update.edited_message is not None:
+        return None
+    user_id = update.message.from_user.id
+    logger.info('executed command diary_remind by %s', user_id)
+
     try:
-        used_id = update.message.from_user.id
         with open('data/diary_remind.json', 'r') as f:
             diary_remind_users: list = json.load(f)
 
-        if used_id not in diary_remind_users:
-            diary_remind_users.append(used_id)
+        if user_id not in diary_remind_users:
+            diary_remind_users.append(user_id)
             response = 'Вас тепер БУДЕ тегати за день до записів'
         else:
-            diary_remind_users.remove(used_id)
+            diary_remind_users.remove(user_id)
             response = 'Вас тепер НЕ БУДЕ тегати за день до записів'
 
         with open('data/diary_remind.json', 'w') as f:
@@ -452,8 +537,8 @@ async def diary_remind(update: Update, context: CallbackContext) -> None:
             text=response,
             reply_to_message_id=update.message.message_id
         )
-    except FileNotFoundError:
-        print('error: data/diary_remind.json does not exist')
+    except FileNotFoundError as e:
+        logger.error(e)
 
 
 async def schedule_today(update: Update, context: CallbackContext) -> None:
@@ -467,6 +552,10 @@ async def schedule_today(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
+    if update.edited_message is not None:
+        return None
+    user_id = update.message.from_user.id
+    logger.info('executed command schedule_today by %s', user_id)
 
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
@@ -486,6 +575,11 @@ async def schedule_tomorrow(update: Update, context: CallbackContext) -> None:
     :param context:
     :return:
     """
+    if update.edited_message is not None:
+        return None
+    user_id = update.message.from_user.id
+    logger.info('executed command schedule_tomorrow by %s', user_id)
+
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
         text=get_schedule(is_next_day=True),
@@ -504,6 +598,11 @@ async def schedule_this_week_day(update: Update, context: CallbackContext) -> No
     :param context:
     :return:
     """
+    if update.edited_message is not None:
+        return None
+    user_id = update.message.from_user.id
+    logger.info('executed command schedule_this_week_day by %s. Arguments: [%s]', user_id, ','.join(context.args))
+
     if len(context.args) > 0:
         day = context.args[0]
 
@@ -532,6 +631,11 @@ async def schedule_next_week_day(update: Update, context: CallbackContext) -> No
     :param context:
     :return:
     """
+    if update.edited_message is not None:
+        return None
+    user_id = update.message.from_user.id
+    logger.info('executed command schedule_next_week_day by %s. Arguments: [%s]', user_id, ','.join(context.args))
+
     if len(context.args) > 0:
         day = context.args[0]
 
