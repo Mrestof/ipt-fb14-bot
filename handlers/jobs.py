@@ -58,8 +58,8 @@ async def diary_remind(context: CallbackContext) -> None:
             diary_remind_users: list = json.load(f)
         for userid in diary_remind_users:
             escaped_response += fr'[\|](tg://user?id={userid})'
-    except FileNotFoundError:
-        logger.error('data/diary_remind.json does not exist')
+    except FileNotFoundError as e:
+        logger.error(e)
 
     if 'Записів немає' not in escaped_response:
         await context.bot.send_message(

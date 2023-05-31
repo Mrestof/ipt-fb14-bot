@@ -150,8 +150,8 @@ async def auf(update: Update, context: CallbackContext) -> None:
             chat_id=update.effective_chat.id,
             text=random.choice(lines)
         )
-    except FileNotFoundError:
-        logger.error('data/pacan.txt does not exist')
+    except FileNotFoundError as e:
+        logger.error(e)
 
 
 async def minecraft(update: Update, context: CallbackContext) -> None:
@@ -331,8 +331,8 @@ async def deadinside(update: Update, context: CallbackContext) -> None:
             chat_id=update.effective_chat.id,
             photo=random.choice(deadinside_items)
         )
-    except FileNotFoundError:
-        logger.error('data/deadinside.txt does not exist')
+    except FileNotFoundError as e:
+        logger.error(e)
 
 
 async def call_all(update: Update, context: CallbackContext) -> None:
@@ -370,8 +370,8 @@ async def call_all(update: Update, context: CallbackContext) -> None:
             text='Заклик ФБ14\n' + userstring,
             parse_mode='MarkdownV2'
         )
-    except FileNotFoundError:
-        logger.error('data/userids.txt does not exist')
+    except FileNotFoundError as e:
+        logger.error(e)
 
 
 async def diary_read_date(update: Update, context: CallbackContext) -> None:
@@ -460,8 +460,8 @@ async def diary_write(update: Update, context: CallbackContext) -> None:
             text=response,
             reply_to_message_id=update.message.message_id
         )
-    except FileNotFoundError:
-        logger.error('data/userids.txt does not exist')
+    except FileNotFoundError as e:
+        logger.error(e)
 
 
 async def diary_delete(update: Update, context: CallbackContext) -> None:
@@ -498,8 +498,8 @@ async def diary_delete(update: Update, context: CallbackContext) -> None:
             text=response,
             reply_to_message_id=update.message.message_id
         )
-    except FileNotFoundError:
-        logger.error('error: data/userids.txt does not exist')
+    except FileNotFoundError as e:
+        logger.error(e)
 
 
 async def diary_remind(update: Update, context: CallbackContext) -> None:
@@ -537,8 +537,8 @@ async def diary_remind(update: Update, context: CallbackContext) -> None:
             text=response,
             reply_to_message_id=update.message.message_id
         )
-    except FileNotFoundError:
-        logger.error('data/diary_remind.json does not exist')
+    except FileNotFoundError as e:
+        logger.error(e)
 
 
 async def schedule_today(update: Update, context: CallbackContext) -> None:

@@ -132,8 +132,8 @@ def _read_file() -> DIARY_DT:
         with open('data/diary.json', 'r') as f:
             diary: DIARY_DT = json.load(f)
         return diary
-    except FileNotFoundError:
-        logger.error('data/diary.json does not exist')
+    except FileNotFoundError as e:
+        logger.error(e)
         return DIARY_DT()
 
 

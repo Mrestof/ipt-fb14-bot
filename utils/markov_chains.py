@@ -48,8 +48,8 @@ def _check_and_generate_model(model_name: str) -> MText:
         filename = f'{MODELNAME_TO_FILENAME[model_name]}.pickle'
         with open(filename, 'rb') as pickle_f:
             return pickle.load(pickle_f)
-    except FileNotFoundError:
-        logger.info(f'{filename} was not found, creating a model')
+    except FileNotFoundError as e:
+        logger.info(f'{e}, creating a model')
         return _generate_model(model_name)
 
 

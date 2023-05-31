@@ -57,8 +57,8 @@ def get_token() -> str:
         with open('data/token.txt', 'r') as f:
             token = f.readline().strip()
         return token
-    except FileNotFoundError:
-        logger.error('error: data/token.txt does not exist')
+    except FileNotFoundError as e:
+        logger.error(e)
         exit()
 
 
