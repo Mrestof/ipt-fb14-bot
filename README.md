@@ -42,6 +42,8 @@
 ### global:
 - [ ] find a more suitable project hierarchy
 - [ ] discuss the usefulness of "general refactor" todo's and notes
+- [ ] requirements.txt: `ptb` and `ptb[job-queue]` are probably duplicates;
+    check and fix if possible
 - [ ] refactor
   - [ ] change variable names to make more sense
   - [ ] expand unreadable oneliners
