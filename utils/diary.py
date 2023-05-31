@@ -152,6 +152,24 @@ def modify(date: str, notes_pos: str, notes: str) -> str:
     return 'Модифіковано'
 
 
+def remind(user_id) -> str:
+    try:
+        with open('data/diary_remind.json', 'r') as f:
+            diary_remind_users: list = json.load(f)
+
+        if user_id not in diary_remind_users:
+            diary_remind_users.append(user_id)
+            response = 'Вас тепер БУДЕ тегати за день до записів'
+        else:
+            diary_remind_users.remove(user_id)
+            response = 'Вас тепер НЕ БУДЕ тегати за день до записів'
+
+        with open('data/diary_remind.json', 'w') as f:
+            json.dump(diary_remind_users, f)
+
+        return response
+    except FileNotFoundError as e:
+        logger.error(e)
 
 
 def _read_file() -> DIARY_DT:

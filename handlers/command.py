@@ -1,4 +1,3 @@
-import json
 import random
 
 from telegram import Update
@@ -361,10 +360,10 @@ async def call_all(update: Update, context: CallbackContext) -> None:
 
     try:
         with open('data/userids.txt', 'r') as f:
-            userids = map(str.strip, f.readlines())
+            allowed_users = map(str.strip, f.readlines())
         userstring = ''
-        for user_id in userids:  # TODO: rename variables (user_id repeating), maybe rename userids here and diary
-            userstring += fr'[\|](tg://user?id={user_id})'
+        for allowed_user in allowed_users:
+            userstring += fr'[\|](tg://user?id={allowed_user})'
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
             text='Заклик ФБ14\n' + userstring,
@@ -377,7 +376,7 @@ async def call_all(update: Update, context: CallbackContext) -> None:
 async def diary_read_date(update: Update, context: CallbackContext) -> None:
     """...
 
-    [description]:Щоденник-1
+    [description]:Прочитати записи на один день
     [name]:diary_read_date
     [is_hidden]:True
 
@@ -406,7 +405,7 @@ async def diary_read_date(update: Update, context: CallbackContext) -> None:
 async def diary_read_all(update: Update, context: CallbackContext) -> None:
     """...
 
-    [description]:Щоденник-4
+    [description]:Прочитати всі записи
     [name]:diary_read_all
     [is_hidden]:False
 
@@ -429,7 +428,7 @@ async def diary_read_all(update: Update, context: CallbackContext) -> None:
 async def diary_write(update: Update, context: CallbackContext) -> None:
     """...
 
-    [description]:Щоденник-2
+    [description]:Зробити запис
     [name]:diary_write
     [is_hidden]:False
 
@@ -444,9 +443,9 @@ async def diary_write(update: Update, context: CallbackContext) -> None:
 
     try:
         with open('data/userids.txt', 'r') as f:
-            userids = map(str.strip, f.readlines())
+            allowed_users = map(str.strip, f.readlines())
 
-        if str(user_id) not in userids:
+        if str(user_id) not in allowed_users:
             response = 'Вам не дозволено викликати цю команду'
         elif len(context.args) >= 2:
             date = context.args[0]
@@ -467,7 +466,7 @@ async def diary_write(update: Update, context: CallbackContext) -> None:
 async def diary_delete(update: Update, context: CallbackContext) -> None:
     """...
 
-    [description]:Щоденник-3
+    [description]:Видалити запис
     [name]:diary_delete
     [is_hidden]:False
 
@@ -482,9 +481,9 @@ async def diary_delete(update: Update, context: CallbackContext) -> None:
 
     try:
         with open('data/userids.txt', 'r') as f:
-            userids = list(map(str.strip, f.readlines()))
+            allowed_users = list(map(str.strip, f.readlines()))
 
-        if str(user_id) not in userids:
+        if str(user_id) not in allowed_users:
             response = 'Вам не дозволено викликати цю команду'
         elif len(context.args) == 2:
             date = context.args[0]
@@ -505,7 +504,7 @@ async def diary_delete(update: Update, context: CallbackContext) -> None:
 async def diary_modify(update: Update, context: CallbackContext) -> None:
     """...
 
-    [description]:Щоденник-5
+    [description]:Модифікувати запис
     [name]:diary_modify
     [is_hidden]:False
 
@@ -520,9 +519,9 @@ async def diary_modify(update: Update, context: CallbackContext) -> None:
 
     try:
         with open('data/userids.txt', 'r') as f:
-            userids = list(map(str.strip, f.readlines()))
+            allowed_users = list(map(str.strip, f.readlines()))
 
-        if str(user_id) not in userids:
+        if str(user_id) not in allowed_users:
             response = 'Вам не дозволено викликати цю команду'
         elif len(context.args) == 3:
             date = context.args[0]
@@ -558,27 +557,11 @@ async def diary_remind(update: Update, context: CallbackContext) -> None:
     user_id = update.message.from_user.id
     logger.info('executed command diary_remind by %s', user_id)
 
-    try:
-        with open('data/diary_remind.json', 'r') as f:
-            diary_remind_users: list = json.load(f)
-
-        if user_id not in diary_remind_users:
-            diary_remind_users.append(user_id)
-            response = 'Вас тепер БУДЕ тегати за день до записів'
-        else:
-            diary_remind_users.remove(user_id)
-            response = 'Вас тепер НЕ БУДЕ тегати за день до записів'
-
-        with open('data/diary_remind.json', 'w') as f:
-            json.dump(diary_remind_users, f)
-
-        await context.bot.send_message(
-            chat_id=update.effective_chat.id,
-            text=response,
-            reply_to_message_id=update.message.message_id
-        )
-    except FileNotFoundError as e:
-        logger.error(e)
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=diary.remind(user_id),
+        reply_to_message_id=update.message.message_id
+    )
 
 
 async def schedule_today(update: Update, context: CallbackContext) -> None:
