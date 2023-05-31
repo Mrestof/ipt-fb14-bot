@@ -127,7 +127,7 @@ def get_schedule(
         with open('data/schedule/schedule.html', 'r') as file:
             template = file.read()
     except FileNotFoundError as e:
-        logger.error(f'Could not read a file; Error: {e}')
+        logger.error(e)
         return 'There is a server problem. contact an admin'
 
     options: dict[str, int] = {
