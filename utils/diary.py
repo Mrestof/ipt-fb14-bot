@@ -73,9 +73,10 @@ def write_one_note(date: str, notes: str) -> str:
 def delete_one_note(date: str, notes_pos: str) -> str:
     logger.debug('start func, date=%s, notes_pos=%s', date, notes_pos)
 
-    if not notes_pos.isdigit():
-        return "Номер запису невірний"
-    notes_pos = int(notes_pos)
+    try:
+        notes_pos = int(notes_pos)
+    except ValueError:
+        return 'Номер запису невірний'
 
     check_result, check_date = _check_date(date)
     if not check_result:
@@ -124,9 +125,10 @@ def delete_one_date(date: str) -> str:
 def modify(date: str, notes_pos: str, notes: str) -> str:
     logger.debug('start func, date=%s, notes_pos=%s, notes=%s', date, notes_pos, notes)
 
-    if not notes_pos.isdigit():
-        return "Номер запису невірний"
-    notes_pos = int(notes_pos)
+    try:
+        notes_pos = int(notes_pos)
+    except ValueError:
+        return 'Номер запису невірний'
 
     check_result, check_date = _check_date(date)
     if not check_result:

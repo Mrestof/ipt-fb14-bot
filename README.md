@@ -12,9 +12,8 @@
 - [x] diary
   - [x] look at saved notes
   - [x] ping opted-in users a day before the note date
-  - [x] add, remove notes by date
+  - [x] add, remove, modify notes by date
   - [x] automatically delete expired notes
-  - [ ] modify notes
 - [x] schedule
   - [x] get list of subject and links to them for any day
 - [x] markov
@@ -80,19 +79,22 @@
 - [ ] review the file
 - [ ] refactor:
   - [ ] get rid of dicts, maybe make it into class
-    (reasoning: access by strings is too much error prone)
+    (reasoning: access by strings is too much error-prone)
   - [x] unify for auf and others
 #### init:
 - [ ] refactor:
   - [ ] merge some methods into one class
       (old note, review the file to confirm its relevance)
-  - [ ] rewrite `_get_command_attrs` to be less error prone
+  - [ ] rewrite `_get_command_attrs` to be less error-prone
       (maybe with usage of configs)
   - [ ] move command extraction from `set_commands` to separate function
 #### voice:
 - [ ] review the file
 #### diary:
 - [ ] refactor: use `defaultdict` where applicable (ex: in `diary_write_one`)
+- [ ] move argument validation to decorator
+- [ ] refactor _check_date return
+- [ ] turn if/else block into try/except where possible
 #### image:
 - [ ] refactor
   - [ ] rewrite `crawl` function

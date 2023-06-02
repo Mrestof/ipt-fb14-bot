@@ -359,11 +359,11 @@ async def call_all(update: Update, context: CallbackContext) -> None:
         return None
 
     try:
-        with open('data/userids.txt', 'r') as f:
-            allowed_users = map(str.strip, f.readlines())
+        with open('data/userids.txt', 'r') as f:  # toconf
+            student_ids = map(int, f.readlines())
         userstring = ''
-        for allowed_user in allowed_users:
-            userstring += fr'[\|](tg://user?id={allowed_user})'
+        for student in student_ids:
+            userstring += fr'[\|](tg://user?id={student})'
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
             text='Заклик ФБ14\n' + userstring,
@@ -371,6 +371,8 @@ async def call_all(update: Update, context: CallbackContext) -> None:
         )
     except FileNotFoundError as e:
         logger.error(e)
+    except ValueError as e:
+        logger.error('Format error in userids.txt', e)
 
 
 async def diary_read_date(update: Update, context: CallbackContext) -> None:
@@ -443,9 +445,9 @@ async def diary_write(update: Update, context: CallbackContext) -> None:
 
     try:
         with open('data/userids.txt', 'r') as f:
-            allowed_users = map(str.strip, f.readlines())
+            student_ids = map(int, f.readlines())
 
-        if str(user_id) not in allowed_users:
+        if user_id not in student_ids:
             response = 'Вам не дозволено викликати цю команду'
         elif len(context.args) >= 2:
             date = context.args[0]
@@ -461,6 +463,8 @@ async def diary_write(update: Update, context: CallbackContext) -> None:
         )
     except FileNotFoundError as e:
         logger.error(e)
+    except ValueError as e:
+        logger.error('Format error in userids.txt', e)
 
 
 async def diary_delete(update: Update, context: CallbackContext) -> None:
@@ -481,9 +485,9 @@ async def diary_delete(update: Update, context: CallbackContext) -> None:
 
     try:
         with open('data/userids.txt', 'r') as f:
-            allowed_users = list(map(str.strip, f.readlines()))
+            student_ids = map(int, f.readlines())
 
-        if str(user_id) not in allowed_users:
+        if user_id not in student_ids:
             response = 'Вам не дозволено викликати цю команду'
         elif len(context.args) == 2:
             date = context.args[0]
@@ -499,6 +503,8 @@ async def diary_delete(update: Update, context: CallbackContext) -> None:
         )
     except FileNotFoundError as e:
         logger.error(e)
+    except ValueError as e:
+        logger.error('Format error in userids.txt', e)
 
 
 async def diary_modify(update: Update, context: CallbackContext) -> None:
@@ -519,11 +525,11 @@ async def diary_modify(update: Update, context: CallbackContext) -> None:
 
     try:
         with open('data/userids.txt', 'r') as f:
-            allowed_users = list(map(str.strip, f.readlines()))
+            student_ids = map(int, f.readlines())
 
-        if str(user_id) not in allowed_users:
+        if user_id not in student_ids:
             response = 'Вам не дозволено викликати цю команду'
-        elif len(context.args) == 3:
+        elif len(context.args) >= 3:
             date = context.args[0]
             number = context.args[1]
             text = ' '.join(context.args[2:])
@@ -539,6 +545,8 @@ async def diary_modify(update: Update, context: CallbackContext) -> None:
         )
     except FileNotFoundError as e:
         logger.error(e)
+    except ValueError as e:
+        logger.error('Format error in userids.txt', e)
 
 
 async def diary_remind(update: Update, context: CallbackContext) -> None:
